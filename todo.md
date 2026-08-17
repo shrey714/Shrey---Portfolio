@@ -291,3 +291,6 @@
 - [x] Add a secure owner-only workflow for future portfolio media uploads.
 - [x] Validate local private Blob delivery, cache headers, SSR social-image output, owner-only upload protection, media-manager rendering, credential access, deterministic tests, TypeScript, and production build.
 - [ ] Validate local and deployed media delivery, admin editing behavior, SEO preview references, tests, and production build.
+
+- [x] Replace the separate media-manager page with a native Decap Media workflow backed by private Vercel Blob storage.
+- [ ] Ensure Decap media uploads, media selection, and deletion operate through owner-authorized Blob routes without committing binary files to GitHub.

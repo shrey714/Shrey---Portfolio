@@ -32,15 +32,17 @@ test("unified Vercel entry serves the private Decap shell with noindex", async (
   expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
   const html = await response.text();
   expect(html).toContain("decap-cms");
+  expect(html).toContain("vercel-blob-media-library.js");
   expect(html).not.toContain("CMS_MANUAL_INIT");
   expect(html).not.toContain("CMS.init");
 });
 
-test("unified Vercel entry serves the owner-only media manager and rejects invalid public paths", async () => {
-  const manager = await fetch(`${origin}/admin/media`);
-  expect(manager.status).toBe(200);
-  expect(manager.headers.get("x-robots-tag")).toBe("noindex, nofollow");
-  expect(await manager.text()).toContain("Portfolio media");
+test("unified Vercel entry serves the native Decap Blob media adapter and rejects invalid public paths", async () => {
+  const adapter = await fetch(`${origin}/admin/vercel-blob-media-library.js`);
+  expect(adapter.status).toBe(200);
+  expect(adapter.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+  expect(adapter.headers.get("content-type")).toContain("application/javascript");
+  expect(await adapter.text()).toContain("registerMediaLibrary");
 
   const invalidMedia = await fetch(`${origin}/api/media/other/not-portfolio-media.webp`);
   expect(invalidMedia.status).toBe(404);

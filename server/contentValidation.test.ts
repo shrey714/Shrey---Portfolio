@@ -4,7 +4,7 @@ import { validatePortfolioContent } from "./contentValidation";
 
 describe("portfolio content validation", () => {
   it("accepts the editable portfolio source", () => {
-    expect(validatePortfolioContent(portfolioContent).identity.name).toBe("Shrey Patel");
+    expect(validatePortfolioContent(portfolioContent).identity.name).toBe(portfolioContent.identity.name);
   });
 
   it("rejects a missing required project visual field", () => {

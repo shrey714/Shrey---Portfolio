@@ -5,6 +5,7 @@ import { registerStorageProxy } from "./storageProxy.js";
 import { appRouter } from "../routers.js";
 import { createContext } from "./context.js";
 import { registerDecapRoutes } from "./decap.js";
+import { registerMediaRoutes } from "../media.js";
 
 export function configureApplication(app: express.Express) {
   app.set("trust proxy", 1);
@@ -13,6 +14,7 @@ export function configureApplication(app: express.Express) {
   registerStorageProxy(app);
   registerOAuthRoutes(app);
   registerDecapRoutes(app);
+  registerMediaRoutes(app);
   app.use(
     "/api/trpc",
     createExpressMiddleware({

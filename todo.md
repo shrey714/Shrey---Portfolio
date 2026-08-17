@@ -229,5 +229,5 @@
 - [x] Enforce an explicit GitHub owner boundary before an authenticated Decap editor session is accepted.
 - [ ] Verify the live GitHub login and save-to-commit flow against the registered Vercel deployment before treating publication as production-ready.
 
-- [ ] Commit the approved Git-backed editor and SSR implementation to GitHub `main`.
-- [ ] Verify the pushed commit is present on the linked GitHub repository without deploying it on the user's behalf.
+- [x] Commit the approved Git-backed editor and SSR implementation to GitHub `main`.
+- [x] Verify the pushed commit is present on the linked GitHub repository without deploying it on the user's behalf.

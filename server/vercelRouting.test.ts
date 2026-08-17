@@ -30,7 +30,10 @@ test("unified Vercel entry serves the private Decap shell with noindex", async (
   const response = await fetch(`${origin}/admin`);
   expect(response.status).toBe(200);
   expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
-  expect(await response.text()).toContain("decap-cms");
+  const html = await response.text();
+  expect(html).toContain("decap-cms");
+  expect(html).not.toContain("CMS_MANUAL_INIT");
+  expect(html).not.toContain("CMS.init");
 });
 
 test("unified Vercel entry provides Decap's conventional configuration fallback", async () => {

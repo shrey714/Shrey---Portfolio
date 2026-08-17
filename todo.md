@@ -273,4 +273,6 @@
 - [x] Remove orphaned cleanup API files and confirm no deleted cleanup modules remain referenced by the Vercel build.
 
 - [x] Serve a Decap-compatible `/config.yml` fallback from the Vercel function so the editor can continue after GitHub OAuth authorization.
+
+- [x] Remove duplicate manual Decap initialization so the editor loads the portfolio collection only once from `/config.yml`.
 - [ ] Verify the deployed editor receives a valid configuration and transitions from GitHub login to the editable portfolio form.

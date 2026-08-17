@@ -155,7 +155,7 @@ function unavailable(res: Parameters<Express["get"]>[1] extends (...args: infer 
 }
 
 function editorShell() {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex,nofollow" /><title>Portfolio content editor</title><script>window.CMS_MANUAL_INIT=true;</script></head><body><noscript>This private editor requires JavaScript.</noscript><script src="https://unpkg.com/decap-cms@3.7.1/dist/decap-cms.js"></script><script>fetch("/api/decap/config",{credentials:"same-origin"}).then(function(response){if(!response.ok)throw new Error("Unable to load editor configuration.");return response.json()}).then(function(config){CMS.init({config:config})}).catch(function(){document.body.innerHTML="<p>The editor configuration could not be loaded. Please try again later.</p>"});</script></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex,nofollow" /><title>Portfolio content editor</title></head><body><noscript>This private editor requires JavaScript.</noscript><script src="https://unpkg.com/decap-cms@3.7.1/dist/decap-cms.js"></script></body></html>`;
 }
 
 export function registerDecapRoutes(app: Express) {

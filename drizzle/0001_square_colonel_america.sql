@@ -1,0 +1,1 @@
+CREATE INDEX `contact_rate_limits_next_allowed_at_idx` ON `contact_rate_limits` (`nextAllowedAt`);

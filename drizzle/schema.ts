@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { index, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -29,9 +29,13 @@ export type InsertUser = typeof users.$inferInsert;
  * Stores only a salted hash of a submitter's network key and the next allowed
  * submission time. Contact message content is never persisted in the database.
  */
-export const contactRateLimits = mysqlTable("contact_rate_limits", {
-  ipHash: varchar("ipHash", { length: 64 }).primaryKey(),
-  nextAllowedAt: timestamp("nextAllowedAt").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+export const contactRateLimits = mysqlTable(
+  "contact_rate_limits",
+  {
+    ipHash: varchar("ipHash", { length: 64 }).primaryKey(),
+    nextAllowedAt: timestamp("nextAllowedAt").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  },
+  table => [index("contact_rate_limits_next_allowed_at_idx").on(table.nextAllowedAt)]
+);

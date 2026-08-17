@@ -111,3 +111,19 @@
 - [x] Identify the primary latency source and optimize the response path without weakening delivery guarantees.
 - [x] Verify the improved interaction time, Telegram notification delivery, and fallback behavior.
 - [x] Save and push the contact-delivery latency refinement to GitHub.
+
+# Systems Evidence Alignment Correction
+
+- [ ] Move the Practice visual callout into a non-overlapping position within the component.
+- [ ] Align the System Note and Signal / Decision / Response labels on a shared footer row.
+- [ ] Verify the corrected component in dark mode and responsive widths.
+- [ ] Save and deliver the alignment correction checkpoint.
+
+# Scheduled Rate-Limit Record Cleanup
+
+- [x] Authorize scheduled cleanup requests with the deployment platform’s CRON_SECRET so only the configured daily job can invoke deletion.
+- [x] Add an idempotent database helper that deletes only expired contact rate-limit records after a 24-hour retention period.
+- [x] Add an authenticated daily scheduled endpoint that invokes the cleanup independently of page loads and contact submissions.
+- [x] Add unit coverage for the cleanup boundary and scheduled-handler authorization behavior.
+- [x] Validate the production build and save the cleanup implementation checkpoint.
+- [ ] After the Vercel production deployment, add a strong CRON_SECRET environment variable so the declared daily schedule can run.

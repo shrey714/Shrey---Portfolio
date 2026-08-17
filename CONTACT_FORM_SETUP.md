@@ -19,12 +19,19 @@ The portfolio contact form lives in the existing project and uses a public serve
 | Honeypot field | Silently absorbs many basic automated submissions. |
 | Input limits and sanitization | Rejects malformed or oversized input and escapes Telegram HTML. |
 | No message database storage | Keeps enquiry content in Telegram rather than duplicating it in the website database. |
+| Daily rate-limit cleanup | Deletes only hashed cooldown records that expired more than 24 hours earlier. |
 
 ## Operational notes
 
 The relevant user-facing form labels and messages live in `client/src/content/portfolioContent.ts` under `contact.form`. The server delivery and safety logic lives in `server/contact.ts`. Telegram credentials are managed as protected project secrets and must never be copied into source files.
 
 If you ever rotate the Telegram bot token or change the destination chat, update the matching protected secret and re-run the credential and destination tests before relying on the form.
+
+## Rate-limit retention and scheduled cleanup
+
+The `contact_rate_limits` table stores one SHA-256 hash and a cooldown timestamp for each recent submitting network key. It does not store the visitor’s raw IP address, name, email address, or message. Records are retained for 24 hours after their 90-second cooldown expires, then removed by the cleanup query. An index on `nextAllowedAt` keeps the scheduled lookup targeted to expired rows.
+
+For the planned Vercel deployment, `vercel.json` schedules `GET /api/contact-rate-limit-cleanup` every day at **03:00 UTC**. The route runs independently of page loads and contact submissions, so it does not add work to a visitor’s request. It accepts only an `Authorization: Bearer <CRON_SECRET>` request. Before the first Vercel production deployment, set a strong `CRON_SECRET` environment variable in the Vercel project; Vercel sends that same value automatically when it invokes the configured cron route. The route fails closed with `401` if the secret is absent or incorrect.
 
 ## Verification record
 

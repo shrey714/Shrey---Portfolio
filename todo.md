@@ -27,3 +27,11 @@
 - [x] Replace the dark boxed hover surface with a restrained text-and-accent response.
 - [x] Verify the corrected list at mobile width in dark mode.
 - [x] Save and deliver the targeted correction checkpoint.
+
+# Mobile Header and Navigation Refinement
+
+- [x] Hide the mobile header identity while the hero identity lockup is visible, then reveal it after scrolling.
+- [x] Remove the redundant Shrey Patel text from the mobile navigation panel.
+- [x] Add a coordinated closing transition for the navigation backdrop, panel, and links.
+- [x] Validate the refined mobile header and menu at relevant scroll positions.
+- [x] Save and deliver the interaction refinement checkpoint.

@@ -3,7 +3,7 @@
  * Warm porcelain, ink typography, Cobalt Mist accents, off-center content rail,
  * and restrained motion communicate a product-minded engineering practice.
  */
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -137,8 +137,21 @@ function SystemsEvidence() {
 export default function Home() {
   const [active, setActive] = useState("top");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [menuMounted, setMenuMounted] = useState(false);
+  const [showMobileIdentity, setShowMobileIdentity] = useState(false);
+  const menuCloseTimer = useRef<number | null>(null);
   const observedIds = useMemo(() => navItems.map((item) => item.id), []);
-  const closeMenu = () => setMenuOpen(false);
+  const openMenu = () => {
+    if (menuCloseTimer.current) window.clearTimeout(menuCloseTimer.current);
+    setMenuMounted(true);
+    window.requestAnimationFrame(() => setMenuOpen(true));
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+    if (menuCloseTimer.current) window.clearTimeout(menuCloseTimer.current);
+    menuCloseTimer.current = window.setTimeout(() => setMenuMounted(false), 240);
+  };
 
   useEffect(() => {
     const sections = observedIds
@@ -160,7 +173,14 @@ export default function Home() {
   }, [observedIds]);
 
   useEffect(() => {
-    if (!menuOpen) return;
+    const updateMobileIdentity = () => setShowMobileIdentity(window.scrollY > 150);
+    updateMobileIdentity();
+    window.addEventListener("scroll", updateMobileIdentity, { passive: true });
+    return () => window.removeEventListener("scroll", updateMobileIdentity);
+  }, []);
+
+  useEffect(() => {
+    if (!menuMounted) return;
 
     const { body, documentElement } = document;
     const bodyOverflow = body.style.overflow;
@@ -178,18 +198,22 @@ export default function Home() {
       documentElement.style.overflow = documentOverflow;
       window.removeEventListener("keydown", handleEscape);
     };
-  }, [menuOpen]);
+  }, [menuMounted]);
+
+  useEffect(() => () => {
+    if (menuCloseTimer.current) window.clearTimeout(menuCloseTimer.current);
+  }, []);
 
   return (
     <div className="portfolio min-h-screen overflow-x-clip bg-[#f6f4ef] text-[#1b1c1d] selection:bg-[#456fe8] selection:text-white">
       <header className="theme-light-surface fixed inset-x-0 top-0 z-50 border-b border-[#1b1c1d]/8 bg-[#f6f4ef]/85 px-5 py-3 backdrop-blur-xl lg:hidden">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <a href="#top" className="text-sm font-semibold tracking-[-0.03em]" aria-label="Shrey Patel home">Shrey Patel</a>
+          <a href="#top" tabIndex={showMobileIdentity ? 0 : -1} aria-hidden={!showMobileIdentity} className={`mobile-header-identity text-sm font-semibold tracking-[-0.03em] ${showMobileIdentity ? "is-visible" : ""}`} aria-label="Shrey Patel home">Shrey Patel</a>
           <div className="flex items-center gap-2">
             <ThemeToggle variant="mobile" />
             <button
               type="button"
-              onClick={() => setMenuOpen((isOpen) => !isOpen)}
+              onClick={() => (menuOpen ? closeMenu() : openMenu())}
               className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#1b1c1d]/12 bg-white/45 text-[#1b1c1d] transition-transform duration-200 active:scale-95"
               aria-label={menuOpen ? "Close navigation" : "Open navigation"}
               aria-expanded={menuOpen}
@@ -200,11 +224,11 @@ export default function Home() {
         </div>
       </header>
 
-      <div className={`mobile-menu-layer lg:hidden ${menuOpen ? "is-open" : ""}`} aria-hidden={!menuOpen}>
+      <div className={`mobile-menu-layer lg:hidden ${menuMounted ? "is-mounted" : ""} ${menuOpen ? "is-open" : ""}`} aria-hidden={!menuMounted}>
         <button type="button" className="mobile-menu-backdrop" tabIndex={menuOpen ? 0 : -1} aria-label="Close navigation" onClick={closeMenu} />
         <nav className="mobile-menu-panel theme-light-surface" aria-label="Mobile navigation" aria-hidden={!menuOpen}>
           <div className="flex items-end justify-between border-b border-[#1b1c1d]/10 pb-4">
-            <div><p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#777571]">Navigate</p><p className="mt-1 text-lg font-semibold tracking-[-0.035em]">Shrey Patel</p></div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#777571]">Navigate</p>
             <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#456fe8]">00—04</span>
           </div>
           <div className="mt-3 space-y-1">

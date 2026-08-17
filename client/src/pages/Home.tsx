@@ -3,7 +3,7 @@
  * Warm porcelain, ink typography, Cobalt Mist accents, off-center content rail,
  * and restrained motion communicate a product-minded engineering practice.
  */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -11,6 +11,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
+  Loader2,
   Github,
   Linkedin,
   Mail,
@@ -24,6 +25,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/contexts/ThemeContext";
 import { portfolioContent as content } from "@/content/portfolioContent";
+import { trpc } from "@/lib/trpc";
 
 const hero = content.hero;
 const navItems = content.navigation;
@@ -117,7 +119,21 @@ export default function Home() {
   const [showMobileIdentity, setShowMobileIdentity] = useState(false);
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
+  const [contactForm, setContactForm] = useState({ name: "", email: "", message: "", website: "" });
+  const [contactStatus, setContactStatus] = useState<"idle" | "success" | "error">("idle");
+  const [contactError, setContactError] = useState("");
   const menuCloseTimer = useRef<number | null>(null);
+  const contactMutation = trpc.contact.submit.useMutation({
+    onSuccess: () => {
+      setContactStatus("success");
+      setContactError("");
+      setContactForm({ name: "", email: "", message: "", website: "" });
+    },
+    onError: error => {
+      setContactStatus("error");
+      setContactError(error.message);
+    },
+  });
   const observedIds = useMemo(() => navItems.map((item) => item.id), []);
   const openMenu = () => {
     if (menuCloseTimer.current) window.clearTimeout(menuCloseTimer.current);
@@ -132,6 +148,13 @@ export default function Home() {
   };
 
   const showHeroSlide = (index: number) => setActiveHeroSlide((index + hero.slides.length) % hero.slides.length);
+
+  const submitContact = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setContactStatus("idle");
+    setContactError("");
+    contactMutation.mutate(contactForm);
+  };
 
   useEffect(() => {
     const sections = observedIds
@@ -472,7 +495,17 @@ export default function Home() {
               </div>
               <div>
                 <h2 className="max-w-3xl font-serif text-[clamp(3.3rem,7vw,7rem)] leading-[0.85] tracking-[-0.075em]">{content.contact.headingLineOne}<br />{content.contact.headingLineTwo}</h2>
-                <a href={`mailto:${content.contact.email}`} className="group mt-10 inline-flex items-center gap-3 border-b border-white/45 pb-2 text-lg font-semibold tracking-[-0.03em] transition-colors hover:border-white sm:text-2xl">{content.contact.email} <ArrowUpRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" /></a>
+                <form className="contact-form mt-10 max-w-2xl" onSubmit={submitContact}>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <label className="contact-form-field"><span>{content.contact.form.nameLabel}</span><input required minLength={2} maxLength={80} autoComplete="name" value={contactForm.name} onChange={event => setContactForm(current => ({ ...current, name: event.target.value }))} placeholder={content.contact.form.namePlaceholder} /></label>
+                    <label className="contact-form-field"><span>{content.contact.form.emailLabel}</span><input required type="email" maxLength={254} autoComplete="email" value={contactForm.email} onChange={event => setContactForm(current => ({ ...current, email: event.target.value }))} placeholder={content.contact.form.emailPlaceholder} /></label>
+                  </div>
+                  <label className="contact-form-field mt-4"><span>{content.contact.form.messageLabel}</span><textarea required minLength={12} maxLength={1500} rows={5} value={contactForm.message} onChange={event => setContactForm(current => ({ ...current, message: event.target.value }))} placeholder={content.contact.form.messagePlaceholder} /></label>
+                  <label className="contact-form-honeypot" aria-hidden="true"><span>Website</span><input tabIndex={-1} autoComplete="off" value={contactForm.website} onChange={event => setContactForm(current => ({ ...current, website: event.target.value }))} /></label>
+                  <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><button type="submit" disabled={contactMutation.isPending} className="contact-form-submit">{contactMutation.isPending ? <><Loader2 className="h-4 w-4 animate-spin" />{content.contact.form.submittingLabel}</> : <>{content.contact.form.submitLabel}<ArrowUpRight className="h-4 w-4" /></>}</button><p className="max-w-sm text-xs leading-5 text-white/65">{content.contact.form.privacyNote}</p></div>
+                  <div className="mt-4 min-h-6 text-sm" aria-live="polite">{contactStatus === "success" && <p className="font-semibold text-white">{content.contact.form.successMessage}</p>}{contactStatus === "error" && <p className="font-medium text-white">{contactError}</p>}</div>
+                </form>
+                <p className="mt-5 text-sm text-white/75">{content.contact.form.fallbackMessage} <a href={`mailto:${content.contact.email}`} className="font-semibold underline underline-offset-4 transition-opacity hover:opacity-75">{content.contact.email}</a></p>
                 <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 text-sm font-semibold">
                   <a href={content.contact.githubUrl} target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"><Github className="h-4 w-4" /> {content.contact.githubLabel} <AnchorArrow /></a>
                   <a href={content.contact.linkedinUrl} target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"><Linkedin className="h-4 w-4" /> {content.contact.linkedinLabel} <AnchorArrow /></a>

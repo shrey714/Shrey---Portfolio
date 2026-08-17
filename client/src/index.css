@@ -595,6 +595,19 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
+/* Contact form: structured field contrast that remains clear on the cobalt delivery surface. */
+.contact-form-field { display: grid; gap: 0.45rem; }
+.contact-form-field > span { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); }
+.contact-form-field input, .contact-form-field textarea { width: 100%; border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 0.8rem; background: rgba(24, 43, 112, 0.18); padding: 0.82rem 0.95rem; color: #fff; font-size: 0.95rem; line-height: 1.45; outline: none; transition: border-color 160ms ease-out, background-color 160ms ease-out, box-shadow 160ms ease-out; }
+.contact-form-field textarea { min-height: 8.5rem; resize: vertical; }
+.contact-form-field input::placeholder, .contact-form-field textarea::placeholder { color: rgba(255, 255, 255, 0.55); }
+.contact-form-field input:focus, .contact-form-field textarea:focus { border-color: rgba(255, 255, 255, 0.88); background: rgba(24, 43, 112, 0.29); box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.16); }
+.contact-form-honeypot { position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px); white-space: nowrap; }
+.contact-form-submit { display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem; border: 1px solid rgba(255, 255, 255, 0.24); border-radius: 999px; background: #fff; padding: 0.8rem 1.15rem; color: #264dcc; font-size: 0.9rem; font-weight: 700; transition: transform 160ms ease-out, background-color 160ms ease-out, color 160ms ease-out; }
+.contact-form-submit:hover:not(:disabled) { background: #dce4ff; }
+.contact-form-submit:active:not(:disabled) { transform: scale(0.97); }
+.contact-form-submit:disabled { cursor: not-allowed; opacity: 0.7; }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

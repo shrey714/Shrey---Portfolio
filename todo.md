@@ -94,3 +94,13 @@
 - [x] Remove temporary browser profiles and generated verification captures.
 - [x] Confirm the project build and repository status remain clean.
 - [x] Save and push the cleanup update to GitHub.
+
+# Secure Telegram Contact Form
+
+- [x] Document the contact-form architecture, delivery flow, and abuse-protection controls.
+- [x] Upgrade the portfolio project with a secure same-repository backend capability.
+- [x] Add strict client and server validation, honeypot spam detection, and IP-based rate limiting.
+- [x] Add a secure Telegram delivery route with secrets kept outside source control.
+- [x] Build an accessible contact form with pending, success, and retry-safe error states.
+- [x] Verify rate limiting, validation, and the unavailable-secret fallback before adding Telegram credentials.
+- [x] Save and push the secure contact-form update to GitHub.

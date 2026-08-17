@@ -188,6 +188,21 @@ export const portfolioContent = {
     githubLabel: "GitHub",
     linkedinLabel: "LinkedIn",
     emailLabel: "Email",
+    form: {
+      eyebrow: "Send a note",
+      heading: "Tell me what you’re building.",
+      nameLabel: "Name",
+      emailLabel: "Email",
+      messageLabel: "Message",
+      namePlaceholder: "Your name",
+      emailPlaceholder: "you@example.com",
+      messagePlaceholder: "A little context about your idea, team, or technical challenge…",
+      submitLabel: "Send securely",
+      submittingLabel: "Sending…",
+      successMessage: "Message sent. I’ll get back to you soon.",
+      fallbackMessage: "For longer context, you can also email directly.",
+      privacyNote: "Your message is delivered privately and is not stored on this website.",
+    },
   },
 
   footer: {

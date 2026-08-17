@@ -17,6 +17,7 @@ To update the site, open that one file and change the text inside quotation mark
 | Biography, fact cards, and professional experience | `about` and `experience` |
 | Engineering principles | `philosophy` |
 | Email and social destinations | `contact` |
+| Contact-form labels, placeholders, and visitor messages | `contact.form` |
 | Footer wording | `footer` |
 
 Keep quotation marks, commas, brackets, and braces intact. For a new project or principle, copy the nearest existing object inside its list and replace only the values.

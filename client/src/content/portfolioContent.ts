@@ -96,30 +96,6 @@ export const portfolioContent = {
         visualMeta: "DardiBook / workflow",
         visualTitle: "Operational care, in view",
         visualRows: ["Patient flow", "Team handoff", "Billing state"],
-        caseStudy: {
-          label: "Micro case-study path",
-          controlsLabel: "DardiBook case-study steps",
-          steps: [
-            {
-              label: "Frame",
-              title: "Bring the care loop into view.",
-              text: "Start with the moments that need shared context: a patient arrives, a team responds, and operational work needs to stay clear.",
-              signal: "Patient context · team handoff",
-            },
-            {
-              label: "Shape",
-              title: "Make changing state easy to read.",
-              text: "Shape the workspace around visible status, deliberate handoffs, and calm routes through the everyday clinical workflow.",
-              signal: "Workflow clarity · live collaboration",
-            },
-            {
-              label: "Connect",
-              title: "Keep the system feeling continuous.",
-              text: "Bring authentication, collaboration, and billing into one coherent product experience rather than a collection of disconnected tasks.",
-              signal: "Access · coordination · billing",
-            },
-          ],
-        },
       },
       {
         kind: "commerce" as const,
@@ -134,30 +110,6 @@ export const portfolioContent = {
         visualMeta: "Shopkeeper AI / operations",
         visualTitle: "Inventory, from shelf to storefront",
         visualRows: ["Catalog signal", "Stock health", "Store orders"],
-        caseStudy: {
-          label: "Micro case-study path",
-          controlsLabel: "Shopkeeper AI case-study steps",
-          steps: [
-            {
-              label: "Read",
-              title: "Turn the shelf into a useful signal.",
-              text: "Begin with the everyday inventory view: what is in stock, what needs attention, and what a shopkeeper needs to act on now.",
-              signal: "Catalog signal · stock health",
-            },
-            {
-              label: "Decide",
-              title: "Put the next decision within reach.",
-              text: "Reduce the distance between stock information and a practical next step, so operational work can move without unnecessary context switching.",
-              signal: "Priority · action · confidence",
-            },
-            {
-              label: "Extend",
-              title: "Let inventory become commerce.",
-              text: "Connect the day-to-day inventory system to a customer-facing storefront, giving the same stock a path to online discovery and orders.",
-              signal: "Inventory · storefront · orders",
-            },
-          ],
-        },
       },
     ],
   },

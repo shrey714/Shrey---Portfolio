@@ -160,3 +160,11 @@
 - [x] Add true scroll-progress evidence-frame motion while preserving reduced-motion and dark-mode behavior.
 - [x] Add frontend interaction coverage for active-step updates, tab semantics, progress state, and motion fallback.
 - [x] Save a local review checkpoint only; do not push these changes to GitHub until the user explicitly approves.
+
+# Micro Case-Study Walkthrough Removal
+
+- [x] Remove the three-step walkthrough panels, controls, and project configuration content from the Selected Work section.
+- [x] Remove the walkthrough-only client tests and browser-test dependencies, retaining only the evidence-motion coverage.
+- [x] Restore the original concise Selected Work composition while keeping the requested evidence-frame motion.
+- [x] Validate desktop and mobile layouts, tests, TypeScript, and production build.
+- [ ] Save a local-only review checkpoint without pushing to GitHub.

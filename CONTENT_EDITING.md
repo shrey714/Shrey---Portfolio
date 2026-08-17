@@ -12,7 +12,7 @@ To update the site, open that one file and change the text inside quotation mark
 | --- | --- |
 | Name, location, availability, desktop rail label | `identity` |
 | Hero title, intro, buttons, resume PDF path, visual carousel captions | `hero` |
-| Work projects, technologies, calls to action, and three-step micro case-study paths | `work.projects` |
+| Work projects, technologies, and calls to action | `work.projects` |
 | Practice statements, disciplines, and skills | `practice` |
 | Biography, fact cards, and professional experience | `about` and `experience` |
 | Engineering principles | `philosophy` |

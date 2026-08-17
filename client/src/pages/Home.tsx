@@ -23,7 +23,6 @@ import {
   X,
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
-import { MicroCaseStudyPath, type WorkProject } from "@/components/MicroCaseStudyPath";
 import { useTheme } from "@/contexts/ThemeContext";
 import { portfolioContent as content } from "@/content/portfolioContent";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
@@ -32,6 +31,7 @@ import { trpc } from "@/lib/trpc";
 const hero = content.hero;
 const navItems = content.navigation;
 const [firstProject, secondProject] = content.work.projects;
+type WorkProject = (typeof content.work.projects)[number];
 
 function AnchorArrow() {
   return <ArrowUpRight aria-hidden="true" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />;
@@ -435,7 +435,6 @@ export default function Home() {
                   <div className="mt-6 flex flex-wrap gap-2 text-[10px] font-medium uppercase tracking-[0.11em] text-[#bab7b1]">
                     {firstProject.technologies.map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5">{tag}</span>)}
                   </div>
-                  <MicroCaseStudyPath project={firstProject} />
                   <a href="#contact" className="group/link mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#f4f1eb]">{firstProject.cta} <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
                 </div>
               </article>
@@ -449,7 +448,6 @@ export default function Home() {
                   <div className="mt-6 flex flex-wrap gap-2 text-[10px] font-medium uppercase tracking-[0.11em] text-[#bab7b1]">
                     {secondProject.technologies.map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5">{tag}</span>)}
                   </div>
-                  <MicroCaseStudyPath project={secondProject} />
                   <a href="#contact" className="group/link mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#f4f1eb]">{secondProject.cta} <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
                 </div>
                 <a href="#contact" className="order-1 relative block transition-transform duration-300 hover:-translate-y-1 lg:order-2" aria-label={secondProject.ariaLabel}>

@@ -97,7 +97,12 @@ function mediaLibraryScript() {
               meta.append(createElement("code", { className: "vercel-blob-media-path", textContent: entry.pathname }));
               const actions = createElement("div", { className: "vercel-blob-media-actions" });
               const use = createElement("button", { className: "vercel-blob-media-use", type: "button", textContent: "Use" });
-              use.addEventListener("click", () => { handleInsert?.(entry.publicUrl); close(); });
+              use.addEventListener("click", async () => {
+                try { await navigator.clipboard?.writeText(entry.publicUrl); } catch { /* Clipboard access is a convenience only. */ }
+                handleInsert?.(entry.publicUrl);
+                setStatus("URL inserted into the active media field, or copied for you to paste.", "success");
+                setTimeout(close, 450);
+              });
               const remove = createElement("button", { className: "vercel-blob-media-delete", type: "button", textContent: "Delete" });
               remove.addEventListener("click", async () => { if (!confirm("Delete this media file permanently?")) return; try { await request("/api/media/" + entry.pathname, { method: "DELETE" }); setStatus("Media deleted.", "success"); await refresh(); } catch (error) { setStatus(error.message || "Delete failed.", "error"); } });
               actions.append(use, remove); meta.append(actions); item.append(preview, meta); grid.append(item);

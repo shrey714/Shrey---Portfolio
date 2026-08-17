@@ -294,3 +294,6 @@
 
 - [x] Replace the separate media-manager page with a native Decap Media workflow backed by private Vercel Blob storage.
 - [ ] Ensure Decap media uploads, media selection, and deletion operate through owner-authorized Blob routes without committing binary files to GitHub.
+
+- [ ] Fix the native Decap Media **Use** action so it inserts the selected Vercel Blob URL into the active content field.
+- [x] Trace the uploaded resume’s Vercel Blob store, pathname, and dashboard visibility, then reconcile any mismatched storage target.

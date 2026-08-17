@@ -20,6 +20,13 @@ describe("Decap CMS configuration", () => {
     expect(config.public_folder).toBe("/media");
     expect(config.media_library).toEqual({ name: "vercel-blob" });
     expect(config.editor.preview).toBe(false);
+
+    const hero = portfolio.fields.find(field => field.name === "hero") as { fields: Array<{ name: string; widget: string }> };
+    const resume = hero.fields.find(field => field.name === "resume") as { fields: Array<{ name: string; widget: string }> };
+    const seo = portfolio.fields.find(field => field.name === "seo") as { fields: Array<{ name: string; widget: string }> };
+    expect(resume.fields.find(field => field.name === "url")?.widget).toBe("file");
+    expect(hero.fields.find(field => field.name === "imageUrl")?.widget).toBe("image");
+    expect(seo.fields.find(field => field.name === "shareImage")?.widget).toBe("image");
   });
 
   it("accepts only the configured repository owner as an editor", () => {

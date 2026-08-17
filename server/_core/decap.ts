@@ -22,6 +22,7 @@ type DecapField = {
 
 const stringField = (name: string, label: string, required = true): DecapField => ({ name, label, widget: "string", required });
 const textField = (name: string, label: string, required = true): DecapField => ({ name, label, widget: "text", required });
+const mediaField = (name: string, label: string, widget: "file" | "image"): DecapField => ({ name, label, widget, required: true });
 const listOfStrings = (name: string, label: string): DecapField => ({ name, label, widget: "list", field: stringField("value", "Value") });
 const objectField = (name: string, label: string, fields: DecapField[]): DecapField => ({ name, label, widget: "object", fields });
 const listOfObjects = (name: string, label: string, fields: DecapField[]): DecapField => ({ name, label, widget: "list", fields });
@@ -37,11 +38,11 @@ function portfolioFields(): DecapField[] {
     objectField("hero", "Hero", [
       stringField("roleLine", "Role line"), listOfStrings("heading", "Heading lines"), textField("introduction", "Introduction"),
       stringField("workCta", "Work button"), stringField("contactCta", "Contact button"),
-      objectField("resume", "Resume", [stringField("label", "Button label"), stringField("url", "PDF URL"), stringField("filename", "Download filename")]),
+      objectField("resume", "Resume", [stringField("label", "Button label"), mediaField("url", "PDF URL", "file"), stringField("filename", "Download filename")]),
       stringField("carouselAriaLabel", "Carousel accessibility label"), stringField("carouselSelectorLabel", "Carousel selector accessibility label"),
       stringField("previousVisualLabel", "Previous visual label"), stringField("nextVisualLabel", "Next visual label"),
       stringField("basedInLabel", "Based-in label"), stringField("basedInDescription", "Based-in description"), stringField("roleSnapshot", "Role snapshot"),
-      listOfStrings("focusAreas", "Focus areas"), stringField("imageUrl", "Hero image URL"),
+      listOfStrings("focusAreas", "Focus areas"), mediaField("imageUrl", "Hero image", "image"),
       listOfObjects("slides", "Hero slides", [
         stringField("label", "Label"), textField("caption", "Caption"), stringField("alt", "Alternative text"),
         stringField("metaLeft", "Left meta", false), stringField("metaRight", "Right meta", false), stringField("annotation", "Annotation", false),
@@ -99,7 +100,7 @@ function portfolioFields(): DecapField[] {
     ]),
     objectField("seo", "SEO and social sharing", [
       stringField("title", "Page title"), textField("description", "Meta description"), textField("ogDescription", "Social description"),
-      listOfStrings("keywords", "Keywords"), stringField("shareImage", "Social share image URL"),
+      listOfStrings("keywords", "Keywords"), mediaField("shareImage", "Social share image", "image"),
       objectField("person", "Structured person data", [
         listOfStrings("jobTitles", "Job titles"), stringField("locality", "City"), stringField("countryCode", "Country code"),
         stringField("education", "Education"), stringField("employer", "Employer"), listOfStrings("knowsAbout", "Expertise topics"),

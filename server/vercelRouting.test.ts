@@ -42,7 +42,9 @@ test("unified Vercel entry serves the native Decap Blob media adapter and reject
   expect(adapter.status).toBe(200);
   expect(adapter.headers.get("x-robots-tag")).toBe("noindex, nofollow");
   expect(adapter.headers.get("content-type")).toContain("application/javascript");
-  expect(await adapter.text()).toContain("registerMediaLibrary");
+  const script = await adapter.text();
+  expect(script).toContain("registerMediaLibrary");
+  expect(script).toContain("navigator.clipboard");
 
   const invalidMedia = await fetch(`${origin}/api/media/other/not-portfolio-media.webp`);
   expect(invalidMedia.status).toBe(404);

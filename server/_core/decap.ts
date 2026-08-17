@@ -169,6 +169,14 @@ export function registerDecapRoutes(app: Express) {
     res.json(buildDecapConfig(requestOrigin(req)));
   });
 
+  // Decap can request this conventional path after completing a popup OAuth
+  // flow even when the initial page manually loads runtime JSON config. JSON is
+  // valid YAML, so this keeps both initialization paths on one configuration.
+  app.get("/config.yml", (req, res) => {
+    res.set({ "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow" });
+    res.type("text/yaml").send(JSON.stringify(buildDecapConfig(requestOrigin(req))));
+  });
+
   app.get("/api/decap/auth", (req, res) => {
     res.set({ "Cache-Control": "no-store", "Referrer-Policy": "no-referrer", "X-Robots-Tag": "noindex, nofollow" });
     if (!ENV.githubClientId || !ENV.githubClientSecret) return unavailable(res);

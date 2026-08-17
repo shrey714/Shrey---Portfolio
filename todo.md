@@ -271,3 +271,6 @@
 - [x] Remove the obsolete Vercel daily rate-limit cleanup cron and its Telegram cleanup-success and failure notification paths because Redis TTL expires cooldown keys automatically.
 
 - [x] Remove orphaned cleanup API files and confirm no deleted cleanup modules remain referenced by the Vercel build.
+
+- [x] Serve a Decap-compatible `/config.yml` fallback from the Vercel function so the editor can continue after GitHub OAuth authorization.
+- [ ] Verify the deployed editor receives a valid configuration and transitions from GitHub login to the editable portfolio form.

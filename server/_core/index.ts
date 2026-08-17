@@ -1,15 +1,11 @@
 import "dotenv/config";
-import express from "express";
 import { createServer } from "http";
 import net from "net";
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { registerOAuthRoutes } from "./oauth";
-import { registerStorageProxy } from "./storageProxy";
-import { appRouter } from "../routers";
-import { createContext } from "./context";
-import { serveStatic, setupVite } from "./vite";
+import { setupVite } from "./vite";
+import { serveStatic } from "./ssrServer";
 import { warmDatabaseConnection } from "../db";
 import { warmTelegramConnection } from "../contact";
+import { createApplication } from "./app";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -31,28 +27,13 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
-  const app = express();
-  // The managed gateway supplies the client address from one trusted proxy hop.
-  app.set("trust proxy", 1);
+  const app = createApplication();
   const server = createServer(app);
   void Promise.allSettled([warmDatabaseConnection(), warmTelegramConnection()]).then(results => {
     const failed = results.filter(result => result.status === "rejected");
     if (failed.length) console.warn(`[Startup] ${failed.length} contact dependency warm-up task(s) did not complete.`);
   });
-  // Configure body parser with larger size limit for file uploads
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb", extended: true }));
-  registerStorageProxy(app);
-  registerOAuthRoutes(app);
-  // tRPC API
-  app.use(
-    "/api/trpc",
-    createExpressMiddleware({
-      router: appRouter,
-      createContext,
-    })
-  );
-  // development mode uses Vite, production mode uses static files
+  // Development uses Vite; production reads the compiled public and SSR bundles.
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
   } else {

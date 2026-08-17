@@ -203,4 +203,28 @@
 - [x] Remove the Design Debug Mode component, triggers, labels, styles, and inspection-layer behavior.
 - [x] Remove the Field Notes section, centralized content, styles, and editing-guide references.
 - [x] Validate the restored portfolio at desktop and mobile widths, and run tests, TypeScript, and a production build.
-- [ ] Save a local-only checkpoint without pushing to GitHub.
+- [x] Save a local-only checkpoint without pushing to GitHub.
+
+# Local-to-GitHub Source Parity Check
+
+- [x] Compare the restored local portfolio source with GitHub `main` without committing or pushing.
+- [x] Restore the two harmless source-parity differences so non-metadata portfolio source matches GitHub `main` exactly.
+
+# Dynamic Content and SEO Options Analysis
+
+- [x] Research free ways to edit portfolio content dynamically while preserving crawler-visible SEO.
+- [x] Compare the options for editing experience, deployment workflow, security, performance, and maintenance.
+- [x] Present a recommendation before implementing or changing any website code.
+- [x] Prepare the dynamic-content and SEO options summary with a recommended path for user approval.
+
+# Git-Backed Content Editor and SEO Rendering
+
+- [x] Audit the existing Vite/Express route graph, content configuration, metadata, and browser-only rendering dependencies.
+- [x] Create a Git-backed content schema and private editor workflow suitable for editable portfolio copy.
+- [x] Convert the public portfolio route to server-rendered HTML with correct canonical, Open Graph, Twitter, JSON-LD, sitemap, and robots output.
+- [x] Add secure owner-only editing, content validation, and draft-to-GitHub publishing without exposing repository credentials in the browser.
+- [ ] Test public crawl output and private editor behavior; document Vercel configuration and rollback; save a local-only review checkpoint without pushing to GitHub.
+
+- [x] Make static assets and public configuration files Vercel-compatible without relying on Express static serving inside the server function.
+- [x] Enforce an explicit GitHub owner boundary before an authenticated Decap editor session is accepted.
+- [ ] Verify the live GitHub login and save-to-commit flow against the registered Vercel deployment before treating publication as production-ready.

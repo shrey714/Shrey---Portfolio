@@ -10,4 +10,8 @@ export const ENV = {
   telegramBotToken: process.env.TELEGRAM_BOT_TOKEN ?? "",
   telegramChatId: process.env.TELEGRAM_CHAT_ID ?? "",
   cronSecret: process.env.CRON_SECRET ?? "",
+  canonicalOrigin: (process.env.CANONICAL_ORIGIN ?? "https://shreypatel.dev").replace(/\/$/, ""),
+  siteName: process.env.SITE_NAME ?? "Shrey Patel",
+  githubClientId: process.env.GITHUB_CLIENT_ID ?? "",
+  githubClientSecret: process.env.GITHUB_CLIENT_SECRET ?? "",
 };

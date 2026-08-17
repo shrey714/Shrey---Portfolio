@@ -21,17 +21,22 @@ export function ThemeProvider({
   defaultTheme = "light",
   switchable = false,
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") return defaultTheme;
-
-    const stored = localStorage.getItem("theme");
-    if (stored === "light" || stored === "dark") return stored;
-
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";
-    return defaultTheme;
-  });
+  // The first browser render intentionally matches SSR. Saved/system preference
+  // is applied after hydration, avoiding a server/client markup mismatch.
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
 
   useEffect(() => {
+    if (!switchable) return;
+    const stored = localStorage.getItem("theme");
+    if (stored === "light" || stored === "dark") {
+      setTheme(stored);
+      return;
+    }
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
+  }, [defaultTheme, switchable]);
+
+  useEffect(() => {
+    if (!switchable) return;
     const root = document.documentElement;
     if (theme === "dark") {
       root.classList.add("dark");

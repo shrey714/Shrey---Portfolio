@@ -2,22 +2,22 @@ import { describe, expect, it } from "vitest";
 import { buildDecapConfig, isRepositoryOwner } from "./_core/decap";
 
 describe("Decap CMS configuration", () => {
-  it("targets the configured repository and local OAuth proxy route", () => {
-    const config = buildDecapConfig("https://shrey-portfolio.vercel.app");
+  it("targets the configured repository, live production origin, and local OAuth proxy route", () => {
+    const config = buildDecapConfig("https://shrey-patel-profile.vercel.app");
     const portfolio = config.collections[0].files[0];
 
     expect(config.backend).toEqual({
       name: "github",
       repo: "shrey714/Shrey---Portfolio",
       branch: "main",
-      base_url: "https://shrey-portfolio.vercel.app",
+      base_url: "https://shrey-patel-profile.vercel.app",
       auth_endpoint: "api/decap/auth",
-      api_root: "https://shrey-portfolio.vercel.app/api/decap/github",
+      api_root: "https://shrey-patel-profile.vercel.app/api/decap/github",
     });
     expect(portfolio.file).toBe("content/portfolio.json");
     expect(portfolio.fields.map(field => field.name)).toContain("seo");
-    expect(config).not.toHaveProperty("media_folder");
-    expect(config).not.toHaveProperty("public_folder");
+    expect(config.media_folder).toBe("content/media");
+    expect(config.public_folder).toBe("/media");
     expect(config.editor.preview).toBe(false);
   });
 

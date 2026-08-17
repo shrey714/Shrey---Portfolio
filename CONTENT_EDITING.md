@@ -18,7 +18,7 @@ Portfolio copy is edited through the private **Decap CMS** at `/admin` after the
 
 ## Editing workflow
 
-Visit `https://shrey-portfolio.vercel.app/admin` and choose **Login with GitHub**. Sign in with the GitHub account that has write access to `shrey714/Shrey---Portfolio`. Open **Portfolio content**, make the changes, and use the editor’s **Publish** action. Decap commits the updated `content/portfolio.json` to the `main` branch.
+Visit `https://shrey-patel-profile.vercel.app/admin` and choose **Login with GitHub**. Sign in with the GitHub account that has write access to `shrey714/Shrey---Portfolio`. Open **Portfolio content**, make the changes, and use the editor’s **Publish** action. Decap commits the updated `content/portfolio.json` to the `main` branch.
 
 The GitHub commit starts the linked Vercel deployment. After its build succeeds, the public home page includes the new content in the initial server-rendered HTML as well as the hydrated page. This keeps normal copy changes code-free while preserving the SEO behavior of the portfolio.
 

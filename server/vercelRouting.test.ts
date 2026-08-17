@@ -44,8 +44,8 @@ test("unified Vercel entry provides Decap's conventional configuration fallback"
   const config = await response.json() as { backend: Record<string, string>; media_folder?: string; public_folder?: string };
   expect(config.backend.repo).toBe("shrey714/Shrey---Portfolio");
   expect(config.backend.api_root).toBe(`${origin}/api/decap/github`);
-  expect(config.media_folder).toBeUndefined();
-  expect(config.public_folder).toBeUndefined();
+  expect(config.media_folder).toBe("content/media");
+  expect(config.public_folder).toBe("/media");
 });
 
 test("Decap GitHub proxy rejects unauthenticated repository calls without contacting GitHub", async () => {

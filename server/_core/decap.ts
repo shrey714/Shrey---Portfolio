@@ -118,6 +118,8 @@ export function buildDecapConfig(origin: string) {
       auth_endpoint: "api/decap/auth",
       api_root: `${origin}${DECAP_GITHUB_PROXY_PATH}`,
     },
+    media_folder: "content/media",
+    public_folder: "/media",
     publish_mode: "simple",
     editor: { preview: false },
     collections: [{ name: "portfolio", label: "Portfolio content", format: "json", files: [{ name: "portfolio", label: "Portfolio", file: "content/portfolio.json", fields: portfolioFields() }] }],

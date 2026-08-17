@@ -143,4 +143,10 @@
 - [x] Preserve the cleanup route’s retryable error response even when the failure alert cannot be delivered.
 - [x] Add unit coverage for failure-alert formatting, delivery fallback, and retryable scheduled-handler response.
 - [x] Validate the production build and update the maintenance documentation.
-- [ ] Save and deliver the cleanup-failure-alert checkpoint.
+- [x] Save and deliver the cleanup-failure-alert checkpoint.
+
+# GitHub Maintenance Sync
+
+- [ ] Inspect the local branch and linked GitHub branch for unpushed portfolio maintenance updates.
+- [ ] Commit and push any remaining validated maintenance, notification, documentation, and task-tracker changes.
+- [ ] Verify GitHub `main` matches the latest pushed commit and report the commit identifier.

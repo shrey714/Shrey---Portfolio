@@ -29,6 +29,12 @@ export const portfolioContent = {
     introduction: "I’m Shrey, a product-minded software engineer and UX researcher who enjoys turning complex problems into simple, polished experiences—from the first interface to the systems underneath.",
     workCta: "See selected work",
     contactCta: "Start a conversation",
+    resume: {
+      label: "Download Resume",
+      // Replace this path with the uploaded PDF URL when your final resume is ready.
+      url: "/resume.pdf",
+      filename: "Shrey-Patel-Resume.pdf",
+    },
     carouselAriaLabel: "Selected design perspectives",
     carouselSelectorLabel: "Hero visual selector",
     previousVisualLabel: "Show previous visual",

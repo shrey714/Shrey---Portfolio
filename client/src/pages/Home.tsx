@@ -10,6 +10,7 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  Download,
   Github,
   Linkedin,
   Mail,
@@ -282,6 +283,9 @@ export default function Home() {
                   </a>
                   <a href="#contact" className="group inline-flex items-center gap-2 rounded-full border border-[#1b1c1d]/14 bg-white/50 px-5 py-3 text-sm font-semibold text-[#1b1c1d] transition-colors duration-200 hover:border-[#456fe8]/40 hover:bg-white active:scale-[0.97]">
                     {hero.contactCta} <AnchorArrow />
+                  </a>
+                  <a href={hero.resume.url} download={hero.resume.filename} className="group inline-flex items-center gap-2 rounded-full border border-[#1b1c1d]/14 bg-transparent px-5 py-3 text-sm font-semibold text-[#1b1c1d] transition-colors duration-200 hover:border-[#456fe8]/45 hover:bg-white/55 active:scale-[0.97]">
+                    {hero.resume.label} <Download className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
                   </a>
                 </div>
               </div>

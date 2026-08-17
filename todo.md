@@ -73,3 +73,10 @@
 - [x] Add simple editing instructions alongside the configuration file.
 - [x] Validate the configuration-driven page and production build.
 - [x] Save and deliver the centralized-content checkpoint.
+
+# Resume Download Action
+
+- [x] Add a resume label, PDF URL, and filename to the centralized portfolio configuration.
+- [x] Add the Download Resume action to the hero section with safe download attributes.
+- [x] Validate the action markup and production build.
+- [x] Save and deliver the resume-action checkpoint.

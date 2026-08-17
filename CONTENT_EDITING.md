@@ -11,7 +11,7 @@ To update the site, open that one file and change the text inside quotation mark
 | What you want to change | Configuration section |
 | --- | --- |
 | Name, location, availability, desktop rail label | `identity` |
-| Hero title, intro, buttons, visual carousel captions | `hero` |
+| Hero title, intro, buttons, resume PDF path, visual carousel captions | `hero` |
 | Work projects, technologies, and calls to action | `work.projects` |
 | Practice statements, disciplines, and skills | `practice` |
 | Biography, fact cards, and professional experience | `about` and `experience` |
@@ -21,3 +21,4 @@ To update the site, open that one file and change the text inside quotation mark
 
 Keep quotation marks, commas, brackets, and braces intact. For a new project or principle, copy the nearest existing object inside its list and replace only the values.
 
+> For the resume action, set `hero.resume.url` to the final uploaded PDF URL. The default `/resume.pdf` is a clearly marked placeholder path.

@@ -84,6 +84,6 @@
 # GitHub First-Phase Release
 
 - [x] Inspect the local repository and linked remote state.
-- [ ] Commit the completed first-phase portfolio code with a release message.
-- [ ] Push the committed code to shrey714/Shrey---Portfolio.
-- [ ] Confirm the remote repository contains the new commit.
+- [x] Commit the completed first-phase portfolio code with a release message.
+- [x] Push the committed code to shrey714/Shrey---Portfolio.
+- [x] Confirm the remote repository contains the new commit.

@@ -19,12 +19,10 @@ import {
   Sun,
   X,
 } from "lucide-react";
-import { motion, useScroll, useSpring } from "framer-motion";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const HERO_IMAGE = "/manus-storage/shrey-hero-editorial_9f125b19.jpg";
-const LOGO_IMAGE = "/manus-storage/shrey-orbit-logo_444aa5f5.png";
 
 const navItems = [
   { id: "top", label: "Index", number: "00" },
@@ -139,10 +137,8 @@ function SystemsEvidence() {
 export default function Home() {
   const [active, setActive] = useState("top");
   const [menuOpen, setMenuOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 160, damping: 26, restDelta: 0.001 });
-
   const observedIds = useMemo(() => navItems.map((item) => item.id), []);
+  const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
     const sections = observedIds
@@ -163,22 +159,32 @@ export default function Home() {
     return () => observer.disconnect();
   }, [observedIds]);
 
-  const closeMenu = () => setMenuOpen(false);
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const { body, documentElement } = document;
+    const bodyOverflow = body.style.overflow;
+    const documentOverflow = documentElement.style.overflow;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeMenu();
+    };
+
+    body.style.overflow = "hidden";
+    documentElement.style.overflow = "hidden";
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      body.style.overflow = bodyOverflow;
+      documentElement.style.overflow = documentOverflow;
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [menuOpen]);
 
   return (
     <div className="portfolio min-h-screen overflow-x-clip bg-[#f6f4ef] text-[#1b1c1d] selection:bg-[#456fe8] selection:text-white">
-      <motion.div
-        aria-hidden="true"
-        className="fixed inset-x-0 top-0 z-[80] h-0.5 origin-left bg-[#456fe8]"
-        style={{ scaleX }}
-      />
-
       <header className="theme-light-surface fixed inset-x-0 top-0 z-50 border-b border-[#1b1c1d]/8 bg-[#f6f4ef]/85 px-5 py-3 backdrop-blur-xl lg:hidden">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <a href="#top" className="flex items-center gap-2.5" aria-label="Shrey Patel home">
-            <img src={LOGO_IMAGE} alt="" className="h-8 w-8" />
-            <span className="text-sm font-semibold tracking-[-0.03em]">Shrey Patel</span>
-          </a>
+          <a href="#top" className="text-sm font-semibold tracking-[-0.03em]" aria-label="Shrey Patel home">Shrey Patel</a>
           <div className="flex items-center gap-2">
             <ThemeToggle variant="mobile" />
             <button
@@ -192,34 +198,30 @@ export default function Home() {
             </button>
           </div>
         </div>
-        {menuOpen && (
-          <nav className="mx-auto mt-3 max-w-7xl border-t border-[#1b1c1d]/10 pt-3" aria-label="Mobile navigation">
-            <div className="grid grid-cols-2 gap-1">
-              {navItems.map((item) => (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  onClick={closeMenu}
-                  className="group flex items-center justify-between rounded-xl px-3 py-3 text-sm font-medium text-[#484746] transition-colors hover:bg-white/80"
-                >
-                  {item.label}
-                  <ChevronRight className="h-4 w-4 opacity-40 transition-transform group-hover:translate-x-0.5" />
-                </a>
-              ))}
-            </div>
-          </nav>
-        )}
       </header>
+
+      <div className={`mobile-menu-layer lg:hidden ${menuOpen ? "is-open" : ""}`} aria-hidden={!menuOpen}>
+        <button type="button" className="mobile-menu-backdrop" tabIndex={menuOpen ? 0 : -1} aria-label="Close navigation" onClick={closeMenu} />
+        <nav className="mobile-menu-panel theme-light-surface" aria-label="Mobile navigation" aria-hidden={!menuOpen}>
+          <div className="flex items-end justify-between border-b border-[#1b1c1d]/10 pb-4">
+            <div><p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#777571]">Navigate</p><p className="mt-1 text-lg font-semibold tracking-[-0.035em]">Shrey Patel</p></div>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#456fe8]">00—04</span>
+          </div>
+          <div className="mt-3 space-y-1">
+            {navItems.map((item) => (
+              <a key={item.id} href={`#${item.id}`} onClick={closeMenu} tabIndex={menuOpen ? 0 : -1} className="mobile-menu-link group flex items-center justify-between rounded-xl px-3 py-3.5 text-base font-semibold tracking-[-0.025em] text-[#343434] transition-colors hover:bg-white/80">
+                <span className="flex items-center gap-3"><span className="text-[10px] font-semibold tabular-nums text-[#456fe8]">{item.number}</span>{item.label}</span>
+                <ChevronRight className="h-4 w-4 opacity-40 transition-transform group-hover:translate-x-0.5" />
+              </a>
+            ))}
+          </div>
+          <div className="mt-5 flex items-center justify-between border-t border-[#1b1c1d]/10 pt-4"><span className="text-[11px] text-[#777571]">Choose an appearance</span><ThemeToggle variant="mobile" /></div>
+        </nav>
+      </div>
 
       <aside className="theme-light-surface fixed inset-y-0 left-0 z-40 hidden w-72 flex-col border-r border-[#1b1c1d]/10 bg-[#f6f4ef] px-7 py-8 lg:flex">
         <span aria-hidden="true" className="absolute bottom-0 left-0 top-0 w-1 bg-[#456fe8]" />
-        <a href="#top" className="flex items-center gap-3" aria-label="Shrey Patel home">
-          <img src={LOGO_IMAGE} alt="" className="h-10 w-10" />
-          <div>
-            <p className="text-sm font-semibold tracking-[-0.04em]">Shrey Patel</p>
-            <p className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.15em] text-[#676766]">Portfolio · 2026</p>
-          </div>
-        </a>
+        <a href="#top" aria-label="Shrey Patel home"><p className="text-sm font-semibold tracking-[-0.04em]">Shrey Patel</p><p className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.15em] text-[#676766]">Portfolio · 2026</p></a>
 
         <nav className="mt-20 space-y-1" aria-label="Section navigation">
           {navItems.map((item) => (
@@ -252,10 +254,7 @@ export default function Home() {
           <div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-12 lg:min-h-[calc(100vh-3rem)]">
             <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(340px,0.72fr)] lg:gap-16">
               <div className="max-w-3xl pt-2 lg:pt-20">
-                <div className="reveal-in mb-8 flex items-center gap-3 [animation-delay:20ms]">
-                  <img src={LOGO_IMAGE} alt="" className="h-11 w-11 rounded-xl border border-[#1b1c1d]/10 bg-white/70 p-1.5 shadow-sm" />
-                  <div><p className="text-sm font-semibold tracking-[-0.04em]">Shrey Patel</p><p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#777571]">Designing the connective tissue</p></div>
-                </div>
+                <div className="reveal-in mb-8 [animation-delay:20ms]"><p className="text-sm font-semibold tracking-[-0.04em]">Shrey Patel</p><p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#777571]">Designing the connective tissue</p></div>
                 <div className="reveal-in flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#62615e] [animation-delay:40ms]">
                   <span className="h-px w-7 bg-[#456fe8]" />
                   UI Designer · Frontend Developer · UX Architect
@@ -448,18 +447,18 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="theme-light-surface px-5 py-20 sm:px-8 sm:py-28 lg:px-12 xl:px-16">
+        <section id="philosophy" className="theme-light-surface px-5 py-20 sm:px-8 sm:py-28 lg:px-12 xl:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col justify-between gap-6 border-b border-[#1b1c1d]/10 pb-10 sm:flex-row sm:items-end">
               <div><p className="eyebrow">Engineering philosophy</p><h2 className="mt-4 font-serif text-5xl leading-[0.94] tracking-[-0.06em] sm:text-6xl">How I think<br />about software.</h2></div>
               <p className="max-w-xs text-sm leading-6 text-[#6a6865]">A few principles I return to when systems, screens, or product decisions get more complex.</p>
             </div>
-            <div className="mt-4 divide-y divide-[#1b1c1d]/10">
+            <div className="mt-6">
               {principles.map((principle) => (
-                <article key={principle.number} className="group grid gap-5 py-7 transition-colors duration-200 hover:bg-white/55 sm:grid-cols-[80px_minmax(0,1fr)_minmax(0,0.9fr)] sm:items-baseline sm:px-4">
-                  <p className="text-[11px] font-semibold tracking-[0.14em] text-[#456fe8]">{principle.number}</p>
+                <article key={principle.number} className="philosophy-entry group grid grid-cols-[2.65rem_minmax(0,1fr)] gap-x-4 gap-y-3 py-7 sm:grid-cols-[80px_minmax(0,1fr)_minmax(0,0.9fr)] sm:items-baseline sm:gap-x-7 sm:gap-y-0">
+                  <p className="pt-1 text-[11px] font-semibold tracking-[0.14em] text-[#456fe8]">{principle.number}</p>
                   <h3 className="text-2xl font-semibold tracking-[-0.045em] transition-transform duration-200 group-hover:translate-x-1">{principle.title}</h3>
-                  <p className="text-sm leading-6 text-[#686663]">{principle.text}</p>
+                  <p className="col-span-2 max-w-xl text-sm leading-6 text-[#686663] sm:col-span-1 sm:max-w-none">{principle.text}</p>
                 </article>
               ))}
             </div>

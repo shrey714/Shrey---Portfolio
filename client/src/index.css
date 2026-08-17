@@ -282,6 +282,110 @@
   background: radial-gradient(circle at 72% 28%, rgba(120, 148, 255, 0.16), transparent 22rem), radial-gradient(circle at 8% 92%, rgba(255, 255, 255, 0.035), transparent 18rem);
 }
 
+/* Philosophy entries remain a clean editorial list in either theme; they are not cards. */
+.philosophy-entry {
+  border-top: 1px solid rgba(27, 28, 29, 0.1);
+  transition: padding 200ms cubic-bezier(0.23, 1, 0.32, 1), border-color 200ms ease-out;
+}
+
+.philosophy-entry:last-child {
+  border-bottom: 1px solid rgba(27, 28, 29, 0.1);
+}
+
+.dark .portfolio .philosophy-entry,
+.dark .portfolio .philosophy-entry:last-child {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark .portfolio .philosophy-entry:hover {
+  background: rgba(120, 148, 255, 0.045) !important;
+}
+
+/* Native mobile navigation overlay: short, interruptible opacity/transform transitions keep it fast. */
+.mobile-menu-layer {
+  position: fixed;
+  inset: 64px 0 0;
+  z-index: 45;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.mobile-menu-layer.is-open {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.mobile-menu-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border: 0;
+  background: rgba(16, 17, 19, 0);
+  transition: background 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.mobile-menu-panel {
+  position: relative;
+  width: min(100% - 1.5rem, 33rem);
+  margin: 0.75rem auto 0;
+  border: 1px solid rgba(27, 28, 29, 0.12);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  background: rgba(246, 244, 239, 0.96);
+  box-shadow: 0 24px 62px -32px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(-10px) scale(0.985);
+  transition: opacity 220ms cubic-bezier(0.23, 1, 0.32, 1), transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.mobile-menu-layer.is-open .mobile-menu-backdrop {
+  background: rgba(16, 17, 19, 0.42);
+}
+
+.mobile-menu-layer.is-open .mobile-menu-panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.mobile-menu-link {
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 180ms cubic-bezier(0.23, 1, 0.32, 1), transform 180ms cubic-bezier(0.23, 1, 0.32, 1), background-color 150ms ease-out;
+}
+
+.mobile-menu-layer.is-open .mobile-menu-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mobile-menu-layer.is-open .mobile-menu-link:nth-child(1) { transition-delay: 35ms; }
+.mobile-menu-layer.is-open .mobile-menu-link:nth-child(2) { transition-delay: 65ms; }
+.mobile-menu-layer.is-open .mobile-menu-link:nth-child(3) { transition-delay: 95ms; }
+.mobile-menu-layer.is-open .mobile-menu-link:nth-child(4) { transition-delay: 125ms; }
+.mobile-menu-layer.is-open .mobile-menu-link:nth-child(5) { transition-delay: 155ms; }
+
+.dark .mobile-menu-panel {
+  border-color: rgba(255, 255, 255, 0.13);
+  background: rgba(16, 17, 19, 0.96);
+}
+
+.dark .mobile-menu-panel :is(p, a, span) {
+  color: #ecebe6;
+}
+
+.dark .mobile-menu-panel .text-\[\#456fe8\] {
+  color: #96aaff !important;
+}
+
+.dark .mobile-menu-panel [class*="border-[#1b1c1d]"] {
+  border-color: rgba(255, 255, 255, 0.13) !important;
+}
+
+.dark .mobile-menu-panel .mobile-menu-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

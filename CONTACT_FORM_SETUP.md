@@ -33,6 +33,8 @@ The `contact_rate_limits` table stores one SHA-256 hash and a cooldown timestamp
 
 For the planned Vercel deployment, `vercel.json` schedules `GET /api/contact-rate-limit-cleanup` every day at **03:00 UTC**. The route runs independently of page loads and contact submissions, so it does not add work to a visitor’s request. It accepts only an `Authorization: Bearer <CRON_SECRET>` request. Before the first Vercel production deployment, set a strong `CRON_SECRET` environment variable in the Vercel project; Vercel sends that same value automatically when it invokes the configured cron route. The route fails closed with `401` if the secret is absent or incorrect.
 
+After each authorized cleanup run, the same configured Telegram bot sends a private maintenance notification with the number of expired cooldown records removed and the UTC retention cutoff. It reports the result even when the count is zero, so you can confirm the job ran. The notification contains no raw IP address, hashed network key, name, email address, or contact message. If Telegram is temporarily unavailable, the completed cleanup remains successful and the route returns normally to avoid an automatic retry deleting the same records twice.
+
 ## Verification record
 
 The public Contact section has been checked in the running portfolio. It exposes labelled name, email, and message fields; a concealed honeypot field; a visible submit action; a live status region; a privacy note; and an email fallback.

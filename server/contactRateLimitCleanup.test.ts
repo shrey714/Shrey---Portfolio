@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   CONTACT_RATE_LIMIT_RETENTION_MS,
   getContactRateLimitCleanupCutoff,
@@ -68,5 +68,33 @@ describe("contact rate-limit cleanup", () => {
     expect(captured.statusCode).toBe(405);
     expect(captured.allow).toBe("GET");
     expect(captured.body).toEqual({ error: "method-not-allowed" });
+  });
+
+  it("reports cleanup success without triggering a retry when its Telegram notification fails", async () => {
+    const captured: CapturedResponse = {};
+    const cleanup = vi.fn().mockResolvedValue({
+      cutoff: new Date("2026-08-16T03:00:00.000Z"),
+      deletedCount: 4,
+    });
+    const notify = vi.fn().mockRejectedValue(new Error("Telegram unavailable"));
+
+    await runContactRateLimitCleanup(
+      { method: "GET", headers: { authorization: "Bearer test" } } as never,
+      createResponse(captured) as never,
+      { authorize: () => true, cleanup, notify }
+    );
+
+    expect(cleanup).toHaveBeenCalledOnce();
+    expect(notify).toHaveBeenCalledWith({
+      cutoff: new Date("2026-08-16T03:00:00.000Z"),
+      deletedCount: 4,
+    });
+    expect(captured.statusCode).toBe(200);
+    expect(captured.body).toEqual({
+      ok: true,
+      deletedCount: 4,
+      cutoff: "2026-08-16T03:00:00.000Z",
+      notificationSent: false,
+    });
   });
 });

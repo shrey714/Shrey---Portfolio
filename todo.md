@@ -127,3 +127,12 @@
 - [x] Add unit coverage for the cleanup boundary and scheduled-handler authorization behavior.
 - [x] Validate the production build and save the cleanup implementation checkpoint.
 - [x] Document the user-owned Vercel CRON_SECRET activation step; the route fails closed until the secret is configured after deployment.
+
+# Scheduled Cleanup Telegram Notification
+
+- [x] Add a server-only Telegram formatter and sender for completed rate-limit cleanup results.
+- [x] Send the deleted-row count only after a successful authorized cleanup run, without delaying public page or contact-form traffic.
+- [x] Add unit coverage for the cleanup notification content and failure behavior.
+- [x] Verify the scheduled handler returns success with `notificationSent: false` when Telegram fails after cleanup succeeds.
+- [x] Validate the updated build and document the new notification flow.
+- [ ] Save and deliver the cleanup-notification checkpoint.

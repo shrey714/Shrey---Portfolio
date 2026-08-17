@@ -97,8 +97,13 @@ export async function warmTelegramConnection(): Promise<void> {
 }
 
 export async function deliverContactToTelegram(input: ContactSubmission): Promise<void> {
+  await deliverTelegramHtmlMessage(formatTelegramContactMessage(input), "contact delivery");
+}
+
+/** Sends a trusted server-generated message to the configured private Telegram destination. */
+export async function deliverTelegramHtmlMessage(text: string, purpose: string): Promise<void> {
   if (!hasTelegramConfiguration(ENV.telegramBotToken, ENV.telegramChatId)) {
-    throw new Error("Telegram contact delivery is not configured.");
+    throw new Error(`Telegram ${purpose} is not configured.`);
   }
 
   const response = await telegramRequest("sendMessage", {
@@ -106,7 +111,7 @@ export async function deliverContactToTelegram(input: ContactSubmission): Promis
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       chat_id: ENV.telegramChatId,
-      text: formatTelegramContactMessage(input),
+      text,
       parse_mode: "HTML",
       disable_web_page_preview: true,
     }),
@@ -114,6 +119,6 @@ export async function deliverContactToTelegram(input: ContactSubmission): Promis
 
   const payload = (await response.json().catch(() => null)) as { ok?: boolean } | null;
   if (!response.ok || !payload?.ok) {
-    throw new Error("Telegram contact delivery failed.");
+    throw new Error(`Telegram ${purpose} failed.`);
   }
 }

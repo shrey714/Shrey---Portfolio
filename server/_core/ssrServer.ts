@@ -2,10 +2,10 @@ import express, { type Express } from "express";
 import fs from "fs";
 import path from "path";
 import { pathToFileURL } from "url";
-import { composeHtml } from "./ssr";
+import { composeHtml } from "./ssr.js";
 
 type SsrEntry = {
-  render: (url: string) => Promise<import("../../client/src/entry-server").RenderResult>;
+  render: (url: string) => Promise<import("../../client/src/entry-server.js").RenderResult>;
 };
 
 function firstExistingPath(paths: string[], requiredFile?: string) {

@@ -1,7 +1,7 @@
 import superjson from "superjson";
-import { portfolioContent } from "../../client/src/content/portfolioContent";
-import type { RenderResult } from "../../client/src/entry-server";
-import { ENV } from "./env";
+import portfolioContent from "../../content/portfolio.json" with { type: "json" };
+import type { RenderResult } from "../../client/src/entry-server.js";
+import { ENV } from "./env.js";
 
 function escapeHtml(value: string) {
   return value.replace(/[&<>\"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" })[character]!);

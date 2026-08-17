@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import path from "node:path";
 import type { Express, Request } from "express";
 import { parse as parseCookies } from "cookie";
-import { ENV } from "./env";
+import { ENV } from "./env.js";
 
 const OAUTH_STATE_COOKIE = "__Host-decap_oauth_state";
 const OAUTH_STATE_MAX_AGE_MS = 10 * 60 * 1000;

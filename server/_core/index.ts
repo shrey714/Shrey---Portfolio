@@ -1,11 +1,11 @@
 import "dotenv/config";
 import { createServer } from "http";
 import net from "net";
-import { setupVite } from "./vite";
-import { serveStatic } from "./ssrServer";
-import { warmDatabaseConnection } from "../db";
-import { warmTelegramConnection } from "../contact";
-import { createApplication } from "./app";
+import { setupVite } from "./vite.js";
+import { serveStatic } from "./ssrServer.js";
+import { warmDatabaseConnection } from "../db.js";
+import { warmTelegramConnection } from "../contact.js";
+import { createApplication } from "./app.js";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {

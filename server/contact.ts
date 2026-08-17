@@ -1,9 +1,9 @@
 import { createHash } from "node:crypto";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { contactRateLimits } from "../drizzle/schema";
-import { getDb } from "./db";
-import { ENV } from "./_core/env";
+import { contactRateLimits } from "../drizzle/schema.js";
+import { getDb } from "./db.js";
+import { ENV } from "./_core/env.js";
 
 export const CONTACT_RATE_LIMIT_MS = 90_000;
 export const TELEGRAM_TIMEOUT_MS = 8_000;

@@ -3,11 +3,11 @@ import fs from "fs";
 import { type Server } from "http";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import viteConfig from "../../vite.config";
-import { composeHtml } from "./ssr";
+import viteConfig from "../../vite.config.js";
+import { composeHtml } from "./ssr.js";
 
 type SsrEntry = {
-  render: (url: string) => Promise<import("../../client/src/entry-server").RenderResult>;
+  render: (url: string) => Promise<import("../../client/src/entry-server.js").RenderResult>;
 };
 
 export async function setupVite(app: Express, server: Server) {

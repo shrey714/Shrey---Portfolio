@@ -237,3 +237,7 @@
 
 - [x] Diagnose the Vercel serverless function crash from runtime evidence and prepare a targeted correction.
 - [ ] Confirm the corrected Vercel deployment responds successfully before continuing CMS workflow validation.
+
+- [x] Collect the Vercel function runtime stack trace for the persistent post-deploy crash and use it to verify the final correction.
+
+- [ ] Deploy the explicit `.js` extension import graph correction and confirm the Vercel function initializes without module-resolution errors.

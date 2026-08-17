@@ -3,7 +3,7 @@
   "buildCommand": "pnpm build",
   "functions": {
     "server.ts": {
-      "includeFiles": "dist/**"
+      "includeFiles": ["dist/**", "content/**", "shared/**"]
     }
   },
   "cleanUrls": true,

@@ -297,3 +297,12 @@
 
 - [ ] Fix the native Decap Media **Use** action so it inserts the selected Vercel Blob URL into the active content field.
 - [x] Trace the uploaded resume’s Vercel Blob store, pathname, and dashboard visibility, then reconcile any mismatched storage target.
+
+- [ ] Stabilize the native Decap Media insertion behavior so asset selection reliably updates the active file or image field.
+- [x] Inventory all code, routes, dependencies, assets, documentation, and deployment configuration for obsolete or duplicate material.
+- [x] Remove obsolete code paths, unused assets, redundant dependencies, and nonessential repository documentation without harming operations.
+- [x] Perform a comprehensive production-readiness review of application logic, security, validation, error handling, SSR, SEO, and deployment behavior.
+- [x] Perform a complete desktop and mobile UI/UX, alignment, accessibility, and interaction-state review, then correct verified issues.
+- [x] Research and apply safe performance optimizations for loading, runtime delivery, media, and metadata.
+- [x] Complete comprehensive regression, build, crawler, visual, and deployment-readiness validation.
+- [ ] Create an unpushed review-ready local checkpoint and change summary; do not publish a branch or open a PR without morning approval.

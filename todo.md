@@ -65,3 +65,11 @@
 - [x] Reduce the automatic slide interval while preserving hover, focus, and reduced-motion behavior.
 - [x] Validate dark carousel contrast and responsive composition.
 - [x] Save and deliver the dark-carousel refinement checkpoint.
+
+# Centralized Portfolio Content
+
+- [x] Move editable identity, hero, navigation, project, experience, philosophy, contact, and carousel content into one configuration file.
+- [x] Refactor the page to consume the configuration without visual or interaction regressions.
+- [x] Add simple editing instructions alongside the configuration file.
+- [x] Validate the configuration-driven page and production build.
+- [x] Save and deliver the centralized-content checkpoint.

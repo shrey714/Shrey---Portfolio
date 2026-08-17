@@ -22,52 +22,11 @@ import {
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/contexts/ThemeContext";
+import { portfolioContent as content } from "@/content/portfolioContent";
 
-const HERO_IMAGE = "/manus-storage/shrey-hero-editorial_9f125b19.jpg";
-
-const heroSlides = [
-  { label: "Systems × experience", caption: "A visual language where interface and engineering connect.", alt: "Abstract cobalt architectural forms on a warm porcelain studio surface" },
-  { label: "Interface architecture", caption: "Turning dense workflows into deliberate, readable product surfaces.", alt: "Abstract interface architecture composition" },
-  { label: "System thinking", caption: "Following the path from signal to decision to response.", alt: "Abstract system flow composition" },
-  { label: "Detail as a feature", caption: "The small decisions that make a product feel complete.", alt: "Abstract editorial detail composition" },
-];
-
-const navItems = [
-  { id: "top", label: "Index", number: "00" },
-  { id: "work", label: "Selected work", number: "01" },
-  { id: "practice", label: "Practice", number: "02" },
-  { id: "about", label: "About", number: "03" },
-  { id: "contact", label: "Contact", number: "04" },
-];
-
-const experienceItems = [
-  "Crafting interface architecture with React and TypeScript.",
-  "Designing Java and Spring services around real operational constraints.",
-  "Working across SQL data flows, business logic, and user-facing product details.",
-];
-
-const principles = [
-  {
-    number: "01",
-    title: "Keep it simple.",
-    text: "Complexity should solve a real problem. If it does not, it is probably just complexity.",
-  },
-  {
-    number: "02",
-    title: "Build for the person using it.",
-    text: "Technical decisions matter, but software ultimately exists to make someone’s work or life better.",
-  },
-  {
-    number: "03",
-    title: "Understand before optimizing.",
-    text: "Measure, find the bottleneck, then make it faster—with a reason for every change.",
-  },
-  {
-    number: "04",
-    title: "Make it maintainable.",
-    text: "The best decision survives the next six months, including the person who has to maintain it.",
-  },
-];
+const hero = content.hero;
+const navItems = content.navigation;
+const [firstProject, secondProject] = content.work.projects;
 
 function AnchorArrow() {
   return <ArrowUpRight aria-hidden="true" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />;
@@ -81,7 +40,7 @@ function ThemeToggle({ variant = "rail" }: { variant?: "rail" | "mobile" }) {
   return (
     <div className={`theme-toggle flex items-center gap-2 rounded-full border border-[#1b1c1d]/12 bg-white/55 p-1.5 text-[#5f5d59] backdrop-blur-sm ${mobile ? "" : "w-fit"}`}>
       <Sun aria-hidden="true" className={`h-3.5 w-3.5 transition-colors ${isDark ? "text-[#8c8a85]" : "text-[#456fe8]"}`} />
-      <Switch checked={isDark} onCheckedChange={toggleTheme} aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"} />
+      <Switch checked={isDark} onCheckedChange={toggleTheme} aria-label={isDark ? content.ui.themeLightLabel : content.ui.themeDarkLabel} />
       <Moon aria-hidden="true" className={`h-3.5 w-3.5 transition-colors ${isDark ? "text-[#9fb2ff]" : "text-[#8c8a85]"}`} />
       {!mobile && <span className="sr-only">{isDark ? "Dark mode active" : "Light mode active"}</span>}
     </div>
@@ -89,26 +48,24 @@ function ThemeToggle({ variant = "rail" }: { variant?: "rail" | "mobile" }) {
 }
 
 function HeroVisual({ index }: { index: number }) {
-  if (index === 0) return <img src={HERO_IMAGE} alt={heroSlides[0].alt} fetchPriority="high" className="h-full w-full rounded-[1.15rem] object-cover" />;
+  if (index === 0) return <img src={hero.imageUrl} alt={hero.slides[0].alt} fetchPriority="high" className="h-full w-full rounded-[1.15rem] object-cover" />;
 
-  if (index === 1) return <div className="hero-visual hero-interface" aria-label={heroSlides[1].alt} role="img"><div className="hero-visual-topline"><span>Interface / 02</span><span>Flow state</span></div><div className="hero-interface-grid"><div className="hero-interface-rail"><i /><i className="is-active" /><i /><i /></div><div className="hero-interface-body"><div className="hero-line short" /><div className="hero-line wide" /><div className="hero-interface-cards"><div /><div className="is-cobalt" /><div /></div><div className="hero-table-lines"><i /><i /><i /><i /></div></div></div><div className="hero-visual-annotation">Readable flows / intentional states</div></div>;
+  if (index === 1) return <div className="hero-visual hero-interface" aria-label={hero.slides[1].alt} role="img"><div className="hero-visual-topline"><span>{hero.slides[1].metaLeft}</span><span>{hero.slides[1].metaRight}</span></div><div className="hero-interface-grid"><div className="hero-interface-rail"><i /><i className="is-active" /><i /><i /></div><div className="hero-interface-body"><div className="hero-line short" /><div className="hero-line wide" /><div className="hero-interface-cards"><div /><div className="is-cobalt" /><div /></div><div className="hero-table-lines"><i /><i /><i /><i /></div></div></div><div className="hero-visual-annotation">{hero.slides[1].annotation}</div></div>;
 
-  if (index === 2) return <div className="hero-visual hero-systems" aria-label={heroSlides[2].alt} role="img"><div className="hero-visual-topline"><span>Systems / 03</span><span>Signal map</span></div><div className="hero-system-map"><div className="hero-system-node node-a">Signal</div><div className="hero-system-node node-b">Decision</div><div className="hero-system-node node-c">Response</div><span className="hero-system-link link-ab" /><span className="hero-system-link link-bc" /><span className="hero-system-orbit" /></div><div className="hero-visual-annotation">From signal to response</div></div>;
+  if (index === 2) return <div className="hero-visual hero-systems" aria-label={hero.slides[2].alt} role="img"><div className="hero-visual-topline"><span>{hero.slides[2].metaLeft}</span><span>{hero.slides[2].metaRight}</span></div><div className="hero-system-map"><div className="hero-system-node node-a">{hero.slides[2].nodes?.[0]}</div><div className="hero-system-node node-b">{hero.slides[2].nodes?.[1]}</div><div className="hero-system-node node-c">{hero.slides[2].nodes?.[2]}</div><span className="hero-system-link link-ab" /><span className="hero-system-link link-bc" /><span className="hero-system-orbit" /></div><div className="hero-visual-annotation">{hero.slides[2].annotation}</div></div>;
 
-  return <div className="hero-visual hero-detail" aria-label={heroSlides[3].alt} role="img"><div className="hero-visual-topline"><span>Details / 04</span><span>Field note</span></div><div className="hero-detail-board"><div className="hero-detail-block block-one" /><div className="hero-detail-block block-two" /><div className="hero-detail-block block-three" /><div className="hero-detail-dot dot-one" /><div className="hero-detail-dot dot-two" /></div><div className="hero-visual-annotation">Small choices, considered</div></div>;
+  return <div className="hero-visual hero-detail" aria-label={hero.slides[3].alt} role="img"><div className="hero-visual-topline"><span>{hero.slides[3].metaLeft}</span><span>{hero.slides[3].metaRight}</span></div><div className="hero-detail-board"><div className="hero-detail-block block-one" /><div className="hero-detail-block block-two" /><div className="hero-detail-block block-three" /><div className="hero-detail-dot dot-one" /><div className="hero-detail-dot dot-two" /></div><div className="hero-visual-annotation">{hero.slides[3].annotation}</div></div>;
 }
 
-function ProductEvidence({ kind }: { kind: "clinic" | "commerce" }) {
-  const clinic = kind === "clinic";
-  const rows = clinic ? ["Patient flow", "Team handoff", "Billing state"] : ["Catalog signal", "Stock health", "Store orders"];
-  const title = clinic ? "Operational care, in view" : "Inventory, from shelf to storefront";
+function ProductEvidence({ project }: { project: (typeof content.work.projects)[number] }) {
+  const clinic = project.kind === "clinic";
 
   return (
     <div className="relative overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#26272a] p-3 shadow-[0_24px_55px_-40px_rgba(0,0,0,0.8)]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(69,111,232,0.22),transparent_35%)]" />
       <div className="relative rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">
         <div className="flex items-center justify-between border-b border-white/10 pb-3 text-[8px] font-semibold uppercase tracking-[0.14em] text-white/45">
-          <span>{clinic ? "DardiBook / workflow" : "Shopkeeper AI / operations"}</span>
+          <span>{project.visualMeta}</span>
           <span className="flex gap-1.5"><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-[#456fe8]" /></span>
         </div>
         <div className={`mt-4 grid gap-3 ${clinic ? "grid-cols-[0.34fr_0.66fr]" : "grid-cols-[0.45fr_0.55fr]"}`}>
@@ -128,12 +85,12 @@ function ProductEvidence({ kind }: { kind: "clinic" | "commerce" }) {
               {[0, 1, 2].map((item) => <div key={item} className="rounded-md border border-white/[0.08] bg-white/[0.035] p-2"><div className="h-1 w-5 rounded-full bg-white/25" /><div className={`mt-3 h-8 rounded ${item === 1 ? "bg-[#456fe8]/60" : "bg-white/[0.09]"}`} /></div>)}
             </div>
             <div className="mt-4 space-y-2.5">
-              {rows.map((row, index) => <div key={row} className="flex items-center gap-3"><span className={`h-1.5 w-1.5 shrink-0 rounded-full ${index === 1 ? "bg-[#456fe8]" : "bg-white/25"}`} /><span className="h-1.5 flex-1 rounded-full bg-white/20" /><span className="h-1.5 w-9 rounded-full bg-white/10" /></div>)}
+              {project.visualRows.map((row, index) => <div key={row} className="flex items-center gap-3"><span className={`h-1.5 w-1.5 shrink-0 rounded-full ${index === 1 ? "bg-[#456fe8]" : "bg-white/25"}`} /><span className="h-1.5 flex-1 rounded-full bg-white/20" /><span className="h-1.5 w-9 rounded-full bg-white/10" /></div>)}
             </div>
           </div>
         </div>
       </div>
-      <div className="relative flex items-end justify-between px-1 pb-1 pt-4 text-white"><p className="max-w-[12rem] text-xs font-medium tracking-[-0.02em] text-white/80 sm:text-sm">{title}</p><span className="rounded-full border border-white/14 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.13em] text-white/60">Evidence frame</span></div>
+      <div className="relative flex items-end justify-between px-1 pb-1 pt-4 text-white"><p className="max-w-[12rem] text-xs font-medium tracking-[-0.02em] text-white/80 sm:text-sm">{project.visualTitle}</p><span className="rounded-full border border-white/14 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.13em] text-white/60">Evidence frame</span></div>
     </div>
   );
 }
@@ -144,10 +101,10 @@ function SystemsEvidence() {
       <div className="absolute inset-0 opacity-50 dot-field" />
       <div className="relative grid grid-cols-[0.24fr_0.52fr_0.24fr] items-center gap-2 sm:gap-4">
         <div className="space-y-3"><div className="h-10 rounded-lg border border-[#1b1c1d]/10 bg-white/70" /><div className="h-6 rounded-lg border border-[#1b1c1d]/10 bg-white/55" /><div className="h-14 rounded-lg border border-[#1b1c1d]/10 bg-[#456fe8]/12" /></div>
-        <div className="relative flex aspect-square items-center justify-center rounded-full border border-[#456fe8]/30 bg-[#456fe8]/8"><div className="absolute h-[70%] w-[70%] rounded-full border border-dashed border-[#456fe8]/45" /><div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-[#1b1c1d]/15 bg-[#1b1c1d] text-[9px] font-semibold uppercase tracking-[0.14em] text-white">Flow</div><div className="absolute right-1 top-5 h-3 w-3 rounded-full border-2 border-[#f5f3ed] bg-[#456fe8]" /></div>
+        <div className="relative flex aspect-square items-center justify-center rounded-full border border-[#456fe8]/30 bg-[#456fe8]/8"><div className="absolute h-[70%] w-[70%] rounded-full border border-dashed border-[#456fe8]/45" /><div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-[#1b1c1d]/15 bg-[#1b1c1d] text-[9px] font-semibold uppercase tracking-[0.14em] text-white">{content.practice.visualFlow}</div><div className="absolute right-1 top-5 h-3 w-3 rounded-full border-2 border-[#f5f3ed] bg-[#456fe8]" /></div>
         <div className="space-y-3"><div className="ml-auto h-14 w-full rounded-lg border border-[#1b1c1d]/10 bg-white/70" /><div className="ml-auto h-6 w-3/4 rounded-lg border border-[#1b1c1d]/10 bg-white/55" /><div className="ml-auto h-10 w-full rounded-lg border border-[#1b1c1d]/10 bg-[#1b1c1d]/[0.06]" /></div>
       </div>
-      <div className="relative mt-6 flex items-center justify-between border-t border-[#1b1c1d]/10 pt-4 text-[9px] font-semibold uppercase tracking-[0.13em] text-[#777571]"><span>Signal / decision / response</span><span className="text-[#456fe8]">System note 01</span></div>
+      <div className="relative mt-6 flex items-center justify-between border-t border-[#1b1c1d]/10 pt-4 text-[9px] font-semibold uppercase tracking-[0.13em] text-[#777571]"><span>{content.practice.visualSystemNote}</span><span className="text-[#456fe8]">{content.practice.visualTag}</span></div>
     </div>
   );
 }
@@ -173,7 +130,7 @@ export default function Home() {
     menuCloseTimer.current = window.setTimeout(() => setMenuMounted(false), 240);
   };
 
-  const showHeroSlide = (index: number) => setActiveHeroSlide((index + heroSlides.length) % heroSlides.length);
+  const showHeroSlide = (index: number) => setActiveHeroSlide((index + hero.slides.length) % hero.slides.length);
 
   useEffect(() => {
     const sections = observedIds
@@ -203,7 +160,7 @@ export default function Home() {
 
   useEffect(() => {
     if (heroPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setTimeout(() => setActiveHeroSlide((slide) => (slide + 1) % heroSlides.length), 3800);
+    const timer = window.setTimeout(() => setActiveHeroSlide((slide) => (slide + 1) % hero.slides.length), 3800);
     return () => window.clearTimeout(timer);
   }, [activeHeroSlide, heroPaused]);
 
@@ -236,7 +193,7 @@ export default function Home() {
     <div className="portfolio min-h-screen overflow-x-clip bg-[#f6f4ef] text-[#1b1c1d] selection:bg-[#456fe8] selection:text-white">
       <header className="theme-light-surface fixed inset-x-0 top-0 z-50 border-b border-[#1b1c1d]/8 bg-[#f6f4ef]/85 px-5 py-3 backdrop-blur-xl lg:hidden">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <a href="#top" tabIndex={showMobileIdentity ? 0 : -1} aria-hidden={!showMobileIdentity} className={`mobile-header-identity text-sm font-semibold tracking-[-0.03em] ${showMobileIdentity ? "is-visible" : ""}`} aria-label="Shrey Patel home">Shrey Patel</a>
+          <a href="#top" tabIndex={showMobileIdentity ? 0 : -1} aria-hidden={!showMobileIdentity} className={`mobile-header-identity text-sm font-semibold tracking-[-0.03em] ${showMobileIdentity ? "is-visible" : ""}`} aria-label={content.ui.homeAriaLabel}>{content.identity.name}</a>
           <div className="flex items-center gap-2">
             <ThemeToggle variant="mobile" />
             <button
@@ -254,9 +211,9 @@ export default function Home() {
 
       <div className={`mobile-menu-layer lg:hidden ${menuMounted ? "is-mounted" : ""} ${menuOpen ? "is-open" : ""}`} aria-hidden={!menuMounted}>
         <button type="button" className="mobile-menu-backdrop" tabIndex={menuOpen ? 0 : -1} aria-label="Close navigation" onClick={closeMenu} />
-        <nav className="mobile-menu-panel theme-light-surface" aria-label="Mobile navigation" aria-hidden={!menuOpen}>
+        <nav className="mobile-menu-panel theme-light-surface" aria-label={content.ui.mobileNavigationLabel} aria-hidden={!menuOpen}>
           <div className="flex items-end justify-between border-b border-[#1b1c1d]/10 pb-4">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#777571]">Navigate</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#777571]">{content.ui.navigateLabel}</p>
             <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#456fe8]">00—04</span>
           </div>
           <div className="mt-3 space-y-1">
@@ -273,9 +230,9 @@ export default function Home() {
 
       <aside className="theme-light-surface fixed inset-y-0 left-0 z-40 hidden w-72 flex-col border-r border-[#1b1c1d]/10 bg-[#f6f4ef] px-7 py-8 lg:flex">
         <span aria-hidden="true" className="absolute bottom-0 left-0 top-0 w-1 bg-[#456fe8]" />
-        <a href="#top" aria-label="Shrey Patel home"><p className="text-sm font-semibold tracking-[-0.04em]">Shrey Patel</p><p className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.15em] text-[#676766]">Portfolio · 2026</p></a>
+        <a href="#top" aria-label={content.ui.homeAriaLabel}><p className="text-sm font-semibold tracking-[-0.04em]">{content.identity.name}</p><p className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.15em] text-[#676766]">{content.identity.pageDescriptor}</p></a>
 
-        <nav className="mt-20 space-y-1" aria-label="Section navigation">
+        <nav className="mt-20 space-y-1" aria-label={content.ui.sectionNavigationLabel}>
           {navItems.map((item) => (
             <a
               key={item.id}
@@ -292,10 +249,10 @@ export default function Home() {
         </nav>
 
         <div className="mt-auto border-t border-[#1b1c1d]/10 pt-5">
-          <div className="mb-4 flex items-center justify-between"><span className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">Appearance</span><ThemeToggle /></div>
-          <p className="flex items-center gap-2 text-[11px] font-medium text-[#676766]"><span className="h-1.5 w-1.5 rounded-full bg-[#456fe8]" /> Available for considered work</p>
-          <p className="mt-3 flex items-center gap-2 text-[11px] text-[#898783]"><MapPin className="h-3.5 w-3.5" /> Bangalore, India</p>
-          <p className="mt-1 text-[11px] text-[#898783]">Built around clarity &amp; care.</p>
+          <div className="mb-4 flex items-center justify-between"><span className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">{content.identity.appearanceLabel}</span><ThemeToggle /></div>
+          <p className="flex items-center gap-2 text-[11px] font-medium text-[#676766]"><span className="h-1.5 w-1.5 rounded-full bg-[#456fe8]" /> {content.identity.availability}</p>
+          <p className="mt-3 flex items-center gap-2 text-[11px] text-[#898783]"><MapPin className="h-3.5 w-3.5" /> {content.identity.location}</p>
+          <p className="mt-1 text-[11px] text-[#898783]">{content.identity.railNote}</p>
         </div>
       </aside>
 
@@ -306,48 +263,48 @@ export default function Home() {
           <div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-12 lg:min-h-[calc(100vh-3rem)]">
             <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(340px,0.72fr)] lg:gap-16">
               <div className="max-w-3xl pt-2 lg:pt-20">
-                <div className="reveal-in mb-8 [animation-delay:20ms]"><p className="text-sm font-semibold tracking-[-0.04em]">Shrey Patel</p><p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#777571]">Designing the connective tissue</p></div>
+                <div className="reveal-in mb-8 [animation-delay:20ms]"><p className="text-sm font-semibold tracking-[-0.04em]">{content.identity.name}</p><p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#777571]">{content.identity.roleDescriptor}</p></div>
                 <div className="reveal-in flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#62615e] [animation-delay:40ms]">
                   <span className="h-px w-7 bg-[#456fe8]" />
-                  UI Designer · Frontend Developer · UX Architect
+                  {hero.roleLine}
                 </div>
                 <h1 className="reveal-in mt-7 font-serif text-[clamp(3.35rem,8vw,7.3rem)] leading-[0.88] tracking-[-0.07em] text-[#1b1c1d] [animation-delay:120ms]">
-                  I make digital
-                  <span className="block pl-[0.06em] text-[#456fe8]">systems feel</span>
-                  <span className="block">considered.</span>
+                  {hero.heading[0]}
+                  <span className="block pl-[0.06em] text-[#456fe8]">{hero.heading[1]}</span>
+                  <span className="block">{hero.heading[2]}</span>
                 </h1>
                 <p className="reveal-in mt-8 max-w-xl text-[17px] leading-7 tracking-[-0.02em] text-[#595856] [animation-delay:200ms] sm:text-lg">
-                  I’m Shrey, a product-minded software engineer and UX researcher who enjoys turning complex problems into simple, polished experiences—from the first interface to the systems underneath.
+                  {hero.introduction}
                 </p>
                 <div className="reveal-in mt-9 flex flex-wrap items-center gap-3 [animation-delay:280ms]">
                   <a href="#work" className="group inline-flex items-center gap-2 rounded-full bg-[#1b1c1d] px-5 py-3 text-sm font-semibold text-[#f6f4ef] transition-all duration-200 hover:bg-[#456fe8] active:scale-[0.97]">
-                    See selected work <ArrowDown className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
+                    {hero.workCta} <ArrowDown className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
                   </a>
                   <a href="#contact" className="group inline-flex items-center gap-2 rounded-full border border-[#1b1c1d]/14 bg-white/50 px-5 py-3 text-sm font-semibold text-[#1b1c1d] transition-colors duration-200 hover:border-[#456fe8]/40 hover:bg-white active:scale-[0.97]">
-                    Start a conversation <AnchorArrow />
+                    {hero.contactCta} <AnchorArrow />
                   </a>
                 </div>
               </div>
 
               <div className="reveal-in relative ml-auto w-full max-w-[37rem] [animation-delay:180ms]">
-                <div className="hero-carousel relative overflow-hidden rounded-[1.55rem] border border-white/80 bg-[#e9e6df] p-2 shadow-[0_28px_80px_-42px_rgba(27,28,29,0.42)]" role="region" aria-roledescription="carousel" aria-label="Selected design perspectives" onMouseEnter={() => setHeroPaused(true)} onMouseLeave={() => setHeroPaused(false)} onFocus={() => setHeroPaused(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setHeroPaused(false); }} onKeyDown={(event) => { if (event.key === "ArrowLeft") showHeroSlide(activeHeroSlide - 1); if (event.key === "ArrowRight") showHeroSlide(activeHeroSlide + 1); }} tabIndex={0}>
+                <div className="hero-carousel relative overflow-hidden rounded-[1.55rem] border border-white/80 bg-[#e9e6df] p-2 shadow-[0_28px_80px_-42px_rgba(27,28,29,0.42)]" role="region" aria-roledescription="carousel" aria-label={hero.carouselAriaLabel} onMouseEnter={() => setHeroPaused(true)} onMouseLeave={() => setHeroPaused(false)} onFocus={() => setHeroPaused(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setHeroPaused(false); }} onKeyDown={(event) => { if (event.key === "ArrowLeft") showHeroSlide(activeHeroSlide - 1); if (event.key === "ArrowRight") showHeroSlide(activeHeroSlide + 1); }} tabIndex={0}>
                   <div className="relative aspect-[16/11] overflow-hidden rounded-[1.15rem]">
                     <div key={activeHeroSlide} className="hero-slide h-full w-full"><HeroVisual index={activeHeroSlide} /></div>
                   </div>
-                  <div className="hero-carousel-footer"><div key={activeHeroSlide} className="hero-carousel-copy" aria-live="polite"><p className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#456fe8]">{heroSlides[activeHeroSlide].label}</p><p className="mt-1 max-w-[15rem] text-[10px] leading-4 text-[#66645f]">{heroSlides[activeHeroSlide].caption}</p></div><div className="hero-carousel-actions"><span className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#6c6a67]">0{activeHeroSlide + 1} / 0{heroSlides.length}</span><div className="flex gap-1.5"><button type="button" onClick={() => showHeroSlide(activeHeroSlide - 1)} className="hero-carousel-control" aria-label="Show previous visual"><ChevronLeft className="h-3.5 w-3.5" /></button><button type="button" onClick={() => showHeroSlide(activeHeroSlide + 1)} className="hero-carousel-control" aria-label="Show next visual"><ChevronRight className="h-3.5 w-3.5" /></button></div></div><div className="hero-carousel-indicators" role="tablist" aria-label="Hero visual selector">{heroSlides.map((slide, index) => <button key={slide.label} type="button" role="tab" aria-selected={activeHeroSlide === index} aria-label={`Show ${slide.label}`} onClick={() => showHeroSlide(index)} className={`hero-carousel-dot ${activeHeroSlide === index ? "is-active" : ""}`} />)}</div></div>
+                  <div className="hero-carousel-footer"><div key={activeHeroSlide} className="hero-carousel-copy" aria-live="polite"><p className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#456fe8]">{hero.slides[activeHeroSlide].label}</p><p className="mt-1 max-w-[15rem] text-[10px] leading-4 text-[#66645f]">{hero.slides[activeHeroSlide].caption}</p></div><div className="hero-carousel-actions"><span className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#6c6a67]">0{activeHeroSlide + 1} / 0{hero.slides.length}</span><div className="flex gap-1.5"><button type="button" onClick={() => showHeroSlide(activeHeroSlide - 1)} className="hero-carousel-control" aria-label={hero.previousVisualLabel}><ChevronLeft className="h-3.5 w-3.5" /></button><button type="button" onClick={() => showHeroSlide(activeHeroSlide + 1)} className="hero-carousel-control" aria-label={hero.nextVisualLabel}><ChevronRight className="h-3.5 w-3.5" /></button></div></div><div className="hero-carousel-indicators" role="tablist" aria-label={hero.carouselSelectorLabel}>{hero.slides.map((slide, index) => <button key={slide.label} type="button" role="tab" aria-selected={activeHeroSlide === index} aria-label={`Show ${slide.label}`} onClick={() => showHeroSlide(index)} className={`hero-carousel-dot ${activeHeroSlide === index ? "is-active" : ""}`} />)}</div></div>
                 </div>
                 <div className="absolute -bottom-4 -left-4 hidden w-44 rounded-2xl border border-[#1b1c1d]/10 bg-[#f6f4ef]/90 p-4 shadow-[0_18px_45px_-30px_rgba(27,28,29,0.45)] backdrop-blur sm:block">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#767570]">Based in</p>
-                  <p className="mt-1 text-sm font-semibold tracking-[-0.03em]">Bangalore, India</p>
-                  <p className="mt-2 text-xs leading-4 text-[#73716e]">Designing across interaction, interface, and implementation.</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#767570]">{hero.basedInLabel}</p>
+                  <p className="mt-1 text-sm font-semibold tracking-[-0.03em]">{content.identity.location}</p>
+                  <p className="mt-2 text-xs leading-4 text-[#73716e]">{hero.basedInDescription}</p>
                 </div>
               </div>
             </div>
 
             <div className="reveal-in flex flex-col gap-4 border-t border-[#1b1c1d]/10 pt-5 text-[11px] text-[#6d6b67] sm:flex-row sm:items-center sm:justify-between [animation-delay:360ms]">
-              <p className="font-medium uppercase tracking-[0.13em]">Software Engineer @ Wells Fargo</p>
+              <p className="font-medium uppercase tracking-[0.13em]">{hero.roleSnapshot}</p>
               <div className="flex flex-wrap gap-x-5 gap-y-2">
-                <span>Frontend interfaces</span><span>•</span><span>Product systems</span><span>•</span><span>User research</span>
+                {hero.focusAreas.map((area, index) => <span key={area}>{index > 0 && <span className="mr-5">•</span>}{area}</span>)}
               </div>
             </div>
           </div>
@@ -357,43 +314,43 @@ export default function Home() {
           <div className="mx-auto max-w-7xl rounded-[2rem] border border-[#1b1c1d]/10 bg-[#1b1c1d] px-6 py-10 shadow-[0_32px_70px_-48px_rgba(27,28,29,0.65)] sm:px-10 sm:py-14 lg:px-14 lg:py-16">
             <div className="flex flex-col justify-between gap-8 border-b border-white/15 pb-10 sm:flex-row sm:items-end">
               <div>
-                <p className="eyebrow text-[#aebff6]">Selected work</p>
-                <h2 className="mt-4 max-w-2xl font-serif text-[clamp(2.75rem,5vw,5rem)] leading-[0.92] tracking-[-0.065em]">Products with a clear point of view.</h2>
+                <p className="eyebrow text-[#aebff6]">{content.work.eyebrow}</p>
+                <h2 className="mt-4 max-w-2xl font-serif text-[clamp(2.75rem,5vw,5rem)] leading-[0.92] tracking-[-0.065em]">{content.work.heading}</h2>
               </div>
-              <p className="max-w-xs text-sm leading-6 text-[#c6c4bf]">A small selection of systems where interface thinking and engineering have to work together.</p>
+              <p className="max-w-xs text-sm leading-6 text-[#c6c4bf]">{content.work.introduction}</p>
             </div>
 
             <div className="mt-10 space-y-16 lg:mt-14 lg:space-y-24">
               <article className="group grid gap-7 lg:grid-cols-[minmax(0,1.42fr)_minmax(260px,0.58fr)] lg:items-end lg:gap-12">
-                <a href="#contact" className="relative block transition-transform duration-300 hover:-translate-y-1" aria-label="Discuss the DardiBook project">
-                  <ProductEvidence kind="clinic" />
+                <a href="#contact" className="relative block transition-transform duration-300 hover:-translate-y-1" aria-label={firstProject.ariaLabel}>
+                  <ProductEvidence project={firstProject} />
                   <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
                 </a>
                 <div className="lg:pb-2">
-                  <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.14em] text-[#a8a6a2]"><span>01 — Product system</span><span>2025</span></div>
-                  <h3 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">DardiBook</h3>
-                  <p className="mt-2 text-base text-[#d0cdc7]">Clinic management platform</p>
-                  <p className="mt-5 text-sm leading-6 text-[#aaa8a3]">A digital workspace that brings authentication, real-time collaboration, operational state, and subscription experiences into one calmer clinical workflow.</p>
+                  <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.14em] text-[#a8a6a2]"><span>{firstProject.meta}</span><span>{firstProject.date}</span></div>
+                  <h3 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">{firstProject.name}</h3>
+                  <p className="mt-2 text-base text-[#d0cdc7]">{firstProject.type}</p>
+                  <p className="mt-5 text-sm leading-6 text-[#aaa8a3]">{firstProject.description}</p>
                   <div className="mt-6 flex flex-wrap gap-2 text-[10px] font-medium uppercase tracking-[0.11em] text-[#bab7b1]">
-                    {['Next.js', 'Firebase', 'Liveblocks', 'Razorpay'].map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5">{tag}</span>)}
+                    {firstProject.technologies.map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5">{tag}</span>)}
                   </div>
-                  <a href="#contact" className="group/link mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#f4f1eb]">Discuss this case study <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
+                  <a href="#contact" className="group/link mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#f4f1eb]">{firstProject.cta} <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
                 </div>
               </article>
 
               <article className="group grid gap-7 lg:grid-cols-[minmax(260px,0.58fr)_minmax(0,1.42fr)] lg:items-end lg:gap-12">
                 <div className="order-2 lg:order-1 lg:pb-2">
-                  <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.14em] text-[#a8a6a2]"><span>02 — Commerce system</span><span>In progress</span></div>
-                  <h3 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">Shopkeeper AI</h3>
-                  <p className="mt-2 text-base text-[#d0cdc7]">Inventory &amp; online store management</p>
-                  <p className="mt-5 text-sm leading-6 text-[#aaa8a3]">One ecosystem for shopkeepers: a native mobile experience for day-to-day inventory and a customer-facing storefront for turning stock into commerce.</p>
+                  <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.14em] text-[#a8a6a2]"><span>{secondProject.meta}</span><span>{secondProject.date}</span></div>
+                  <h3 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">{secondProject.name}</h3>
+                  <p className="mt-2 text-base text-[#d0cdc7]">{secondProject.type}</p>
+                  <p className="mt-5 text-sm leading-6 text-[#aaa8a3]">{secondProject.description}</p>
                   <div className="mt-6 flex flex-wrap gap-2 text-[10px] font-medium uppercase tracking-[0.11em] text-[#bab7b1]">
-                    {['Expo', 'React', 'TypeScript', 'Supabase'].map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5">{tag}</span>)}
+                    {secondProject.technologies.map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5">{tag}</span>)}
                   </div>
-                  <a href="#contact" className="group/link mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#f4f1eb]">Ask about the build <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
+                  <a href="#contact" className="group/link mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#f4f1eb]">{secondProject.cta} <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
                 </div>
-                <a href="#contact" className="order-1 relative block transition-transform duration-300 hover:-translate-y-1 lg:order-2" aria-label="Discuss the Shopkeeper AI project">
-                  <ProductEvidence kind="commerce" />
+                <a href="#contact" className="order-1 relative block transition-transform duration-300 hover:-translate-y-1 lg:order-2" aria-label={secondProject.ariaLabel}>
+                  <ProductEvidence project={secondProject} />
                   <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
                 </a>
               </article>
@@ -406,43 +363,33 @@ export default function Home() {
           <div className="relative mx-auto max-w-7xl">
             <div className="grid gap-10 border-b border-[#1b1c1d]/10 pb-12 lg:grid-cols-[0.66fr_1.34fr] lg:gap-20">
               <div>
-                <p className="eyebrow">Practice</p>
-                <h2 className="mt-4 font-serif text-5xl leading-[0.95] tracking-[-0.06em] sm:text-6xl">The work behind the work.</h2>
+                <p className="eyebrow">{content.practice.eyebrow}</p>
+                <h2 className="mt-4 font-serif text-5xl leading-[0.95] tracking-[-0.06em] sm:text-6xl">{content.practice.heading}</h2>
               </div>
-              <p className="max-w-2xl self-end text-lg leading-8 tracking-[-0.025em] text-[#575653]">I work best in the space between a messy problem and a usable system. That means thinking through flows, asking sharper questions, shaping the interface, and staying close enough to implementation that the details hold up.</p>
+              <p className="max-w-2xl self-end text-lg leading-8 tracking-[-0.025em] text-[#575653]">{content.practice.introduction}</p>
             </div>
 
             <div className="mt-12 grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-center lg:gap-20">
               <div className="relative mx-auto w-full max-w-[29rem] lg:mx-0">
                 <SystemsEvidence />
-                <div className="absolute -right-3 bottom-7 rounded-xl border border-[#1b1c1d]/10 bg-[#f6f4ef]/90 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#5d5b58] backdrop-blur-sm">Detail is part of the system.</div>
+                <div className="absolute -right-3 bottom-7 rounded-xl border border-[#1b1c1d]/10 bg-[#f6f4ef]/90 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#5d5b58] backdrop-blur-sm">{content.practice.visualCallout}</div>
               </div>
               <div className="grid gap-x-8 gap-y-8 sm:grid-cols-2">
-                {[
-                  ["Interface design", "Making complex workflows clear, calm, and easy to navigate."],
-                  ["UX architecture", "Mapping decisions, edge cases, and information before they become interface debt."],
-                  ["Frontend craft", "Translating systems into responsive, resilient interfaces with considered detail."],
-                  ["Research mindset", "Watching for assumptions, asking why, and letting real constraints shape the answer."],
-                ].map(([title, text], index) => (
-                  <div key={title} className="border-t border-[#1b1c1d]/12 pt-4">
+                {content.practice.disciplines.map((discipline, index) => (
+                  <div key={discipline.title} className="border-t border-[#1b1c1d]/12 pt-4">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#456fe8]">0{index + 1}</p>
-                    <h3 className="mt-3 text-lg font-semibold tracking-[-0.035em]">{title}</h3>
-                    <p className="mt-2 max-w-xs text-sm leading-6 text-[#6a6865]">{text}</p>
+                    <h3 className="mt-3 text-lg font-semibold tracking-[-0.035em]">{discipline.title}</h3>
+                    <p className="mt-2 max-w-xs text-sm leading-6 text-[#6a6865]">{discipline.text}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="mt-16 grid gap-px overflow-hidden rounded-[1.25rem] border border-[#1b1c1d]/10 bg-[#1b1c1d]/10 sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                ["Frontend", "React · Next.js · TypeScript"],
-                ["Backend", "Java · Spring · REST APIs"],
-                ["Data", "SQL · Firestore · DuckDB"],
-                ["Architecture", "Systems · Events · Scale"],
-              ].map(([name, tools]) => (
-                <div key={name} className="min-h-28 bg-[#f6f4ef] p-5 transition-colors duration-200 hover:bg-white">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#777571]">{name}</p>
-                  <p className="mt-4 text-sm font-medium tracking-[-0.02em] text-[#343434]">{tools}</p>
+              {content.practice.skills.map((skill) => (
+                <div key={skill.name} className="min-h-28 bg-[#f6f4ef] p-5 transition-colors duration-200 hover:bg-white">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#777571]">{skill.name}</p>
+                  <p className="mt-4 text-sm font-medium tracking-[-0.02em] text-[#343434]">{skill.tools}</p>
                 </div>
               ))}
             </div>
@@ -453,26 +400,22 @@ export default function Home() {
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-12 lg:grid-cols-[0.62fr_1.38fr] lg:gap-20">
               <div>
-                <p className="eyebrow">About</p>
-                <h2 className="mt-4 font-serif text-5xl leading-[0.94] tracking-[-0.06em] sm:text-6xl">A little about me.</h2>
+                <p className="eyebrow">{content.about.eyebrow}</p>
+                <h2 className="mt-4 font-serif text-5xl leading-[0.94] tracking-[-0.06em] sm:text-6xl">{content.about.heading}</h2>
                 <div className="mt-8 space-y-3 text-sm text-[#64625e]">
-                  <p className="flex items-center gap-2"><MapPin className="h-4 w-4 text-[#456fe8]" /> Bangalore, India</p>
-                  <p className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[#456fe8]" /> 2+ years of experience</p>
+                  <p className="flex items-center gap-2"><MapPin className="h-4 w-4 text-[#456fe8]" /> {content.identity.location}</p>
+                  <p className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[#456fe8]" /> {content.about.experienceLabel}</p>
                 </div>
               </div>
               <div>
-                <p className="max-w-3xl text-[clamp(1.55rem,3vw,2.45rem)] leading-[1.18] tracking-[-0.045em] text-[#292a2a]">I studied Computer Science and Engineering at SVNIT Surat and now work as a Software Developer at Wells Fargo. I care about what software does under the hood—and how it feels in the hands of the person using it.</p>
-                <p className="mt-7 max-w-2xl text-base leading-7 text-[#62605d]">My work has taken me across frontend development, backend engineering, databases, and risk technology. I particularly enjoy problems where the answer is not obvious: understanding the constraints, breaking the work down, and shaping an experience that can scale.</p>
+                <p className="max-w-3xl text-[clamp(1.55rem,3vw,2.45rem)] leading-[1.18] tracking-[-0.045em] text-[#292a2a]">{content.about.statement}</p>
+                <p className="mt-7 max-w-2xl text-base leading-7 text-[#62605d]">{content.about.description}</p>
                 <div className="mt-10 grid gap-4 sm:grid-cols-3">
-                  {[
-                    ["Now", "Software Developer", "Wells Fargo"],
-                    ["Education", "B.Tech, CSE", "SVNIT Surat"],
-                    ["Focus", "Product systems", "Interface to data"],
-                  ].map(([label, primary, secondary]) => (
-                    <div key={label} className="border-t border-[#1b1c1d]/12 pt-4">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">{label}</p>
-                      <p className="mt-2 text-sm font-semibold tracking-[-0.025em]">{primary}</p>
-                      <p className="mt-1 text-xs text-[#706e6a]">{secondary}</p>
+                  {content.about.facts.map((fact) => (
+                    <div key={fact.label} className="border-t border-[#1b1c1d]/12 pt-4">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">{fact.label}</p>
+                      <p className="mt-2 text-sm font-semibold tracking-[-0.025em]">{fact.primary}</p>
+                      <p className="mt-1 text-xs text-[#706e6a]">{fact.secondary}</p>
                     </div>
                   ))}
                 </div>
@@ -481,17 +424,17 @@ export default function Home() {
 
             <div className="mt-20 grid gap-12 border-t border-[#1b1c1d]/10 pt-12 lg:grid-cols-[0.62fr_1.38fr] lg:gap-20">
               <div>
-                <p className="eyebrow">Experience</p>
-                <p className="mt-4 text-sm leading-6 text-[#6a6865]">A factual, understated snapshot of the work I do and the systems I want to keep learning from.</p>
+                <p className="eyebrow">{content.experience.eyebrow}</p>
+                <p className="mt-4 text-sm leading-6 text-[#6a6865]">{content.experience.introduction}</p>
               </div>
               <div>
                 <div className="flex flex-col gap-4 border-b border-[#1b1c1d]/10 pb-6 sm:flex-row sm:items-start sm:justify-between">
-                  <div><h3 className="text-2xl font-semibold tracking-[-0.05em]">Wells Fargo</h3><p className="mt-1 text-sm text-[#676561]">Software Developer · Market Risk</p></div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">2024 — Present</p>
+                  <div><h3 className="text-2xl font-semibold tracking-[-0.05em]">{content.experience.company}</h3><p className="mt-1 text-sm text-[#676561]">{content.experience.role}</p></div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">{content.experience.date}</p>
                 </div>
-                <p className="mt-6 max-w-2xl text-base leading-7 text-[#5d5b58]">Contributing to applications and services that support quantitative risk-management and risk-adjustment workflows. The work stretches across frontend, backend, data, and the technical decisions that connect them.</p>
-                <ul className="mt-7 grid gap-3 sm:grid-cols-2" aria-label="Current engineering responsibilities">
-                  {experienceItems.map((item) => <li key={item} className="flex gap-3 text-sm leading-6 text-[#595754]"><Check className="mt-1 h-3.5 w-3.5 shrink-0 text-[#456fe8]" />{item}</li>)}
+                <p className="mt-6 max-w-2xl text-base leading-7 text-[#5d5b58]">{content.experience.description}</p>
+                <ul className="mt-7 grid gap-3 sm:grid-cols-2" aria-label={content.experience.responsibilityLabel}>
+                  {content.experience.responsibilities.map((item) => <li key={item} className="flex gap-3 text-sm leading-6 text-[#595754]"><Check className="mt-1 h-3.5 w-3.5 shrink-0 text-[#456fe8]" />{item}</li>)}
                 </ul>
               </div>
             </div>
@@ -501,11 +444,11 @@ export default function Home() {
         <section id="philosophy" className="theme-light-surface px-5 py-20 sm:px-8 sm:py-28 lg:px-12 xl:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col justify-between gap-6 border-b border-[#1b1c1d]/10 pb-10 sm:flex-row sm:items-end">
-              <div><p className="eyebrow">Engineering philosophy</p><h2 className="mt-4 font-serif text-5xl leading-[0.94] tracking-[-0.06em] sm:text-6xl">How I think<br />about software.</h2></div>
-              <p className="max-w-xs text-sm leading-6 text-[#6a6865]">A few principles I return to when systems, screens, or product decisions get more complex.</p>
+              <div><p className="eyebrow">{content.philosophy.eyebrow}</p><h2 className="mt-4 font-serif text-5xl leading-[0.94] tracking-[-0.06em] sm:text-6xl">{content.philosophy.headingLineOne}<br />{content.philosophy.headingLineTwo}</h2></div>
+              <p className="max-w-xs text-sm leading-6 text-[#6a6865]">{content.philosophy.introduction}</p>
             </div>
             <div className="mt-6">
-              {principles.map((principle) => (
+              {content.philosophy.principles.map((principle) => (
                 <article key={principle.number} className="philosophy-entry group grid grid-cols-[2.65rem_minmax(0,1fr)] gap-x-4 gap-y-3 py-7 sm:grid-cols-[80px_minmax(0,1fr)_minmax(0,0.9fr)] sm:items-baseline sm:gap-x-7 sm:gap-y-0">
                   <p className="pt-1 text-[11px] font-semibold tracking-[0.14em] text-[#456fe8]">{principle.number}</p>
                   <h3 className="text-2xl font-semibold tracking-[-0.045em] transition-transform duration-200 group-hover:translate-x-1">{principle.title}</h3>
@@ -520,16 +463,16 @@ export default function Home() {
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-10 lg:grid-cols-[0.68fr_1.32fr] lg:gap-20">
               <div>
-                <p className="eyebrow contact-eyebrow">Contact</p>
-                <p className="mt-5 max-w-xs text-sm leading-6 text-white/75">Have an interesting idea, a technical problem to explore, or simply want to compare notes?</p>
+                <p className="eyebrow contact-eyebrow">{content.contact.eyebrow}</p>
+                <p className="mt-5 max-w-xs text-sm leading-6 text-white/75">{content.contact.introduction}</p>
               </div>
               <div>
-                <h2 className="max-w-3xl font-serif text-[clamp(3.3rem,7vw,7rem)] leading-[0.85] tracking-[-0.075em]">Let’s build<br />something clear.</h2>
-                <a href="mailto:hello@shreypatel.dev" className="group mt-10 inline-flex items-center gap-3 border-b border-white/45 pb-2 text-lg font-semibold tracking-[-0.03em] transition-colors hover:border-white sm:text-2xl">hello@shreypatel.dev <ArrowUpRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" /></a>
+                <h2 className="max-w-3xl font-serif text-[clamp(3.3rem,7vw,7rem)] leading-[0.85] tracking-[-0.075em]">{content.contact.headingLineOne}<br />{content.contact.headingLineTwo}</h2>
+                <a href={`mailto:${content.contact.email}`} className="group mt-10 inline-flex items-center gap-3 border-b border-white/45 pb-2 text-lg font-semibold tracking-[-0.03em] transition-colors hover:border-white sm:text-2xl">{content.contact.email} <ArrowUpRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" /></a>
                 <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 text-sm font-semibold">
-                  <a href="https://github.com/" target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"><Github className="h-4 w-4" /> GitHub <AnchorArrow /></a>
-                  <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"><Linkedin className="h-4 w-4" /> LinkedIn <AnchorArrow /></a>
-                  <a href="mailto:hello@shreypatel.dev" className="group inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"><Mail className="h-4 w-4" /> Email <AnchorArrow /></a>
+                  <a href={content.contact.githubUrl} target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"><Github className="h-4 w-4" /> {content.contact.githubLabel} <AnchorArrow /></a>
+                  <a href={content.contact.linkedinUrl} target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"><Linkedin className="h-4 w-4" /> {content.contact.linkedinLabel} <AnchorArrow /></a>
+                  <a href={`mailto:${content.contact.email}`} className="group inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"><Mail className="h-4 w-4" /> {content.contact.emailLabel} <AnchorArrow /></a>
                 </div>
               </div>
             </div>
@@ -539,8 +482,8 @@ export default function Home() {
 
       <footer className="border-t border-white/15 bg-[#1b1c1d] px-5 py-7 text-[#c8c6c1] sm:px-8 lg:ml-72 lg:px-12 xl:px-16">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-3 text-[11px] sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} Shrey Patel. Built with clarity &amp; care.</p>
-          <p className="uppercase tracking-[0.12em] text-[#8e8c87]">UI · Frontend · UX · Systems</p>
+          <p>© {new Date().getFullYear()} {content.identity.name}. {content.footer.left}</p>
+          <p className="uppercase tracking-[0.12em] text-[#8e8c87]">{content.footer.right}</p>
         </div>
       </footer>
     </div>

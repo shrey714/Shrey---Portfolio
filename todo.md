@@ -269,3 +269,5 @@
 - [x] Remove the database-schema dependency from public contact delivery while retaining existing validation, honeypot, cooldown, Telegram delivery, and safe failure behavior.
 
 - [x] Remove the obsolete Vercel daily rate-limit cleanup cron and its Telegram cleanup-success and failure notification paths because Redis TTL expires cooldown keys automatically.
+
+- [x] Remove orphaned cleanup API files and confirm no deleted cleanup modules remain referenced by the Vercel build.

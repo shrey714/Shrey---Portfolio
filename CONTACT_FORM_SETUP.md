@@ -19,7 +19,7 @@ The portfolio contact form lives in the existing project and uses a public serve
 | Honeypot field | Silently absorbs many basic automated submissions. |
 | Input limits and sanitization | Rejects malformed or oversized input and escapes Telegram HTML. |
 | No message database storage | Keeps enquiry content in Telegram rather than duplicating it in the website database. |
-| Daily rate-limit cleanup | Deletes only hashed cooldown records that expired more than 24 hours earlier. |
+| Redis TTL expiration | Automatically removes each opaque cooldown key after 90 seconds; no cleanup job is required. |
 
 ## Operational notes
 
@@ -27,15 +27,11 @@ The relevant user-facing form labels and messages live in `client/src/content/po
 
 If you ever rotate the Telegram bot token or change the destination chat, update the matching protected secret and re-run the credential and destination tests before relying on the form.
 
-## Rate-limit retention and scheduled cleanup
+## Rate-limit storage and expiration
 
-The `contact_rate_limits` table stores one SHA-256 hash and a cooldown timestamp for each recent submitting network key. It does not store the visitor’s raw IP address, name, email address, or message. Records are retained for 24 hours after their 90-second cooldown expires, then removed by the cleanup query. An index on `nextAllowedAt` keeps the scheduled lookup targeted to expired rows.
+The contact form stores one SHA-256 hash in Upstash Redis for each recent submitting network key. It does not store the visitor’s raw IP address, name, email address, or message. Redis automatically expires the key after the 90-second cooldown, so the application needs neither a SQL database nor a maintenance query for this feature.
 
-For the planned Vercel deployment, `vercel.json` schedules `GET /api/contact-rate-limit-cleanup` every day at **03:00 UTC**. The route runs independently of page loads and contact submissions, so it does not add work to a visitor’s request. It accepts only an `Authorization: Bearer <CRON_SECRET>` request. Before the first Vercel production deployment, set a strong `CRON_SECRET` environment variable in the Vercel project; Vercel sends that same value automatically when it invokes the configured cron route. The route fails closed with `401` if the secret is absent or incorrect.
-
-After each authorized cleanup run, the same configured Telegram bot sends a private maintenance notification with the number of expired cooldown records removed and the UTC retention cutoff. It reports the result even when the count is zero, so you can confirm the job ran. The notification contains no raw IP address, hashed network key, name, email address, or contact message. If Telegram is temporarily unavailable, the completed cleanup remains successful and the route returns normally to avoid an automatic retry deleting the same records twice.
-
-If the cleanup itself fails, the bot sends a separate private alert that identifies only the failed maintenance stage and UTC timestamp. It deliberately excludes the underlying error text, database connection data, credentials, and visitor information. The route still returns a retryable failure response so the scheduler can retry the cleanup automatically; if the alert cannot be delivered, the retry behavior remains unchanged.
+For Vercel production, connect the Upstash Redis integration to the project and keep `KV_REST_API_URL` and `KV_REST_API_TOKEN` available to the Production environment. The full-access token is server-only and must never be copied into browser code or GitHub.
 
 ## Verification record
 

@@ -135,4 +135,12 @@
 - [x] Add unit coverage for the cleanup notification content and failure behavior.
 - [x] Verify the scheduled handler returns success with `notificationSent: false` when Telegram fails after cleanup succeeds.
 - [x] Validate the updated build and document the new notification flow.
-- [ ] Save and deliver the cleanup-notification checkpoint.
+- [x] Save and deliver the cleanup-notification checkpoint.
+
+# Scheduled Cleanup Failure Alert
+
+- [x] Add a sanitized Telegram alert for cleanup failures that includes only a safe stage label and timestamp.
+- [x] Preserve the cleanup route’s retryable error response even when the failure alert cannot be delivered.
+- [x] Add unit coverage for failure-alert formatting, delivery fallback, and retryable scheduled-handler response.
+- [x] Validate the production build and update the maintenance documentation.
+- [ ] Save and deliver the cleanup-failure-alert checkpoint.

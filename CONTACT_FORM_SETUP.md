@@ -35,6 +35,8 @@ For the planned Vercel deployment, `vercel.json` schedules `GET /api/contact-rat
 
 After each authorized cleanup run, the same configured Telegram bot sends a private maintenance notification with the number of expired cooldown records removed and the UTC retention cutoff. It reports the result even when the count is zero, so you can confirm the job ran. The notification contains no raw IP address, hashed network key, name, email address, or contact message. If Telegram is temporarily unavailable, the completed cleanup remains successful and the route returns normally to avoid an automatic retry deleting the same records twice.
 
+If the cleanup itself fails, the bot sends a separate private alert that identifies only the failed maintenance stage and UTC timestamp. It deliberately excludes the underlying error text, database connection data, credentials, and visitor information. The route still returns a retryable failure response so the scheduler can retry the cleanup automatically; if the alert cannot be delivered, the retry behavior remains unchanged.
+
 ## Verification record
 
 The public Contact section has been checked in the running portfolio. It exposes labelled name, email, and message fields; a concealed honeypot field; a visible submit action; a live status region; a privacy note; and an email fallback.

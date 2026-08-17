@@ -97,4 +97,41 @@ describe("contact rate-limit cleanup", () => {
       notificationSent: false,
     });
   });
+
+  it("alerts about a cleanup failure and still returns a retryable response", async () => {
+    const captured: CapturedResponse = {};
+    const cleanup = vi.fn().mockRejectedValue(new Error("Database query failed with internal details"));
+    const notifyFailure = vi.fn().mockResolvedValue(undefined);
+
+    await runContactRateLimitCleanup(
+      { method: "GET", headers: { authorization: "Bearer test" } } as never,
+      createResponse(captured) as never,
+      { authorize: () => true, cleanup, notifyFailure }
+    );
+
+    expect(notifyFailure).toHaveBeenCalledOnce();
+    expect(captured.statusCode).toBe(500);
+    expect(captured.body).toMatchObject({
+      error: "cleanup-failed",
+      failureAlertSent: true,
+    });
+  });
+
+  it("keeps the cleanup failure retryable when the Telegram failure alert also fails", async () => {
+    const captured: CapturedResponse = {};
+    const cleanup = vi.fn().mockRejectedValue(new Error("Database query failed"));
+    const notifyFailure = vi.fn().mockRejectedValue(new Error("Telegram unavailable"));
+
+    await runContactRateLimitCleanup(
+      { method: "GET", headers: { authorization: "Bearer test" } } as never,
+      createResponse(captured) as never,
+      { authorize: () => true, cleanup, notifyFailure }
+    );
+
+    expect(captured.statusCode).toBe(500);
+    expect(captured.body).toMatchObject({
+      error: "cleanup-failed",
+      failureAlertSent: false,
+    });
+  });
 });

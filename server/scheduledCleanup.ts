@@ -1,6 +1,9 @@
 import { timingSafeEqual } from "node:crypto";
 import type { Request, Response } from "express";
-import { deliverContactRateLimitCleanupNotification } from "./cleanupNotification";
+import {
+  deliverContactRateLimitCleanupFailureNotification,
+  deliverContactRateLimitCleanupNotification,
+} from "./cleanupNotification";
 import { cleanupExpiredContactRateLimits } from "./contactRateLimitCleanup";
 import { ENV } from "./_core/env";
 
@@ -8,6 +11,7 @@ export type ScheduledCleanupDependencies = {
   authorize?: typeof hasValidCronAuthorization;
   cleanup?: typeof cleanupExpiredContactRateLimits;
   notify?: typeof deliverContactRateLimitCleanupNotification;
+  notifyFailure?: typeof deliverContactRateLimitCleanupFailureNotification;
 };
 
 function getAuthorizationToken(value: string | string[] | undefined): string {
@@ -40,6 +44,7 @@ export async function runContactRateLimitCleanup(
     authorize = hasValidCronAuthorization,
     cleanup = cleanupExpiredContactRateLimits,
     notify = deliverContactRateLimitCleanupNotification,
+    notifyFailure = deliverContactRateLimitCleanupFailureNotification,
   }: ScheduledCleanupDependencies = {}
 ): Promise<void> {
   if (req.method !== "GET") {
@@ -67,7 +72,18 @@ export async function runContactRateLimitCleanup(
 
     res.status(200).json({ ok: true, deletedCount, cutoff: cutoff.toISOString(), notificationSent });
   } catch (error) {
+    const failedAt = new Date();
+    let failureAlertSent = true;
+
+    try {
+      await notifyFailure({ occurredAt: failedAt });
+    } catch (notificationError) {
+      failureAlertSent = false;
+      console.error("[Scheduled Cleanup] Telegram failure alert could not be delivered:", notificationError);
+    }
+
     console.error("[Scheduled Cleanup] Contact rate-limit cleanup failed:", error);
-    res.status(500).json({ error: "cleanup-failed", timestamp: new Date().toISOString() });
+    // Retain 5xx so the scheduler retries the failed cleanup, regardless of alert delivery.
+    res.status(500).json({ error: "cleanup-failed", timestamp: failedAt.toISOString(), failureAlertSent });
   }
 }

@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  deliverContactRateLimitCleanupFailureNotification,
   deliverContactRateLimitCleanupNotification,
+  formatContactRateLimitCleanupFailureNotification,
   formatContactRateLimitCleanupNotification,
 } from "./cleanupNotification";
 
@@ -29,9 +31,30 @@ describe("scheduled cleanup Telegram notification", () => {
     ).toContain("1 expired cooldown record");
   });
 
+  it("formats a safe failure alert without including the original error", () => {
+    const message = formatContactRateLimitCleanupFailureNotification({
+      occurredAt: new Date("2026-08-17T03:00:00.000Z"),
+    });
+
+    expect(message).toContain("Rate-limit cleanup failed");
+    expect(message).toContain("2026-08-17T03:00:00.000Z");
+    expect(message).not.toContain("DATABASE_URL");
+    expect(message).not.toContain("Telegram unavailable");
+  });
+
   it("propagates a bounded Telegram failure to the scheduled handler", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new DOMException("aborted", "AbortError")));
 
     await expect(deliverContactRateLimitCleanupNotification(cleanupResult)).rejects.toThrow("timed out");
+  });
+
+  it("uses the same bounded delivery path for failure alerts", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new DOMException("aborted", "AbortError")));
+
+    await expect(
+      deliverContactRateLimitCleanupFailureNotification({
+        occurredAt: new Date("2026-08-17T03:00:00.000Z"),
+      })
+    ).rejects.toThrow("timed out");
   });
 });

@@ -256,3 +256,5 @@
 - [ ] Verify the deployed contact endpoint returns tRPC JSON and the deployed `/admin` endpoint returns the Decap editor shell.
 
 - [x] During active Vercel troubleshooting, automatically push each validated corrective commit to GitHub `main` and report its commit ID without asking separately.
+
+- [x] Restore a Vercel-detectable root Express entrypoint while preserving the explicit unified `/api/index.ts` route configuration.

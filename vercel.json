@@ -3,6 +3,9 @@
   "version": 2,
   "buildCommand": "pnpm build",
   "functions": {
+    "server.ts": {
+      "includeFiles": "dist/**"
+    },
     "api/index.ts": {
       "includeFiles": "dist/**"
     }

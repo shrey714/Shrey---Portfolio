@@ -282,24 +282,32 @@
   background: radial-gradient(circle at 72% 28%, rgba(120, 148, 255, 0.16), transparent 22rem), radial-gradient(circle at 8% 92%, rgba(255, 255, 255, 0.035), transparent 18rem);
 }
 
-/* Philosophy entries remain a clean editorial list in either theme; they are not cards. */
+/* Philosophy entries are a single-divider editorial list, never card surfaces. */
 .philosophy-entry {
-  border-top: 1px solid rgba(27, 28, 29, 0.1);
-  transition: padding 200ms cubic-bezier(0.23, 1, 0.32, 1), border-color 200ms ease-out;
-}
-
-.philosophy-entry:last-child {
   border-bottom: 1px solid rgba(27, 28, 29, 0.1);
+  transition: border-color 180ms ease-out;
 }
 
-.dark .portfolio .philosophy-entry,
-.dark .portfolio .philosophy-entry:last-child {
+.philosophy-entry:hover {
+  border-color: rgba(69, 111, 232, 0.62);
+}
+
+.philosophy-entry:hover h3 {
+  color: #456fe8;
+}
+
+.dark .portfolio .philosophy-entry {
   background: transparent !important;
   border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
 .dark .portfolio .philosophy-entry:hover {
-  background: rgba(120, 148, 255, 0.045) !important;
+  background: transparent !important;
+  border-color: rgba(150, 170, 255, 0.75) !important;
+}
+
+.dark .portfolio .philosophy-entry:hover h3 {
+  color: #96aaff !important;
 }
 
 /* Native mobile navigation overlay: short, interruptible opacity/transform transitions keep it fast. */

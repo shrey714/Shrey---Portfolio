@@ -20,3 +20,10 @@
 - [x] Tune mobile padding, surface treatment, and divider rhythm for stronger reading flow.
 - [x] Verify the correction in light and dark modes at desktop and mobile widths.
 - [x] Save and deliver the updated project checkpoint.
+
+# Philosophy Divider and Hover Correction
+
+- [x] Remove stacked borders so each philosophy entry has exactly one separator.
+- [x] Replace the dark boxed hover surface with a restrained text-and-accent response.
+- [x] Verify the corrected list at mobile width in dark mode.
+- [x] Save and deliver the targeted correction checkpoint.

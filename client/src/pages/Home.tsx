@@ -23,8 +23,10 @@ import {
   X,
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
+import { MicroCaseStudyPath, type WorkProject } from "@/components/MicroCaseStudyPath";
 import { useTheme } from "@/contexts/ThemeContext";
 import { portfolioContent as content } from "@/content/portfolioContent";
+import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
 import { trpc } from "@/lib/trpc";
 
 const hero = content.hero;
@@ -60,12 +62,84 @@ function HeroVisual({ index }: { index: number }) {
   return <div className="hero-visual hero-detail" aria-label={hero.slides[3].alt} role="img"><div className="hero-visual-topline"><span>{hero.slides[3].metaLeft}</span><span>{hero.slides[3].metaRight}</span></div><div className="hero-detail-board"><div className="hero-detail-block block-one" /><div className="hero-detail-block block-two" /><div className="hero-detail-block block-three" /><div className="hero-detail-dot dot-one" /><div className="hero-detail-dot dot-two" /></div><div className="hero-visual-annotation">{hero.slides[3].annotation}</div></div>;
 }
 
-function ProductEvidence({ project }: { project: (typeof content.work.projects)[number] }) {
+function ProductEvidence({ project }: { project: WorkProject }) {
   const clinic = project.kind === "clinic";
+  const [isVisible, setIsVisible] = useState(false);
+  const evidenceRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const element = evidenceRef.current;
+    if (!element) return;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let animationFrame: number | null = null;
+
+    const resetScrollMotion = () => {
+      element.style.removeProperty("--evidence-scroll-y");
+      element.style.removeProperty("--evidence-scroll-scale");
+    };
+
+    const updateScrollMotion = () => {
+      animationFrame = null;
+      if (reducedMotion.matches) {
+        resetScrollMotion();
+        setIsVisible(true);
+        return;
+      }
+
+      const bounds = element.getBoundingClientRect();
+      const motion = getEvidenceScrollMotion({ top: bounds.top, height: bounds.height, viewportHeight: window.innerHeight }, reducedMotion.matches);
+      if (!motion) {
+        resetScrollMotion();
+        return;
+      }
+
+      element.style.setProperty("--evidence-scroll-y", `${motion.translateY}px`);
+      element.style.setProperty("--evidence-scroll-scale", motion.scale.toString());
+    };
+
+    const requestScrollMotion = () => {
+      if (animationFrame === null) animationFrame = window.requestAnimationFrame(updateScrollMotion);
+    };
+
+    const handleMotionPreference = () => {
+      if (reducedMotion.matches) {
+        resetScrollMotion();
+        setIsVisible(true);
+      } else {
+        requestScrollMotion();
+      }
+    };
+
+    if (reducedMotion.matches) setIsVisible(true);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.22 }
+    );
+
+    observer.observe(element);
+    requestScrollMotion();
+    window.addEventListener("scroll", requestScrollMotion, { passive: true });
+    window.addEventListener("resize", requestScrollMotion);
+    reducedMotion.addEventListener("change", handleMotionPreference);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", requestScrollMotion);
+      window.removeEventListener("resize", requestScrollMotion);
+      reducedMotion.removeEventListener("change", handleMotionPreference);
+      if (animationFrame !== null) window.cancelAnimationFrame(animationFrame);
+    };
+  }, []);
 
   return (
-    <div className="relative overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#26272a] p-3 shadow-[0_24px_55px_-40px_rgba(0,0,0,0.8)]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(69,111,232,0.22),transparent_35%)]" />
+    <div ref={evidenceRef} className={`project-evidence relative overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#26272a] p-3 shadow-[0_24px_55px_-40px_rgba(0,0,0,0.8)] ${isVisible ? "is-visible" : ""}`}>
+      <div className="project-evidence-glow absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(69,111,232,0.22),transparent_35%)]" />
       <div className="relative rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">
         <div className="flex items-center justify-between border-b border-white/10 pb-3 text-[8px] font-semibold uppercase tracking-[0.14em] text-white/45">
           <span>{project.visualMeta}</span>
@@ -361,6 +435,7 @@ export default function Home() {
                   <div className="mt-6 flex flex-wrap gap-2 text-[10px] font-medium uppercase tracking-[0.11em] text-[#bab7b1]">
                     {firstProject.technologies.map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5">{tag}</span>)}
                   </div>
+                  <MicroCaseStudyPath project={firstProject} />
                   <a href="#contact" className="group/link mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#f4f1eb]">{firstProject.cta} <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
                 </div>
               </article>
@@ -374,6 +449,7 @@ export default function Home() {
                   <div className="mt-6 flex flex-wrap gap-2 text-[10px] font-medium uppercase tracking-[0.11em] text-[#bab7b1]">
                     {secondProject.technologies.map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5">{tag}</span>)}
                   </div>
+                  <MicroCaseStudyPath project={secondProject} />
                   <a href="#contact" className="group/link mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#f4f1eb]">{secondProject.cta} <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
                 </div>
                 <a href="#contact" className="order-1 relative block transition-transform duration-300 hover:-translate-y-1 lg:order-2" aria-label={secondProject.ariaLabel}>

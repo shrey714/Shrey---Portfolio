@@ -150,3 +150,13 @@
 - [x] Inspect the local branch and linked GitHub branch for unpushed portfolio maintenance updates.
 - [x] Commit and push any remaining validated maintenance, notification, documentation, and task-tracker changes.
 - [x] Verify GitHub `main` matches the latest pushed commit and report the commit identifier.
+
+# Micro Case-Study Paths and Motion
+
+- [x] Add editable three-step micro walkthrough content to both case-study projects in the central portfolio configuration.
+- [x] Build keyboard-accessible walkthrough controls with clear active-step and progress states for each project.
+- [x] Add a restrained IntersectionObserver-based evidence-frame entrance treatment that respects reduced-motion preferences and dark mode.
+- [x] Add targeted configuration coverage, validate desktop and mobile layouts, and confirm the production build.
+- [x] Add true scroll-progress evidence-frame motion while preserving reduced-motion and dark-mode behavior.
+- [x] Add frontend interaction coverage for active-step updates, tab semantics, progress state, and motion fallback.
+- [ ] Save a local review checkpoint only; do not push these changes to GitHub until the user explicitly approves.

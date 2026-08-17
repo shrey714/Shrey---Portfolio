@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildDecapConfig, isRepositoryOwner } from "./_core/decap";
+import { buildDecapConfig, isAllowedDecapGithubProxyRequest, isRepositoryOwner } from "./_core/decap";
 
 describe("Decap CMS configuration", () => {
   it("targets the configured repository, live production origin, and local OAuth proxy route", () => {
@@ -25,5 +25,13 @@ describe("Decap CMS configuration", () => {
     expect(isRepositoryOwner("shrey714")).toBe(true);
     expect(isRepositoryOwner("ShReY714")).toBe(true);
     expect(isRepositoryOwner("another-editor")).toBe(false);
+  });
+
+  it("allows only Decap's read-only user identity lookup outside the configured repository", () => {
+    expect(isAllowedDecapGithubProxyRequest("/user", "GET")).toBe(true);
+    expect(isAllowedDecapGithubProxyRequest("/user", "POST")).toBe(false);
+    expect(isAllowedDecapGithubProxyRequest("/user/repos", "GET")).toBe(false);
+    expect(isAllowedDecapGithubProxyRequest("/repos/shrey714/Shrey---Portfolio/git/blobs", "POST")).toBe(true);
+    expect(isAllowedDecapGithubProxyRequest("/repos/another-owner/another-repository", "GET")).toBe(false);
   });
 });

@@ -167,7 +167,8 @@ function editorShell() {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex,nofollow" /><title>Portfolio content editor</title></head><body><noscript>This private editor requires JavaScript.</noscript><script src="https://unpkg.com/decap-cms@3.7.1/dist/decap-cms.js"></script></body></html>`;
 }
 
-function isAllowedGithubRepositoryPath(pathname: string) {
+export function isAllowedDecapGithubProxyRequest(pathname: string, method: string) {
+  if (pathname === "/user") return method === "GET";
   return pathname === `/repos/${REPOSITORY}` || pathname.startsWith(`/repos/${REPOSITORY}/`);
 }
 
@@ -177,8 +178,8 @@ async function proxyDecapGithubRequest(req: Request, res: Parameters<Express["ge
   const authorization = req.get("authorization");
 
   if (!authorization) return res.status(401).json({ message: "Editor authentication is required." });
-  if (targetUrl.origin !== GITHUB_API_ORIGIN || !isAllowedGithubRepositoryPath(targetUrl.pathname)) {
-    return res.status(403).json({ message: "This editor may only access its configured repository." });
+  if (targetUrl.origin !== GITHUB_API_ORIGIN || !isAllowedDecapGithubProxyRequest(targetUrl.pathname, req.method)) {
+    return res.status(403).json({ message: "This editor may only identify its authenticated user or access its configured repository." });
   }
 
   const headers = new Headers({

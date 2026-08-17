@@ -7,6 +7,8 @@ const OAUTH_STATE_COOKIE = "__Host-decap_oauth_state";
 const OAUTH_STATE_MAX_AGE_MS = 10 * 60 * 1000;
 const REPOSITORY = "shrey714/Shrey---Portfolio";
 const REPOSITORY_OWNER = REPOSITORY.split("/")[0];
+const DECAP_GITHUB_PROXY_PATH = "/api/decap/github";
+const GITHUB_API_ORIGIN = "https://api.github.com";
 
 type DecapField = {
   label: string;
@@ -108,9 +110,14 @@ function portfolioFields(): DecapField[] {
 
 export function buildDecapConfig(origin: string) {
   return {
-    backend: { name: "github", repo: REPOSITORY, branch: "main", base_url: origin, auth_endpoint: "api/decap/auth" },
-    media_folder: "content/media",
-    public_folder: "/media",
+    backend: {
+      name: "github",
+      repo: REPOSITORY,
+      branch: "main",
+      base_url: origin,
+      auth_endpoint: "api/decap/auth",
+      api_root: `${origin}${DECAP_GITHUB_PROXY_PATH}`,
+    },
     publish_mode: "simple",
     editor: { preview: false },
     collections: [{ name: "portfolio", label: "Portfolio content", format: "json", files: [{ name: "portfolio", label: "Portfolio", file: "content/portfolio.json", fields: portfolioFields() }] }],
@@ -158,6 +165,49 @@ function editorShell() {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex,nofollow" /><title>Portfolio content editor</title></head><body><noscript>This private editor requires JavaScript.</noscript><script src="https://unpkg.com/decap-cms@3.7.1/dist/decap-cms.js"></script></body></html>`;
 }
 
+function isAllowedGithubRepositoryPath(pathname: string) {
+  return pathname === `/repos/${REPOSITORY}` || pathname.startsWith(`/repos/${REPOSITORY}/`);
+}
+
+async function proxyDecapGithubRequest(req: Request, res: Parameters<Express["get"]>[1] extends (...args: infer Args) => unknown ? Args[1] : never) {
+  const pathWithQuery = req.originalUrl.slice(DECAP_GITHUB_PROXY_PATH.length) || "/";
+  const targetUrl = new URL(pathWithQuery, GITHUB_API_ORIGIN);
+  const authorization = req.get("authorization");
+
+  if (!authorization) return res.status(401).json({ message: "Editor authentication is required." });
+  if (targetUrl.origin !== GITHUB_API_ORIGIN || !isAllowedGithubRepositoryPath(targetUrl.pathname)) {
+    return res.status(403).json({ message: "This editor may only access its configured repository." });
+  }
+
+  const headers = new Headers({
+    Accept: req.get("accept") ?? "application/vnd.github+json",
+    Authorization: authorization,
+    "User-Agent": "Shrey-Portfolio-Decap-Proxy",
+    "X-GitHub-Api-Version": req.get("x-github-api-version") ?? "2022-11-28",
+  });
+  const contentType = req.get("content-type");
+  const ifMatch = req.get("if-match");
+  if (contentType) headers.set("Content-Type", contentType);
+  if (ifMatch) headers.set("If-Match", ifMatch);
+
+  const hasRequestBody = !["GET", "HEAD"].includes(req.method);
+  const body = hasRequestBody && req.body !== undefined ? JSON.stringify(req.body) : undefined;
+
+  try {
+    const response = await fetch(targetUrl, { method: req.method, headers, body });
+    res.set({ "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow" });
+    const contentTypeHeader = response.headers.get("content-type");
+    const etag = response.headers.get("etag");
+    const rateLimitRemaining = response.headers.get("x-ratelimit-remaining");
+    if (contentTypeHeader) res.type(contentTypeHeader);
+    if (etag) res.set("ETag", etag);
+    if (rateLimitRemaining) res.set("X-RateLimit-Remaining", rateLimitRemaining);
+    return res.status(response.status).send(await response.text());
+  } catch {
+    return res.status(502).json({ message: "The editor could not reach GitHub. Please try again." });
+  }
+}
+
 export function registerDecapRoutes(app: Express) {
   app.get("/admin", (_req, res) => {
     res.set("X-Robots-Tag", "noindex, nofollow");
@@ -176,6 +226,8 @@ export function registerDecapRoutes(app: Express) {
     res.set({ "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow" });
     res.type("text/yaml").send(JSON.stringify(buildDecapConfig(requestOrigin(req))));
   });
+
+  app.all(`${DECAP_GITHUB_PROXY_PATH}/*`, proxyDecapGithubRequest);
 
   app.get("/api/decap/auth", (req, res) => {
     res.set({ "Cache-Control": "no-store", "Referrer-Policy": "no-referrer", "X-Robots-Tag": "noindex, nofollow" });

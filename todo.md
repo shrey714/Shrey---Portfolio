@@ -275,4 +275,7 @@
 - [x] Serve a Decap-compatible `/config.yml` fallback from the Vercel function so the editor can continue after GitHub OAuth authorization.
 
 - [x] Remove duplicate manual Decap initialization so the editor loads the portfolio collection only once from `/config.yml`.
+
+- [x] Remove unused Decap media-folder configuration to stop optional missing-media lookups.
+- [x] Route Decap GitHub API save requests through a constrained same-origin proxy so browser CORS does not block content commits.
 - [ ] Verify the deployed editor receives a valid configuration and transitions from GitHub login to the editable portfolio form.

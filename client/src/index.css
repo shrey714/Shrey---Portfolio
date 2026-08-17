@@ -333,13 +333,105 @@
   }
 }
 
-.micro-case-panel {
-  animation: micro-case-panel-enter 240ms cubic-bezier(0.23, 1, 0.32, 1) both;
-}
-
 .contact-eyebrow {
   color: rgba(255, 255, 255, 0.82) !important;
 }
+
+/* System X-Ray reveals project thinking without interrupting the default scan. */
+.system-xray { position: absolute; bottom: 0.85rem; left: 0.85rem; z-index: 12; }
+.system-xray-trigger,
+.rail-debug-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(27, 28, 29, 0.78);
+  color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.75);
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), border-color 180ms ease-out, background-color 180ms ease-out;
+}
+
+.system-xray-trigger { min-height: 2.2rem; padding: 0 0.85rem; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.rail-debug-button { height: 2.45rem; width: 2.45rem; border-color: rgba(27, 28, 29, 0.12); background: rgba(255, 255, 255, 0.58); color: #456fe8; }
+.system-xray-trigger:hover, .rail-debug-button:hover { transform: translateY(-1px); border-color: rgba(159, 178, 255, 0.7); background: rgba(49, 53, 61, 0.94); }
+.rail-debug-button:hover { background: #edf0ff; border-color: rgba(69, 111, 232, 0.45); }
+.system-xray-trigger:active, .rail-debug-button:active { transform: scale(0.96); }
+.system-xray-trigger:focus-visible, .rail-debug-button:focus-visible, .system-xray-tabs button:focus-visible, .system-xray-close:focus-visible, .footer-debug-button:focus-visible { outline: 2px solid #9fb2ff; outline-offset: 3px; }
+
+.system-xray-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: min(20rem, calc(100vw - 3.5rem));
+  overflow: hidden;
+  border: 1px solid rgba(159, 178, 255, 0.28);
+  border-radius: 1rem;
+  background: rgba(24, 25, 29, 0.96);
+  color: white;
+  box-shadow: 0 22px 45px -24px rgba(0, 0, 0, 0.95);
+  animation: system-xray-enter 260ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+.system-xray-panel-heading { display: flex; align-items: center; justify-content: space-between; padding: 0.8rem 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #aebff6; }
+.system-xray-close { display: inline-flex; height: 1.75rem; width: 1.75rem; align-items: center; justify-content: center; border-radius: 999px; color: rgba(255,255,255,0.7); transition: background-color 160ms ease-out, color 160ms ease-out; }
+.system-xray-close:hover { background: rgba(255,255,255,0.1); color: white; }
+.system-xray-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.3rem; padding: 0.75rem 0.85rem 0; }
+.system-xray-tabs button { min-height: 2rem; border-radius: 0.5rem; border: 1px solid transparent; color: rgba(255,255,255,0.5); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; transition: background-color 180ms ease-out, border-color 180ms ease-out, color 180ms ease-out; }
+.system-xray-tabs button[aria-selected="true"] { border-color: rgba(159,178,255,0.44); background: rgba(69,111,232,0.22); color: white; }
+.system-xray-lens { min-height: 10rem; padding: 1.1rem 1rem 1.15rem; }
+.system-xray-signal { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: #9fb2ff; }
+.system-xray-lens h4 { margin-top: 0.65rem; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.04em; }
+.system-xray-lens > p:last-child { margin-top: 0.55rem; font-size: 0.78rem; line-height: 1.55; color: rgba(255,255,255,0.68); }
+
+/* A calm, inspectable field-notes surface: dynamic content, not a fake live feed. */
+.field-notes-lines { opacity: 0.45; background-image: linear-gradient(rgba(27,28,29,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(27,28,29,0.05) 1px, transparent 1px); background-size: 1.75rem 1.75rem; mask-image: linear-gradient(to bottom, black, transparent 88%); }
+.field-note-card { position: relative; min-height: 15rem; border: 1px solid rgba(27,28,29,0.11); border-radius: 1.15rem; background: rgba(246,244,239,0.86); padding: 1.3rem; box-shadow: 0 22px 38px -36px rgba(27,28,29,0.72); transition: transform 220ms cubic-bezier(0.23,1,0.32,1), border-color 200ms ease-out, background-color 200ms ease-out; }
+.field-note-card:hover { transform: translateY(-0.3rem); border-color: rgba(69,111,232,0.48); background: rgba(255,255,255,0.92); }
+.field-note-card > div p, .field-note-card > div span { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.field-note-card > div p { color: #456fe8; }
+.field-note-card > div span { color: #777571; }
+.field-note-card h3 { margin-top: 2.9rem; max-width: 14rem; font-family: "DM Serif Display", serif; font-size: 1.75rem; line-height: 0.98; letter-spacing: -0.045em; }
+.field-note-card > p { margin-top: 1.1rem; max-width: 20rem; font-size: 0.83rem; line-height: 1.6; color: #62605d; }
+
+/* Debug mode makes the design system visible without becoming a new page. */
+.design-debug-layer { position: fixed; inset: 0; z-index: 70; pointer-events: none; }
+.design-debug-grid { position: absolute; inset: 0; display: grid; grid-template-columns: 18rem repeat(12, minmax(0, 1fr)); padding-right: 2.5rem; background: rgba(69,111,232,0.025); }
+.design-debug-grid span { border-left: 1px dashed rgba(69,111,232,0.46); background: rgba(69,111,232,0.025); }
+.design-debug-grid span:last-child { border-right: 1px dashed rgba(69,111,232,0.46); }
+.design-debug-panel { pointer-events: auto; position: absolute; top: 1rem; right: 1rem; width: min(23rem, calc(100vw - 2rem)); border: 1px solid rgba(27,28,29,0.14); border-radius: 1.1rem; background: rgba(246,244,239,0.94); padding: 1rem; color: #1b1c1d; box-shadow: 0 28px 58px -30px rgba(27,28,29,0.48); backdrop-filter: blur(16px); animation: design-debug-enter 280ms cubic-bezier(0.23,1,0.32,1) both; }
+.design-debug-panel-heading { display: flex; align-items: center; justify-content: space-between; color: #456fe8; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.design-debug-panel-heading button { display: inline-flex; height: 2rem; width: 2rem; align-items: center; justify-content: center; border-radius: 999px; color: #575653; transition: background-color 160ms ease-out; }
+.design-debug-panel-heading button:hover { background: rgba(27,28,29,0.07); }
+.design-debug-panel h2 { margin-top: 1.75rem; font-family: "DM Serif Display", serif; font-size: 2rem; line-height: 0.95; letter-spacing: -0.055em; }
+.design-debug-panel > p { margin-top: 0.8rem; font-size: 0.82rem; line-height: 1.55; color: #625f5a; }
+.design-debug-panel dl { margin-top: 1.4rem; display: grid; gap: 0.55rem; }
+.design-debug-panel dl div { border-top: 1px solid rgba(27,28,29,0.1); padding-top: 0.65rem; }
+.design-debug-panel dt { font-size: 0.59rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #777571; }
+.design-debug-panel dd { display: flex; align-items: center; gap: 0.35rem; margin-top: 0.35rem; font-size: 0.76rem; font-weight: 600; letter-spacing: -0.02em; }
+.design-debug-swatch { height: 0.7rem; width: 0.7rem; border-radius: 999px; border: 1px solid rgba(27,28,29,0.15); }
+.swatch-porcelain { background: #f6f4ef; }.swatch-charcoal { background: #1b1c1d; }.swatch-cobalt { background: #456fe8; }
+.footer-debug-button { display: inline-flex; align-items: center; gap: 0.4rem; color: #aebff6; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; transition: color 180ms ease-out; }
+.footer-debug-button:hover { color: white; }
+
+.dark .rail-debug-button { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.075); color: #9fb2ff; }
+.dark .field-note-card { border-color: rgba(255,255,255,0.13); background: rgba(27,28,29,0.86); box-shadow: none; }
+.dark .field-note-card:hover { border-color: rgba(159,178,255,0.5); background: rgba(37,38,43,0.96); }
+.dark .field-note-card > div span, .dark .field-note-card > p { color: rgba(255,255,255,0.62); }
+.dark .field-note-card h3 { color: #f4f1eb; }
+.dark .design-debug-panel { border-color: rgba(255,255,255,0.14); background: rgba(21,22,25,0.95); color: #f4f1eb; box-shadow: 0 30px 58px -30px rgba(0,0,0,0.92); }
+.dark .design-debug-panel > p, .dark .design-debug-panel-heading button { color: rgba(255,255,255,0.62); }
+.dark .design-debug-panel dl div { border-color: rgba(255,255,255,0.12); }
+.dark .design-debug-panel dt { color: rgba(255,255,255,0.48); }
+
+@keyframes system-xray-enter { from { opacity: 0; transform: translateY(0.75rem) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes design-debug-enter { from { opacity: 0; transform: translateY(-0.75rem) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+@media (max-width: 1023px) { .design-debug-grid { grid-template-columns: repeat(6, minmax(0,1fr)); padding: 0 1rem; } }
+@media (max-width: 640px) { .system-xray { bottom: 0.65rem; left: 0.65rem; }.system-xray-panel { width: min(20rem, calc(100vw - 2.1rem)); }.field-note-card { min-height: 13rem; }.field-note-card h3 { margin-top: 2.1rem; }.design-debug-panel { top: auto; right: 0.75rem; bottom: 0.75rem; width: calc(100vw - 1.5rem); }.design-debug-grid { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+@media (prefers-reduced-motion: reduce) { .system-xray-panel, .design-debug-panel { animation: none; }.field-note-card, .system-xray-trigger, .rail-debug-button { transition: none; }.field-note-card:hover, .system-xray-trigger:hover, .rail-debug-button:hover { transform: none; } }
 
 /* Compact appearance control: only the active icon is visible, with an
    interruptible transform/opacity crossfade between sun and moon states. */

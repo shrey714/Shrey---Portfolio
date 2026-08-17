@@ -181,3 +181,18 @@
 - [x] Inspect the latest local and remote GitHub branch state before publication.
 - [x] Commit the approved compact appearance-icon change and the associated local portfolio refinements.
 - [x] Push the approved commit to GitHub `main` and verify the remote commit identifier.
+
+# Portfolio Interaction Ideas Research
+
+- [x] Research distinctive, real portfolio interaction patterns from public design and portfolio sources.
+- [x] Evaluate candidate ideas for fit with the current quiet editorial visual system, accessibility, and performance.
+- [x] Present a practical shortlist for user review without modifying or pushing website code.
+
+# System X-Ray, Debug Mode, and Field Notes
+
+- [x] Add editable X-Ray lenses and Field Notes content to the centralized portfolio configuration.
+- [x] Build the System X-Ray interaction for both selected-work evidence frames with keyboard access and reduced-motion fallback.
+- [x] Build an optional Design Debug Mode that exposes editorial grid, typography, and color-system layers without altering normal reading.
+- [x] Add a compact Field Notes section that presents manually editable evolving observations without a live-status backend.
+- [x] Add focused unit coverage and validate responsive accessibility and production build.
+- [ ] Save a local-only review checkpoint without pushing to GitHub.

@@ -10,6 +10,7 @@ This project uses Decap CMS with the GitHub backend. The public portfolio is ser
 | `SITE_NAME` | `Shrey Patel` | Open Graph site name. |
 | `GITHUB_CLIENT_ID` | GitHub OAuth App Client ID | Starts the Decap GitHub login flow. |
 | `GITHUB_CLIENT_SECRET` | GitHub OAuth App Client Secret | Server-only authorization-code exchange; never expose it in client code. |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Blob write token | Server-only access to private portfolio media storage and owner-only media uploads. |
 
 These values have been added as protected project configuration for local review. Add the same four values to the Vercel project’s **Environment Variables** before its first production deployment. Use the **Production** environment and, if preview deployments need the editor, add matching preview-domain redirect URLs and environment values deliberately.
 

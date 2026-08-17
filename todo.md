@@ -284,3 +284,10 @@
 - [x] Audit and correct all production-facing origin references to https://shrey-patel-profile.vercel.app/.
 
 - [x] Permit Decap’s authenticated `/user` identification request through the same-origin proxy without widening repository write access.
+
+- [x] Audit current portfolio image and document assets and determine the available Vercel Blob storage access path.
+- [x] Connect or provision Vercel Blob storage and securely configure the required server-side token.
+- [x] Migrate existing portfolio media to Vercel Blob and replace editable content with permanent Blob URLs.
+- [x] Add a secure owner-only workflow for future portfolio media uploads.
+- [x] Validate local private Blob delivery, cache headers, SSR social-image output, owner-only upload protection, media-manager rendering, credential access, deterministic tests, TypeScript, and production build.
+- [ ] Validate local and deployed media delivery, admin editing behavior, SEO preview references, tests, and production build.

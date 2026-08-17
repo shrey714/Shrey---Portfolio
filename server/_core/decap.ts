@@ -147,16 +147,20 @@ export function isRepositoryOwner(login: string) {
   return login.trim().toLowerCase() === REPOSITORY_OWNER.toLowerCase();
 }
 
-async function verifyEditorOwner(accessToken: string) {
-  const response = await fetch("https://api.github.com/user", {
-    headers: {
-      Accept: "application/vnd.github+json",
-      Authorization: `Bearer ${accessToken}`,
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
-  });
-  const profile = (await response.json()) as { login?: unknown };
-  return response.ok && typeof profile.login === "string" && isRepositoryOwner(profile.login);
+export async function isAuthorizedEditorToken(accessToken: string) {
+  try {
+    const response = await fetch("https://api.github.com/user", {
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${accessToken}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    });
+    const profile = (await response.json()) as { login?: unknown };
+    return response.ok && typeof profile.login === "string" && isRepositoryOwner(profile.login);
+  } catch {
+    return false;
+  }
 }
 
 function unavailable(res: Parameters<Express["get"]>[1] extends (...args: infer Args) => unknown ? Args[1] : never) {
@@ -164,7 +168,7 @@ function unavailable(res: Parameters<Express["get"]>[1] extends (...args: infer 
 }
 
 function editorShell() {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex,nofollow" /><title>Portfolio content editor</title></head><body><noscript>This private editor requires JavaScript.</noscript><script src="https://unpkg.com/decap-cms@3.7.1/dist/decap-cms.js"></script></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex,nofollow" /><title>Portfolio content editor</title><style>.portfolio-media-link{position:fixed;z-index:2147483647;right:18px;top:14px;border:1px solid #7d7d7d;border-radius:999px;background:#fff;color:#222;padding:8px 12px;font:600 12px/1 system-ui,sans-serif;text-decoration:none;box-shadow:0 1px 8px #0002}.portfolio-media-link:focus{outline:3px solid #456fe8;outline-offset:2px}</style></head><body><a class="portfolio-media-link" href="/admin/media">Manage media</a><noscript>This private editor requires JavaScript.</noscript><script src="https://unpkg.com/decap-cms@3.7.1/dist/decap-cms.js"></script></body></html>`;
 }
 
 export function isAllowedDecapGithubProxyRequest(pathname: string, method: string) {
@@ -268,7 +272,7 @@ export function registerDecapRoutes(app: Express) {
       if (!tokenResponse.ok || !tokenBody.access_token) {
         return res.status(401).type("html").send(callbackDocument("error", { error: "Authentication could not be completed." }, trustedOrigin));
       }
-      const authorized = await verifyEditorOwner(tokenBody.access_token);
+      const authorized = await isAuthorizedEditorToken(tokenBody.access_token);
       if (!authorized) {
         return res.status(403).type("html").send(callbackDocument("error", { error: "Only the portfolio repository owner can use this editor." }, trustedOrigin));
       }

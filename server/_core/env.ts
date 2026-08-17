@@ -11,6 +11,7 @@ export const ENV = {
   telegramChatId: process.env.TELEGRAM_CHAT_ID ?? "",
   kvRestApiUrl: process.env.KV_REST_API_URL ?? "",
   kvRestApiToken: process.env.KV_REST_API_TOKEN ?? "",
+  blobReadWriteToken: process.env.BLOB_READ_WRITE_TOKEN ?? "",
   canonicalOrigin: (process.env.CANONICAL_ORIGIN ?? "https://shrey-patel-profile.vercel.app").replace(/\/$/, ""),
   siteName: process.env.SITE_NAME ?? "Shrey Patel",
   githubClientId: process.env.GITHUB_CLIENT_ID ?? "",

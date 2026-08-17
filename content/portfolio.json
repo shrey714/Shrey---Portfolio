@@ -238,7 +238,7 @@
       "User research"
     ],
     "contactCta": "Start a conversation",
-    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030516120/shwRtlkMQlPKcxgZ.jpg",
+    "imageUrl": "/api/media/portfolio/hero/shrey-hero-editorial.webp",
     "carouselSelectorLabel": "Hero visual selector",
     "introduction": "I’m Shrey, a product-minded software engineer and UX researcher who enjoys turning complex problems into simple, polished experiences—from the first interface to the systems underneath.",
     "roleSnapshot": "Software Engineer @ Wells Fargo",
@@ -309,7 +309,7 @@
       "React Developer",
       "Bangalore"
     ],
-    "shareImage": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030516120/shwRtlkMQlPKcxgZ.jpg",
+    "shareImage": "/api/media/portfolio/hero/shrey-hero-editorial.webp",
     "person": {
       "jobTitles": [
         "UI Designer",
@@ -334,7 +334,7 @@
     }
   },
   "identity": {
-    "name": "Shrey Patel",
+    "name": "Shrey Patel ll 2",
     "pageDescriptor": "Portfolio · 2026",
     "roleDescriptor": "Designing the connective tissue",
     "location": "Bangalore, India",

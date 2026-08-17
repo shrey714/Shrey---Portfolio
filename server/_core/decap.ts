@@ -1,6 +1,4 @@
 import crypto from "node:crypto";
-import fs from "node:fs";
-import path from "node:path";
 import type { Express, Request } from "express";
 import { parse as parseCookies } from "cookie";
 import { ENV } from "./env.js";
@@ -156,19 +154,14 @@ function unavailable(res: Parameters<Express["get"]>[1] extends (...args: infer 
   return res.status(503).type("text/plain").send("The content editor has not been configured yet.");
 }
 
-function resolveAdminShell() {
-  const candidates = [
-    path.resolve(import.meta.dirname, "../../client/public/admin/index.html"),
-    path.resolve(import.meta.dirname, "../..", "dist", "public", "admin", "index.html"),
-    path.resolve(process.cwd(), "dist", "public", "admin", "index.html"),
-  ];
-  return candidates.find(candidate => fs.existsSync(candidate)) ?? candidates[0];
+function editorShell() {
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex,nofollow" /><title>Portfolio content editor</title><script>window.CMS_MANUAL_INIT=true;</script></head><body><noscript>This private editor requires JavaScript.</noscript><script src="https://unpkg.com/decap-cms@3.7.1/dist/decap-cms.js"></script><script>fetch("/api/decap/config",{credentials:"same-origin"}).then(function(response){if(!response.ok)throw new Error("Unable to load editor configuration.");return response.json()}).then(function(config){CMS.init({config:config})}).catch(function(){document.body.innerHTML="<p>The editor configuration could not be loaded. Please try again later.</p>"});</script></body></html>`;
 }
 
 export function registerDecapRoutes(app: Express) {
   app.get("/admin", (_req, res) => {
     res.set("X-Robots-Tag", "noindex, nofollow");
-    res.sendFile(resolveAdminShell());
+    res.type("html").send(editorShell());
   });
 
   app.get("/api/decap/config", (req, res) => {

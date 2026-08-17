@@ -258,3 +258,6 @@
 - [x] During active Vercel troubleshooting, automatically push each validated corrective commit to GitHub `main` and report its commit ID without asking separately.
 
 - [x] Restore a Vercel-detectable root Express entrypoint while preserving the explicit unified `/api/index.ts` route configuration.
+
+- [ ] Configure a Vercel-reachable `DATABASE_URL` so contact-rate-limit storage is available in production.
+- [x] Diagnose the live `/admin` 404 and return the Decap editor shell directly from the function without a bundled file dependency.

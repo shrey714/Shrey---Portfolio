@@ -241,3 +241,5 @@
 - [x] Collect the Vercel function runtime stack trace for the persistent post-deploy crash and use it to verify the final correction.
 
 - [ ] Deploy the explicit `.js` extension import graph correction and confirm the Vercel function initializes without module-resolution errors.
+
+- [x] Convert the Vercel `includeFiles` declaration to the supported single-string glob form and validate the deployment configuration.

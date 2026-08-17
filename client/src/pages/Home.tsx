@@ -158,6 +158,7 @@ export default function Home() {
   const [menuMounted, setMenuMounted] = useState(false);
   const [showMobileIdentity, setShowMobileIdentity] = useState(false);
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
+  const [heroPaused, setHeroPaused] = useState(false);
   const menuCloseTimer = useRef<number | null>(null);
   const observedIds = useMemo(() => navItems.map((item) => item.id), []);
   const openMenu = () => {
@@ -199,6 +200,12 @@ export default function Home() {
     window.addEventListener("scroll", updateMobileIdentity, { passive: true });
     return () => window.removeEventListener("scroll", updateMobileIdentity);
   }, []);
+
+  useEffect(() => {
+    if (heroPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setTimeout(() => setActiveHeroSlide((slide) => (slide + 1) % heroSlides.length), 5600);
+    return () => window.clearTimeout(timer);
+  }, [activeHeroSlide, heroPaused]);
 
   useEffect(() => {
     if (!menuMounted) return;
@@ -323,13 +330,11 @@ export default function Home() {
               </div>
 
               <div className="reveal-in relative ml-auto w-full max-w-[37rem] [animation-delay:180ms]">
-                <div className="hero-carousel relative overflow-hidden rounded-[1.55rem] border border-white/80 bg-[#e9e6df] p-2 shadow-[0_28px_80px_-42px_rgba(27,28,29,0.42)]" role="region" aria-roledescription="carousel" aria-label="Selected design perspectives" onKeyDown={(event) => { if (event.key === "ArrowLeft") showHeroSlide(activeHeroSlide - 1); if (event.key === "ArrowRight") showHeroSlide(activeHeroSlide + 1); }} tabIndex={0}>
+                <div className="hero-carousel relative overflow-hidden rounded-[1.55rem] border border-white/80 bg-[#e9e6df] p-2 shadow-[0_28px_80px_-42px_rgba(27,28,29,0.42)]" role="region" aria-roledescription="carousel" aria-label="Selected design perspectives" onMouseEnter={() => setHeroPaused(true)} onMouseLeave={() => setHeroPaused(false)} onFocus={() => setHeroPaused(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setHeroPaused(false); }} onKeyDown={(event) => { if (event.key === "ArrowLeft") showHeroSlide(activeHeroSlide - 1); if (event.key === "ArrowRight") showHeroSlide(activeHeroSlide + 1); }} tabIndex={0}>
                   <div className="relative aspect-[16/11] overflow-hidden rounded-[1.15rem]">
                     <div key={activeHeroSlide} className="hero-slide h-full w-full"><HeroVisual index={activeHeroSlide} /></div>
-                    <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-3 text-white sm:inset-x-5 sm:bottom-5"><div><span className="rounded-full border border-white/20 bg-[#1b1c1d]/45 px-3 py-1.5 text-[9px] font-medium uppercase tracking-[0.13em] backdrop-blur-md sm:text-[10px]">{heroSlides[activeHeroSlide].label}</span><p className="mt-2 max-w-[13rem] text-[10px] leading-4 text-white/75 sm:max-w-[16rem]">{heroSlides[activeHeroSlide].caption}</p></div><div className="flex items-center gap-2"><button type="button" onClick={() => showHeroSlide(activeHeroSlide - 1)} className="hero-carousel-control" aria-label="Show previous visual"><ChevronLeft className="h-3.5 w-3.5" /></button><button type="button" onClick={() => showHeroSlide(activeHeroSlide + 1)} className="hero-carousel-control" aria-label="Show next visual"><ChevronRight className="h-3.5 w-3.5" /></button></div></div>
-                    <div className="absolute right-4 top-4 flex items-center gap-2 sm:right-5 sm:top-5"><span className="text-[10px] font-medium uppercase tracking-[0.13em] text-white/75">0{activeHeroSlide + 1} / 0{heroSlides.length}</span></div>
                   </div>
-                  <div className="flex items-center justify-between px-2 pb-1 pt-3"><div className="flex gap-1.5" role="tablist" aria-label="Hero visual selector">{heroSlides.map((slide, index) => <button key={slide.label} type="button" role="tab" aria-selected={activeHeroSlide === index} aria-label={`Show ${slide.label}`} onClick={() => showHeroSlide(index)} className={`hero-carousel-dot ${activeHeroSlide === index ? "is-active" : ""}`} />)}</div><span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#6c6a67]">Use arrow keys</span></div>
+                  <div className="hero-carousel-footer"><div key={activeHeroSlide} className="hero-carousel-copy" aria-live="polite"><p className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#456fe8]">{heroSlides[activeHeroSlide].label}</p><p className="mt-1 max-w-[15rem] text-[10px] leading-4 text-[#66645f]">{heroSlides[activeHeroSlide].caption}</p></div><div className="hero-carousel-actions"><span className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#6c6a67]">0{activeHeroSlide + 1} / 0{heroSlides.length}</span><div className="flex gap-1.5"><button type="button" onClick={() => showHeroSlide(activeHeroSlide - 1)} className="hero-carousel-control" aria-label="Show previous visual"><ChevronLeft className="h-3.5 w-3.5" /></button><button type="button" onClick={() => showHeroSlide(activeHeroSlide + 1)} className="hero-carousel-control" aria-label="Show next visual"><ChevronRight className="h-3.5 w-3.5" /></button></div></div><div className="hero-carousel-indicators" role="tablist" aria-label="Hero visual selector">{heroSlides.map((slide, index) => <button key={slide.label} type="button" role="tab" aria-selected={activeHeroSlide === index} aria-label={`Show ${slide.label}`} onClick={() => showHeroSlide(index)} className={`hero-carousel-dot ${activeHeroSlide === index ? "is-active" : ""}`} />)}</div></div>
                 </div>
                 <div className="absolute -bottom-4 -left-4 hidden w-44 rounded-2xl border border-[#1b1c1d]/10 bg-[#f6f4ef]/90 p-4 shadow-[0_18px_45px_-30px_rgba(27,28,29,0.45)] backdrop-blur sm:block">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#767570]">Based in</p>

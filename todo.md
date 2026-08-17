@@ -49,3 +49,11 @@
 - [x] Preserve initial-load performance by loading the first hero visual eagerly and remaining visuals lazily.
 - [x] Validate the carousel at desktop and mobile widths.
 - [x] Save and deliver the completed carousel checkpoint.
+
+# Hero Carousel Readability and Autoplay
+
+- [x] Move slide-specific visual metadata away from the global carousel caption and controls.
+- [x] Add a gentle automatic slide cadence that pauses during hover and focus.
+- [x] Animate captions in sync with each slide change while respecting reduced-motion preferences.
+- [x] Verify readable overlays at desktop and mobile widths.
+- [x] Save and deliver the refined carousel checkpoint.

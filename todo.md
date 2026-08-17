@@ -243,3 +243,6 @@
 - [ ] Deploy the explicit `.js` extension import graph correction and confirm the Vercel function initializes without module-resolution errors.
 
 - [x] Convert the Vercel `includeFiles` declaration to the supported single-string glob form and validate the deployment configuration.
+
+- [x] Diagnose why the deployed Vercel page cannot load generated CSS and JavaScript assets and prepare a focused correction.
+- [ ] Confirm the redeployed portfolio returns its CSS and JavaScript assets successfully before continuing editor verification.

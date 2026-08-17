@@ -25,9 +25,9 @@ export function serveStatic(app: Express) {
     console.error(`Could not find the build directory: ${distPath}, make sure to build the client first`);
   }
 
-  // Vercel serves the generated root public/ directory from its CDN. Local Node
-  // production runs still need this middleware to serve the same build output.
-  if (!process.env.VERCEL) app.use(express.static(distPath, { index: false }));
+  // The Vercel Express function receives requests for generated assets too, so
+  // serve the compiled bundle before the SSR catch-all in every environment.
+  app.use(express.static(distPath, { index: false }));
 
   const entryPath = firstExistingPath([
     path.resolve(import.meta.dirname, "server-ssr", "entry-server.js"),

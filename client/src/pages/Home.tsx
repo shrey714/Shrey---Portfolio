@@ -8,6 +8,7 @@ import {
   ArrowDown,
   ArrowUpRight,
   Check,
+  ChevronLeft,
   ChevronRight,
   Github,
   Linkedin,
@@ -23,6 +24,13 @@ import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const HERO_IMAGE = "/manus-storage/shrey-hero-editorial_9f125b19.jpg";
+
+const heroSlides = [
+  { label: "Systems × experience", caption: "A visual language where interface and engineering connect.", alt: "Abstract cobalt architectural forms on a warm porcelain studio surface" },
+  { label: "Interface architecture", caption: "Turning dense workflows into deliberate, readable product surfaces.", alt: "Abstract interface architecture composition" },
+  { label: "System thinking", caption: "Following the path from signal to decision to response.", alt: "Abstract system flow composition" },
+  { label: "Detail as a feature", caption: "The small decisions that make a product feel complete.", alt: "Abstract editorial detail composition" },
+];
 
 const navItems = [
   { id: "top", label: "Index", number: "00" },
@@ -78,6 +86,16 @@ function ThemeToggle({ variant = "rail" }: { variant?: "rail" | "mobile" }) {
       {!mobile && <span className="sr-only">{isDark ? "Dark mode active" : "Light mode active"}</span>}
     </div>
   );
+}
+
+function HeroVisual({ index }: { index: number }) {
+  if (index === 0) return <img src={HERO_IMAGE} alt={heroSlides[0].alt} fetchPriority="high" className="h-full w-full rounded-[1.15rem] object-cover" />;
+
+  if (index === 1) return <div className="hero-visual hero-interface" aria-label={heroSlides[1].alt} role="img"><div className="hero-visual-topline"><span>Interface / 02</span><span>Flow state</span></div><div className="hero-interface-grid"><div className="hero-interface-rail"><i /><i className="is-active" /><i /><i /></div><div className="hero-interface-body"><div className="hero-line short" /><div className="hero-line wide" /><div className="hero-interface-cards"><div /><div className="is-cobalt" /><div /></div><div className="hero-table-lines"><i /><i /><i /><i /></div></div></div><div className="hero-visual-annotation">Readable flows / intentional states</div></div>;
+
+  if (index === 2) return <div className="hero-visual hero-systems" aria-label={heroSlides[2].alt} role="img"><div className="hero-visual-topline"><span>Systems / 03</span><span>Signal map</span></div><div className="hero-system-map"><div className="hero-system-node node-a">Signal</div><div className="hero-system-node node-b">Decision</div><div className="hero-system-node node-c">Response</div><span className="hero-system-link link-ab" /><span className="hero-system-link link-bc" /><span className="hero-system-orbit" /></div><div className="hero-visual-annotation">From signal to response</div></div>;
+
+  return <div className="hero-visual hero-detail" aria-label={heroSlides[3].alt} role="img"><div className="hero-visual-topline"><span>Details / 04</span><span>Field note</span></div><div className="hero-detail-board"><div className="hero-detail-block block-one" /><div className="hero-detail-block block-two" /><div className="hero-detail-block block-three" /><div className="hero-detail-dot dot-one" /><div className="hero-detail-dot dot-two" /></div><div className="hero-visual-annotation">Small choices, considered</div></div>;
 }
 
 function ProductEvidence({ kind }: { kind: "clinic" | "commerce" }) {
@@ -139,6 +157,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuMounted, setMenuMounted] = useState(false);
   const [showMobileIdentity, setShowMobileIdentity] = useState(false);
+  const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const menuCloseTimer = useRef<number | null>(null);
   const observedIds = useMemo(() => navItems.map((item) => item.id), []);
   const openMenu = () => {
@@ -152,6 +171,8 @@ export default function Home() {
     if (menuCloseTimer.current) window.clearTimeout(menuCloseTimer.current);
     menuCloseTimer.current = window.setTimeout(() => setMenuMounted(false), 240);
   };
+
+  const showHeroSlide = (index: number) => setActiveHeroSlide((index + heroSlides.length) % heroSlides.length);
 
   useEffect(() => {
     const sections = observedIds
@@ -302,12 +323,13 @@ export default function Home() {
               </div>
 
               <div className="reveal-in relative ml-auto w-full max-w-[37rem] [animation-delay:180ms]">
-                <div className="relative overflow-hidden rounded-[1.55rem] border border-white/80 bg-[#e9e6df] p-2 shadow-[0_28px_80px_-42px_rgba(27,28,29,0.42)]">
-                  <img src={HERO_IMAGE} alt="Abstract cobalt architectural forms on a warm porcelain studio surface" className="aspect-[16/11] w-full rounded-[1.15rem] object-cover" />
-                  <div className="absolute inset-x-5 bottom-5 flex items-end justify-between text-white">
-                    <span className="rounded-full border border-white/20 bg-[#1b1c1d]/40 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.13em] backdrop-blur-md">Systems × experience</span>
-                    <span className="text-[10px] uppercase tracking-[0.13em] opacity-70">01 / 04</span>
+                <div className="hero-carousel relative overflow-hidden rounded-[1.55rem] border border-white/80 bg-[#e9e6df] p-2 shadow-[0_28px_80px_-42px_rgba(27,28,29,0.42)]" role="region" aria-roledescription="carousel" aria-label="Selected design perspectives" onKeyDown={(event) => { if (event.key === "ArrowLeft") showHeroSlide(activeHeroSlide - 1); if (event.key === "ArrowRight") showHeroSlide(activeHeroSlide + 1); }} tabIndex={0}>
+                  <div className="relative aspect-[16/11] overflow-hidden rounded-[1.15rem]">
+                    <div key={activeHeroSlide} className="hero-slide h-full w-full"><HeroVisual index={activeHeroSlide} /></div>
+                    <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-3 text-white sm:inset-x-5 sm:bottom-5"><div><span className="rounded-full border border-white/20 bg-[#1b1c1d]/45 px-3 py-1.5 text-[9px] font-medium uppercase tracking-[0.13em] backdrop-blur-md sm:text-[10px]">{heroSlides[activeHeroSlide].label}</span><p className="mt-2 max-w-[13rem] text-[10px] leading-4 text-white/75 sm:max-w-[16rem]">{heroSlides[activeHeroSlide].caption}</p></div><div className="flex items-center gap-2"><button type="button" onClick={() => showHeroSlide(activeHeroSlide - 1)} className="hero-carousel-control" aria-label="Show previous visual"><ChevronLeft className="h-3.5 w-3.5" /></button><button type="button" onClick={() => showHeroSlide(activeHeroSlide + 1)} className="hero-carousel-control" aria-label="Show next visual"><ChevronRight className="h-3.5 w-3.5" /></button></div></div>
+                    <div className="absolute right-4 top-4 flex items-center gap-2 sm:right-5 sm:top-5"><span className="text-[10px] font-medium uppercase tracking-[0.13em] text-white/75">0{activeHeroSlide + 1} / 0{heroSlides.length}</span></div>
                   </div>
+                  <div className="flex items-center justify-between px-2 pb-1 pt-3"><div className="flex gap-1.5" role="tablist" aria-label="Hero visual selector">{heroSlides.map((slide, index) => <button key={slide.label} type="button" role="tab" aria-selected={activeHeroSlide === index} aria-label={`Show ${slide.label}`} onClick={() => showHeroSlide(index)} className={`hero-carousel-dot ${activeHeroSlide === index ? "is-active" : ""}`} />)}</div><span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#6c6a67]">Use arrow keys</span></div>
                 </div>
                 <div className="absolute -bottom-4 -left-4 hidden w-44 rounded-2xl border border-[#1b1c1d]/10 bg-[#f6f4ef]/90 p-4 shadow-[0_18px_45px_-30px_rgba(27,28,29,0.45)] backdrop-blur sm:block">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#767570]">Based in</p>

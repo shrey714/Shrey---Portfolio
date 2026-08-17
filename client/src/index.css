@@ -314,6 +314,131 @@
   color: #96aaff !important;
 }
 
+/* Hero visual sequence: one photographic frame and three lightweight CSS-built perspectives. */
+.hero-slide {
+  animation: hero-visual-enter 300ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+.hero-carousel-control {
+  display: inline-flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(27, 28, 29, 0.45);
+  color: white;
+  backdrop-filter: blur(10px);
+  transition: transform 150ms ease-out, background-color 150ms ease-out;
+}
+
+.hero-carousel-control:hover { background: rgba(69, 111, 232, 0.82); }
+.hero-carousel-control:active { transform: scale(0.94); }
+
+.hero-carousel-dot {
+  height: 0.38rem;
+  width: 0.38rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(27, 28, 29, 0.2);
+  transition: width 180ms ease-out, background-color 180ms ease-out;
+}
+
+.hero-carousel-dot.is-active { width: 1.25rem; background: #456fe8; }
+
+.hero-visual {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  color: #f6f4ef;
+}
+
+.hero-visual-topline {
+  position: absolute;
+  inset: 1rem 1rem auto;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.hero-visual-annotation {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 0.38rem 0.65rem;
+  background: rgba(27, 28, 29, 0.48);
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+
+.hero-interface { background: #1f2228; }
+.hero-interface::after, .hero-systems::after, .hero-detail::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+.hero-interface::after { background: radial-gradient(circle at 79% 20%, rgba(69, 111, 232, 0.55), transparent 32%); }
+.hero-interface-grid { position: absolute; inset: 3.3rem 1.25rem 3.7rem; display: grid; grid-template-columns: 0.18fr 0.82fr; gap: 0.8rem; }
+.hero-interface-rail, .hero-interface-body { border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0.65rem; background: rgba(255, 255, 255, 0.04); }
+.hero-interface-rail { display: flex; flex-direction: column; gap: 0.7rem; padding: 0.9rem 0.55rem; }
+.hero-interface-rail i { display: block; height: 0.35rem; border-radius: 999px; background: rgba(255, 255, 255, 0.18); }
+.hero-interface-rail i.is-active { background: #7392ff; }
+.hero-interface-body { padding: 1rem; }
+.hero-line { height: 0.36rem; border-radius: 999px; background: rgba(255, 255, 255, 0.26); }
+.hero-line.short { width: 31%; }
+.hero-line.wide { width: 64%; margin-top: 0.55rem; background: rgba(255, 255, 255, 0.11); }
+.hero-interface-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 1.2rem; }
+.hero-interface-cards div { height: 38%; min-height: 3rem; border: 1px solid rgba(255, 255, 255, 0.11); border-radius: 0.55rem; background: rgba(255, 255, 255, 0.06); }
+.hero-interface-cards div.is-cobalt { background: #456fe8; }
+.hero-table-lines { display: grid; gap: 0.48rem; margin-top: 1rem; }
+.hero-table-lines i { height: 0.34rem; border-radius: 999px; background: rgba(255, 255, 255, 0.11); }
+
+.hero-systems { background: #e8e5de; color: #1b1c1d; }
+.hero-systems::after { background: radial-gradient(circle at 50% 50%, rgba(69, 111, 232, 0.2), transparent 32%), linear-gradient(110deg, transparent 0 48%, rgba(27, 28, 29, 0.04) 48% 49%, transparent 49%); }
+.hero-systems .hero-visual-topline { color: #73716b; }
+.hero-system-map { position: absolute; inset: 4rem 1.25rem 3.2rem; }
+.hero-system-node { position: absolute; z-index: 2; display: flex; height: 4.15rem; width: 4.15rem; align-items: center; justify-content: center; border: 1px solid rgba(27, 28, 29, 0.18); border-radius: 999px; background: #f6f4ef; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.04em; }
+.hero-system-node.node-a { top: 14%; left: 7%; }
+.hero-system-node.node-b { top: 42%; left: calc(50% - 2.05rem); background: #456fe8; color: white; }
+.hero-system-node.node-c { right: 7%; bottom: 9%; }
+.hero-system-link { position: absolute; z-index: 1; height: 1px; transform-origin: left center; background: rgba(27, 28, 29, 0.4); }
+.hero-system-link.link-ab { top: 38%; left: 23%; width: 38%; transform: rotate(28deg); }
+.hero-system-link.link-bc { top: 59%; left: 55%; width: 31%; transform: rotate(33deg); }
+.hero-system-orbit { position: absolute; top: 16%; right: 17%; height: 7.7rem; width: 7.7rem; border: 1px dashed rgba(69, 111, 232, 0.45); border-radius: 999px; }
+.hero-systems .hero-visual-annotation { color: white; }
+
+.hero-detail { background: #f1efe9; color: #1b1c1d; }
+.hero-detail::after { background-image: radial-gradient(circle, rgba(27, 28, 29, 0.14) 0.65px, transparent 0.8px); background-size: 12px 12px; opacity: 0.58; }
+.hero-detail .hero-visual-topline { color: #73716b; }
+.hero-detail-board { position: absolute; inset: 4rem 1.5rem 3.6rem; border: 1px solid rgba(27, 28, 29, 0.12); background: rgba(255, 255, 255, 0.5); box-shadow: 0 14px 32px -25px rgba(27, 28, 29, 0.55); transform: rotate(-2deg); }
+.hero-detail-block { position: absolute; border: 1px solid rgba(27, 28, 29, 0.13); }
+.hero-detail-block.block-one { top: 16%; left: 11%; height: 43%; width: 28%; background: #456fe8; }
+.hero-detail-block.block-two { right: 13%; bottom: 12%; height: 53%; width: 34%; background: #1b1c1d; }
+.hero-detail-block.block-three { top: 19%; right: 12%; height: 22%; width: 19%; background: #e8e5de; }
+.hero-detail-dot { position: absolute; z-index: 1; height: 1.2rem; width: 1.2rem; border: 3px solid #f1efe9; border-radius: 999px; background: #456fe8; }
+.hero-detail-dot.dot-one { top: 38%; left: 42%; }
+.hero-detail-dot.dot-two { right: 35%; bottom: 23%; background: #1b1c1d; }
+.hero-detail .hero-visual-annotation { color: white; }
+
+@keyframes hero-visual-enter { from { opacity: 0; transform: scale(1.018); } to { opacity: 1; transform: scale(1); } }
+
+@media (max-width: 640px) {
+  .hero-interface-grid { inset: 2.8rem 0.8rem 3.15rem; gap: 0.5rem; }
+  .hero-interface-body { padding: 0.7rem; }
+  .hero-interface-cards { margin-top: 0.7rem; }
+  .hero-interface-cards div { min-height: 2.2rem; }
+  .hero-system-node { height: 3.25rem; width: 3.25rem; font-size: 0.5rem; }
+  .hero-system-orbit { height: 5.7rem; width: 5.7rem; }
+}
+
 /* Native mobile navigation overlay: short, interruptible opacity/transform transitions keep it fast. */
 .mobile-menu-layer {
   position: fixed;

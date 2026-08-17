@@ -41,3 +41,11 @@
 - [x] Apply a dedicated light contact-label color that is readable on the cobalt surface.
 - [x] Verify the label remains correct in light and dark themes.
 - [x] Save and deliver the contrast correction checkpoint.
+
+# Hero Visual Carousel
+
+- [x] Convert the hero visual index into four distinct editorial slides with truthful captions.
+- [x] Add accessible previous/next controls, slide indicators, and keyboard navigation without autoplay.
+- [x] Preserve initial-load performance by loading the first hero visual eagerly and remaining visuals lazily.
+- [x] Validate the carousel at desktop and mobile widths.
+- [x] Save and deliver the completed carousel checkpoint.

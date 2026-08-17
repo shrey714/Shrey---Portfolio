@@ -223,8 +223,11 @@
 - [x] Create a Git-backed content schema and private editor workflow suitable for editable portfolio copy.
 - [x] Convert the public portfolio route to server-rendered HTML with correct canonical, Open Graph, Twitter, JSON-LD, sitemap, and robots output.
 - [x] Add secure owner-only editing, content validation, and draft-to-GitHub publishing without exposing repository credentials in the browser.
-- [ ] Test public crawl output and private editor behavior; document Vercel configuration and rollback; save a local-only review checkpoint without pushing to GitHub.
+- [x] Test public crawl output and private editor behavior; document Vercel configuration and rollback; save a local-only review checkpoint without pushing to GitHub.
 
 - [x] Make static assets and public configuration files Vercel-compatible without relying on Express static serving inside the server function.
 - [x] Enforce an explicit GitHub owner boundary before an authenticated Decap editor session is accepted.
 - [ ] Verify the live GitHub login and save-to-commit flow against the registered Vercel deployment before treating publication as production-ready.
+
+- [ ] Commit the approved Git-backed editor and SSR implementation to GitHub `main`.
+- [ ] Verify the pushed commit is present on the linked GitHub repository without deploying it on the user's behalf.

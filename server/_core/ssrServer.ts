@@ -8,16 +8,19 @@ type SsrEntry = {
   render: (url: string) => Promise<import("../../client/src/entry-server").RenderResult>;
 };
 
-function firstExistingPath(paths: string[]) {
-  return paths.find(candidate => fs.existsSync(candidate)) ?? paths[0];
+function firstExistingPath(paths: string[], requiredFile?: string) {
+  return paths.find(candidate => fs.existsSync(requiredFile ? path.resolve(candidate, requiredFile) : candidate)) ?? paths[0];
 }
 
 export function serveStatic(app: Express) {
-  const distPath = firstExistingPath([
-    path.resolve(import.meta.dirname, "public"),
-    path.resolve(import.meta.dirname, "..", "dist", "public"),
-    path.resolve(process.cwd(), "dist", "public"),
-  ]);
+  const distPath = firstExistingPath(
+    [
+      path.resolve(import.meta.dirname, "public"),
+      path.resolve(import.meta.dirname, "..", "dist", "public"),
+      path.resolve(process.cwd(), "dist", "public"),
+    ],
+    "index.html"
+  );
   if (!fs.existsSync(distPath)) {
     console.error(`Could not find the build directory: ${distPath}, make sure to build the client first`);
   }

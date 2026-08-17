@@ -234,3 +234,6 @@
 
 - [x] Make the root Vercel entrypoint import and initialize Express directly so framework detection accepts the deployment.
 - [ ] Validate and push the targeted Vercel entrypoint correction, then ask the user to redeploy.
+
+- [x] Diagnose the Vercel serverless function crash from runtime evidence and prepare a targeted correction.
+- [ ] Confirm the corrected Vercel deployment responds successfully before continuing CMS workflow validation.

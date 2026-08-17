@@ -282,3 +282,5 @@
 
 - [x] Restore Decap’s required valid media configuration without enabling unused media uploads or noisy repository lookups.
 - [x] Audit and correct all production-facing origin references to https://shrey-patel-profile.vercel.app/.
+
+- [x] Permit Decap’s authenticated `/user` identification request through the same-origin proxy without widening repository write access.

@@ -107,7 +107,7 @@ function SystemsEvidence() {
         <div className="relative flex aspect-square items-center justify-center rounded-full border border-[#456fe8]/30 bg-[#456fe8]/8"><div className="absolute h-[70%] w-[70%] rounded-full border border-dashed border-[#456fe8]/45" /><div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-[#1b1c1d]/15 bg-[#1b1c1d] text-[9px] font-semibold uppercase tracking-[0.14em] text-white">{content.practice.visualFlow}</div><div className="absolute right-1 top-5 h-3 w-3 rounded-full border-2 border-[#f5f3ed] bg-[#456fe8]" /></div>
         <div className="space-y-3"><div className="ml-auto h-14 w-full rounded-lg border border-[#1b1c1d]/10 bg-white/70" /><div className="ml-auto h-6 w-3/4 rounded-lg border border-[#1b1c1d]/10 bg-white/55" /><div className="ml-auto h-10 w-full rounded-lg border border-[#1b1c1d]/10 bg-[#1b1c1d]/[0.06]" /></div>
       </div>
-      <div className="relative mt-6 flex items-center justify-between border-t border-[#1b1c1d]/10 pt-4 text-[9px] font-semibold uppercase tracking-[0.13em] text-[#777571]"><span>{content.practice.visualSystemNote}</span><span className="text-[#456fe8]">{content.practice.visualTag}</span></div>
+      <div className="relative mt-6 flex flex-wrap items-baseline justify-between gap-x-5 gap-y-2 border-t border-[#1b1c1d]/10 pt-4 text-[9px] font-semibold uppercase tracking-[0.13em] text-[#777571]"><span className="whitespace-nowrap">{content.practice.visualSystemNote}</span><span className="whitespace-nowrap text-[#456fe8]">{content.practice.visualTag}</span></div>
     </div>
   );
 }
@@ -397,10 +397,10 @@ export default function Home() {
             </div>
 
             <div className="mt-12 grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-center lg:gap-20">
-              <div className="relative mx-auto w-full max-w-[29rem] lg:mx-0">
+              <figure className="mx-auto w-full max-w-[29rem] lg:mx-0">
                 <SystemsEvidence />
-                <div className="absolute -right-3 bottom-7 rounded-xl border border-[#1b1c1d]/10 bg-[#f6f4ef]/90 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#5d5b58] backdrop-blur-sm">{content.practice.visualCallout}</div>
-              </div>
+                <figcaption className="mt-3 flex justify-start lg:justify-end"><span className="rounded-full border border-[#1b1c1d]/10 bg-[#f6f4ef]/90 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#5d5b58] backdrop-blur-sm">{content.practice.visualCallout}</span></figcaption>
+              </figure>
               <div className="grid gap-x-8 gap-y-8 sm:grid-cols-2">
                 {content.practice.disciplines.map((discipline, index) => (
                   <div key={discipline.title} className="border-t border-[#1b1c1d]/12 pt-4">

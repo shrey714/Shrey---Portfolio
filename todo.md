@@ -114,9 +114,9 @@
 
 # Systems Evidence Alignment Correction
 
-- [ ] Move the Practice visual callout into a non-overlapping position within the component.
-- [ ] Align the System Note and Signal / Decision / Response labels on a shared footer row.
-- [ ] Verify the corrected component in dark mode and responsive widths.
+- [x] Move the Practice visual callout into a non-overlapping position within the component.
+- [x] Align the System Note and Signal / Decision / Response labels on a shared footer row.
+- [x] Verify the corrected component in dark mode and responsive widths.
 - [ ] Save and deliver the alignment correction checkpoint.
 
 # Scheduled Rate-Limit Record Cleanup

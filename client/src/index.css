@@ -1,6 +1,6 @@
 /**
  * Quiet Product Studio foundation: warm porcelain ground, ink typography,
- * Cobalt Mist as the only expressive accent, and calm editorial rhythm.
+ * Cobalt Mist as the only expressive accent, and a complementary dark editorial skin.
  */
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -80,6 +80,37 @@
   --sidebar-accent-foreground: #1b1c1d;
   --sidebar-border: #dedbd3;
   --sidebar-ring: #456fe8;
+}
+
+.dark {
+  --primary: #7894ff;
+  --primary-foreground: #111216;
+  --sidebar-primary: #7894ff;
+  --sidebar-primary-foreground: #111216;
+  --background: #101113;
+  --foreground: #f2f1ed;
+  --card: #1b1d20;
+  --card-foreground: #f2f1ed;
+  --popover: #1b1d20;
+  --popover-foreground: #f2f1ed;
+  --secondary: #1b1d20;
+  --secondary-foreground: #eceae5;
+  --muted: #1b1d20;
+  --muted-foreground: #aaa9a5;
+  --accent: #252a3e;
+  --accent-foreground: #f2f1ed;
+  --destructive: #e57373;
+  --destructive-foreground: #111216;
+  --border: rgba(255, 255, 255, 0.13);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #91a7ff;
+  --sidebar: #151619;
+  --sidebar-foreground: #f2f1ed;
+  --sidebar-accent: #1e2025;
+  --sidebar-accent-foreground: #f2f1ed;
+  --sidebar-border: rgba(255, 255, 255, 0.13);
+  --sidebar-ring: #91a7ff;
+  color-scheme: dark;
 }
 
 @layer base {
@@ -184,6 +215,71 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Dark-mode skin: retain Quiet Product Studio material contrast while charcoal
+   replaces porcelain and Cobalt Mist remains the connective accent. */
+.dark .portfolio {
+  background: #101113;
+  color: #f2f1ed;
+}
+
+.dark .portfolio .theme-light-surface {
+  background-color: #101113 !important;
+}
+
+.dark .portfolio .theme-soft-surface {
+  background-color: #17191c !important;
+}
+
+.dark .portfolio .theme-work-surface {
+  background-color: #17191c !important;
+}
+
+.dark .portfolio .theme-light-surface :is(h1, h2, h3, p, a, span, li),
+.dark .portfolio .theme-soft-surface :is(h1, h2, h3, p, a, span, li) {
+  color: #ecebe6;
+}
+
+.dark .portfolio .theme-light-surface [class*="text-[#456fe8]"],
+.dark .portfolio .theme-soft-surface [class*="text-[#456fe8]"] {
+  color: #96aaff !important;
+}
+
+.dark .portfolio .theme-light-surface [class*="text-[#1b1c1d]"],
+.dark .portfolio .theme-soft-surface [class*="text-[#1b1c1d]"] {
+  color: #ecebe6 !important;
+}
+
+.dark .portfolio .theme-light-surface [class*="border-[#1b1c1d]"],
+.dark .portfolio .theme-soft-surface [class*="border-[#1b1c1d]"],
+.dark .portfolio .theme-light-surface [class*="divide-[#1b1c1d]"],
+.dark .portfolio .theme-soft-surface [class*="divide-[#1b1c1d]"] {
+  border-color: rgba(255, 255, 255, 0.13) !important;
+}
+
+.dark .portfolio .theme-light-surface [class*="bg-white"],
+.dark .portfolio .theme-soft-surface [class*="bg-white"] {
+  background-color: rgba(255, 255, 255, 0.065) !important;
+}
+
+.dark .portfolio .theme-light-surface [class*="bg-[#f5f3ed]"],
+.dark .portfolio .theme-soft-surface [class*="bg-[#f5f3ed]"] {
+  background-color: #1c1e22 !important;
+}
+
+.dark .portfolio .theme-light-surface [class*="bg-[#f6f4ef]"],
+.dark .portfolio .theme-soft-surface [class*="bg-[#f6f4ef]"] {
+  background-color: #17191c !important;
+}
+
+.dark .portfolio .theme-light-surface .dot-field,
+.dark .portfolio .theme-soft-surface .dot-field {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0.65px, transparent 0.8px);
+}
+
+.dark .portfolio .theme-light-surface .paper-glow {
+  background: radial-gradient(circle at 72% 28%, rgba(120, 148, 255, 0.16), transparent 22rem), radial-gradient(circle at 8% 92%, rgba(255, 255, 255, 0.035), transparent 18rem);
 }
 
 @media (prefers-reduced-motion: reduce) {

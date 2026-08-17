@@ -14,10 +14,14 @@ import {
   Mail,
   MapPin,
   Menu,
+  Moon,
   Sparkles,
+  Sun,
   X,
 } from "lucide-react";
 import { motion, useScroll, useSpring } from "framer-motion";
+import { Switch } from "@/components/ui/switch";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const HERO_IMAGE = "/manus-storage/shrey-hero-editorial_9f125b19.jpg";
 const LOGO_IMAGE = "/manus-storage/shrey-orbit-logo_444aa5f5.png";
@@ -61,6 +65,21 @@ const principles = [
 
 function AnchorArrow() {
   return <ArrowUpRight aria-hidden="true" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />;
+}
+
+function ThemeToggle({ variant = "rail" }: { variant?: "rail" | "mobile" }) {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+  const mobile = variant === "mobile";
+
+  return (
+    <div className={`theme-toggle flex items-center gap-2 rounded-full border border-[#1b1c1d]/12 bg-white/55 p-1.5 text-[#5f5d59] backdrop-blur-sm ${mobile ? "" : "w-fit"}`}>
+      <Sun aria-hidden="true" className={`h-3.5 w-3.5 transition-colors ${isDark ? "text-[#8c8a85]" : "text-[#456fe8]"}`} />
+      <Switch checked={isDark} onCheckedChange={toggleTheme} aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"} />
+      <Moon aria-hidden="true" className={`h-3.5 w-3.5 transition-colors ${isDark ? "text-[#9fb2ff]" : "text-[#8c8a85]"}`} />
+      {!mobile && <span className="sr-only">{isDark ? "Dark mode active" : "Light mode active"}</span>}
+    </div>
+  );
 }
 
 function ProductEvidence({ kind }: { kind: "clinic" | "commerce" }) {
@@ -147,28 +166,31 @@ export default function Home() {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[#f6f4ef] text-[#1b1c1d] selection:bg-[#456fe8] selection:text-white">
+    <div className="portfolio min-h-screen overflow-x-clip bg-[#f6f4ef] text-[#1b1c1d] selection:bg-[#456fe8] selection:text-white">
       <motion.div
         aria-hidden="true"
         className="fixed inset-x-0 top-0 z-[80] h-0.5 origin-left bg-[#456fe8]"
         style={{ scaleX }}
       />
 
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-[#1b1c1d]/8 bg-[#f6f4ef]/85 px-5 py-3 backdrop-blur-xl lg:hidden">
+      <header className="theme-light-surface fixed inset-x-0 top-0 z-50 border-b border-[#1b1c1d]/8 bg-[#f6f4ef]/85 px-5 py-3 backdrop-blur-xl lg:hidden">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <a href="#top" className="flex items-center gap-2.5" aria-label="Shrey Patel home">
             <img src={LOGO_IMAGE} alt="" className="h-8 w-8" />
             <span className="text-sm font-semibold tracking-[-0.03em]">Shrey Patel</span>
           </a>
-          <button
-            type="button"
-            onClick={() => setMenuOpen((isOpen) => !isOpen)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#1b1c1d]/12 bg-white/45 text-[#1b1c1d] transition-transform duration-200 active:scale-95"
-            aria-label={menuOpen ? "Close navigation" : "Open navigation"}
-            aria-expanded={menuOpen}
-          >
-            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle variant="mobile" />
+            <button
+              type="button"
+              onClick={() => setMenuOpen((isOpen) => !isOpen)}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#1b1c1d]/12 bg-white/45 text-[#1b1c1d] transition-transform duration-200 active:scale-95"
+              aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
         {menuOpen && (
           <nav className="mx-auto mt-3 max-w-7xl border-t border-[#1b1c1d]/10 pt-3" aria-label="Mobile navigation">
@@ -189,7 +211,7 @@ export default function Home() {
         )}
       </header>
 
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-72 flex-col border-r border-[#1b1c1d]/10 bg-[#f6f4ef] px-7 py-8 lg:flex">
+      <aside className="theme-light-surface fixed inset-y-0 left-0 z-40 hidden w-72 flex-col border-r border-[#1b1c1d]/10 bg-[#f6f4ef] px-7 py-8 lg:flex">
         <span aria-hidden="true" className="absolute bottom-0 left-0 top-0 w-1 bg-[#456fe8]" />
         <a href="#top" className="flex items-center gap-3" aria-label="Shrey Patel home">
           <img src={LOGO_IMAGE} alt="" className="h-10 w-10" />
@@ -216,6 +238,7 @@ export default function Home() {
         </nav>
 
         <div className="mt-auto border-t border-[#1b1c1d]/10 pt-5">
+          <div className="mb-4 flex items-center justify-between"><span className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">Appearance</span><ThemeToggle /></div>
           <p className="flex items-center gap-2 text-[11px] font-medium text-[#676766]"><span className="h-1.5 w-1.5 rounded-full bg-[#456fe8]" /> Available for considered work</p>
           <p className="mt-3 flex items-center gap-2 text-[11px] text-[#898783]"><MapPin className="h-3.5 w-3.5" /> Bangalore, India</p>
           <p className="mt-1 text-[11px] text-[#898783]">Built around clarity &amp; care.</p>
@@ -223,7 +246,7 @@ export default function Home() {
       </aside>
 
       <main className="pt-[64px] lg:ml-72 lg:pt-0">
-        <section id="top" className="relative isolate min-h-[calc(100svh-64px)] overflow-hidden px-5 pb-12 pt-16 sm:px-8 sm:pt-24 lg:min-h-screen lg:px-12 lg:pt-12 xl:px-16">
+        <section id="top" className="theme-light-surface relative isolate min-h-[calc(100svh-64px)] overflow-hidden px-5 pb-12 pt-16 sm:px-8 sm:pt-24 lg:min-h-screen lg:px-12 lg:pt-12 xl:px-16">
           <div className="pointer-events-none absolute inset-0 dot-field opacity-60" />
           <div className="pointer-events-none absolute -right-20 top-4 h-[27rem] w-[27rem] rounded-full bg-[#456fe8]/7 blur-3xl sm:h-[36rem] sm:w-[36rem]" />
           <div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-12 lg:min-h-[calc(100vh-3rem)]">
@@ -280,7 +303,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="work" className="relative bg-[#e9e6df] px-5 py-12 text-[#f4f1eb] sm:px-8 sm:py-16 lg:px-12 xl:px-16">
+        <section id="work" className="theme-work-surface relative bg-[#e9e6df] px-5 py-12 text-[#f4f1eb] sm:px-8 sm:py-16 lg:px-12 xl:px-16">
           <div className="mx-auto max-w-7xl rounded-[2rem] border border-[#1b1c1d]/10 bg-[#1b1c1d] px-6 py-10 shadow-[0_32px_70px_-48px_rgba(27,28,29,0.65)] sm:px-10 sm:py-14 lg:px-14 lg:py-16">
             <div className="flex flex-col justify-between gap-8 border-b border-white/15 pb-10 sm:flex-row sm:items-end">
               <div>
@@ -328,7 +351,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="practice" className="relative px-5 py-20 sm:px-8 sm:py-28 lg:px-12 xl:px-16">
+        <section id="practice" className="theme-light-surface relative px-5 py-20 sm:px-8 sm:py-28 lg:px-12 xl:px-16">
           <div className="pointer-events-none absolute inset-0 paper-glow" />
           <div className="relative mx-auto max-w-7xl">
             <div className="grid gap-10 border-b border-[#1b1c1d]/10 pb-12 lg:grid-cols-[0.66fr_1.34fr] lg:gap-20">
@@ -376,7 +399,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="about" className="border-y border-[#1b1c1d]/10 bg-[#eeece6] px-5 py-20 sm:px-8 sm:py-28 lg:px-12 xl:px-16">
+        <section id="about" className="theme-soft-surface border-y border-[#1b1c1d]/10 bg-[#eeece6] px-5 py-20 sm:px-8 sm:py-28 lg:px-12 xl:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-12 lg:grid-cols-[0.62fr_1.38fr] lg:gap-20">
               <div>
@@ -425,7 +448,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="px-5 py-20 sm:px-8 sm:py-28 lg:px-12 xl:px-16">
+        <section className="theme-light-surface px-5 py-20 sm:px-8 sm:py-28 lg:px-12 xl:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col justify-between gap-6 border-b border-[#1b1c1d]/10 pb-10 sm:flex-row sm:items-end">
               <div><p className="eyebrow">Engineering philosophy</p><h2 className="mt-4 font-serif text-5xl leading-[0.94] tracking-[-0.06em] sm:text-6xl">How I think<br />about software.</h2></div>

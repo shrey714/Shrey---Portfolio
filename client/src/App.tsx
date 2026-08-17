@@ -1,4 +1,4 @@
-/** Quiet Product Studio app shell — light, editorial portfolio with no theme switching. */
+/** Quiet Product Studio app shell — light/dark editorial portfolio with persistent visitor preference. */
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
@@ -29,7 +29,7 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider
         defaultTheme="light"
-        // switchable
+        switchable
       >
         <TooltipProvider>
           <Toaster />

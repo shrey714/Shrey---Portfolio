@@ -195,4 +195,12 @@
 - [x] Build an optional Design Debug Mode that exposes editorial grid, typography, and color-system layers without altering normal reading.
 - [x] Add a compact Field Notes section that presents manually editable evolving observations without a live-status backend.
 - [x] Add focused unit coverage and validate responsive accessibility and production build.
-- [ ] Save a local-only review checkpoint without pushing to GitHub.
+- [x] Save a local-only review checkpoint without pushing to GitHub.
+
+# Removal of System X-Ray, Debug Mode, and Field Notes
+
+- [x] Remove the System X-Ray components, project content, controls, styles, and tests.
+- [x] Remove the Design Debug Mode component, triggers, labels, styles, and inspection-layer behavior.
+- [x] Remove the Field Notes section, centralized content, styles, and editing-guide references.
+- [x] Validate the restored portfolio at desktop and mobile widths, and run tests, TypeScript, and a production build.
+- [ ] Save a local-only checkpoint without pushing to GitHub.

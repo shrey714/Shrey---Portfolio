@@ -96,16 +96,6 @@ export const portfolioContent = {
         visualMeta: "DardiBook / workflow",
         visualTitle: "Operational care, in view",
         visualRows: ["Patient flow", "Team handoff", "Billing state"],
-        xray: {
-          openLabel: "Open System X-Ray",
-          closeLabel: "Close System X-Ray",
-          title: "DardiBook system x-ray",
-          lenses: [
-            { label: "Interface", title: "Make daily care work readable.", text: "Keep patient context, handoffs, and operational state visible where people need to make the next decision.", signal: "Visible context" },
-            { label: "Workflow", title: "Reduce the distance between handoff and action.", text: "Treat the clinical flow as connected moments rather than isolated screens, so a team can retain its place as work moves.", signal: "Continuity" },
-            { label: "System", title: "Let product layers feel like one surface.", text: "Bring authentication, collaboration, and billing into a coherent experience instead of asking people to manage disconnected tasks.", signal: "Connected layers" },
-          ],
-        },
       },
       {
         kind: "commerce" as const,
@@ -120,16 +110,6 @@ export const portfolioContent = {
         visualMeta: "Shopkeeper AI / operations",
         visualTitle: "Inventory, from shelf to storefront",
         visualRows: ["Catalog signal", "Stock health", "Store orders"],
-        xray: {
-          openLabel: "Open System X-Ray",
-          closeLabel: "Close System X-Ray",
-          title: "Shopkeeper AI system x-ray",
-          lenses: [
-            { label: "Interface", title: "Make inventory legible at a glance.", text: "Surface stock, catalog, and order signals in a practical view that keeps daily operations calm and actionable.", signal: "Useful signal" },
-            { label: "Workflow", title: "Bring the next decision closer.", text: "Shorten the path from noticing a stock condition to deciding what to do, without unnecessary context switching.", signal: "Decision distance" },
-            { label: "System", title: "Connect operations to commerce.", text: "Give the same inventory a continuous route from the shelf to a customer-facing storefront and its resulting orders.", signal: "Shelf to storefront" },
-          ],
-        },
       },
     ],
   },
@@ -181,17 +161,6 @@ export const portfolioContent = {
       "Crafting interface architecture with React and TypeScript.",
       "Designing Java and Spring services around real operational constraints.",
       "Working across SQL data flows, business logic, and user-facing product details.",
-    ],
-  },
-
-  fieldNotes: {
-    eyebrow: "Field notes",
-    heading: "Things I keep returning to.",
-    introduction: "A small, manually maintained collection of product and engineering observations. Not a live status—just ideas that are still useful enough to keep close.",
-    entries: [
-      { category: "Interface note", title: "Explain uncertainty without adding noise.", text: "The best status language tells someone what changed, what matters, and what they can do next—without turning every moment into an alert.", tag: "Clarity" },
-      { category: "System note", title: "A useful workflow keeps its context intact.", text: "Good products make handoffs feel like continuation, not a fresh search for what happened before.", tag: "Continuity" },
-      { category: "Build note", title: "Small details should survive the implementation.", text: "The interaction is not finished when it looks right. It also needs states, focus, fallback behavior, and a future maintainer in mind.", tag: "Craft" },
     ],
   },
 
@@ -251,16 +220,4 @@ export const portfolioContent = {
     themeDarkLabel: "Switch to dark mode",
   },
 
-  debug: {
-    openLabel: "Open Design Debug Mode",
-    closeLabel: "Close Design Debug Mode",
-    title: "Design Debug Mode",
-    description: "A quiet look at the system beneath the page. The reading layer stays unchanged; this is only an optional inspection view.",
-    gridLabel: "Editorial grid",
-    gridValue: "72 px rail · fluid 12-column field",
-    typeLabel: "Type system",
-    typeValue: "DM Serif Display · Manrope",
-    colorLabel: "Surface system",
-    colorValue: "Porcelain · Charcoal · Cobalt Mist",
-  },
 };

@@ -18,14 +18,11 @@ import {
   MapPin,
   Menu,
   Moon,
-  ScanLine,
   Sparkles,
   Sun,
   X,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
-import { DesignDebugMode } from "@/components/DesignDebugMode";
-import { SystemXRay } from "@/components/SystemXRay";
 import { portfolioContent as content } from "@/content/portfolioContent";
 import { getAppearanceToggleState } from "@/lib/appearanceToggle";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
@@ -203,7 +200,6 @@ export default function Home() {
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "", website: "" });
   const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [contactError, setContactError] = useState("");
-  const [debugOpen, setDebugOpen] = useState(false);
   const menuCloseTimer = useRef<number | null>(null);
   const contactMutation = trpc.contact.submit.useMutation({
     onSuccess: () => {
@@ -297,7 +293,6 @@ export default function Home() {
 
   return (
     <div className="portfolio min-h-screen overflow-x-clip bg-[#f6f4ef] text-[#1b1c1d] selection:bg-[#456fe8] selection:text-white">
-      <DesignDebugMode open={debugOpen} onClose={() => setDebugOpen(false)} content={content.debug} />
       <header className="theme-light-surface fixed inset-x-0 top-0 z-50 border-b border-[#1b1c1d]/8 bg-[#f6f4ef]/85 px-5 py-3 backdrop-blur-xl lg:hidden">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <a href="#top" tabIndex={showMobileIdentity ? 0 : -1} aria-hidden={!showMobileIdentity} className={`mobile-header-identity text-sm font-semibold tracking-[-0.03em] ${showMobileIdentity ? "is-visible" : ""}`} aria-label={content.ui.homeAriaLabel}>{content.identity.name}</a>
@@ -356,7 +351,7 @@ export default function Home() {
         </nav>
 
         <div className="mt-auto border-t border-[#1b1c1d]/10 pt-5">
-          <div className="mb-4 flex items-center justify-between"><span className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">{content.identity.appearanceLabel}</span><div className="flex items-center gap-1.5"><button type="button" className="rail-debug-button" onClick={() => setDebugOpen(true)} aria-label={content.debug.openLabel} title={content.debug.openLabel}><ScanLine className="h-3.5 w-3.5" aria-hidden="true" /></button><ThemeToggle /></div></div>
+          <div className="mb-4 flex items-center justify-between"><span className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">{content.identity.appearanceLabel}</span><ThemeToggle /></div>
           <p className="flex items-center gap-2 text-[11px] font-medium text-[#676766]"><span className="h-1.5 w-1.5 rounded-full bg-[#456fe8]" /> {content.identity.availability}</p>
           <p className="mt-3 flex items-center gap-2 text-[11px] text-[#898783]"><MapPin className="h-3.5 w-3.5" /> {content.identity.location}</p>
           <p className="mt-1 text-[11px] text-[#898783]">{content.identity.railNote}</p>
@@ -432,13 +427,10 @@ export default function Home() {
 
             <div className="mt-10 space-y-16 lg:mt-14 lg:space-y-24">
               <article className="group grid gap-7 lg:grid-cols-[minmax(0,1.42fr)_minmax(260px,0.58fr)] lg:items-end lg:gap-12">
-                <div className="relative">
-                  <a href="#contact" className="relative block transition-transform duration-300 hover:-translate-y-1" aria-label={firstProject.ariaLabel}>
-                    <ProductEvidence project={firstProject} />
-                    <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
-                  </a>
-                  <SystemXRay xray={firstProject.xray} />
-                </div>
+                <a href="#contact" className="relative block transition-transform duration-300 hover:-translate-y-1" aria-label={firstProject.ariaLabel}>
+                  <ProductEvidence project={firstProject} />
+                  <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
+                </a>
                 <div className="lg:pb-2">
                   <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.14em] text-[#a8a6a2]"><span>{firstProject.meta}</span><span>{firstProject.date}</span></div>
                   <h3 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">{firstProject.name}</h3>
@@ -462,13 +454,10 @@ export default function Home() {
                   </div>
                   <a href="#contact" className="group/link mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#f4f1eb]">{secondProject.cta} <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
                 </div>
-                <div className="order-1 relative lg:order-2">
-                  <a href="#contact" className="relative block transition-transform duration-300 hover:-translate-y-1" aria-label={secondProject.ariaLabel}>
-                    <ProductEvidence project={secondProject} />
-                    <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
-                  </a>
-                  <SystemXRay xray={secondProject.xray} />
-                </div>
+                <a href="#contact" className="order-1 relative block transition-transform duration-300 hover:-translate-y-1 lg:order-2" aria-label={secondProject.ariaLabel}>
+                  <ProductEvidence project={secondProject} />
+                  <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
+                </a>
               </article>
             </div>
           </div>
@@ -557,19 +546,6 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="field-notes" className="theme-note-surface relative overflow-hidden border-y border-[#1b1c1d]/10 bg-[#e9e6df] px-5 py-20 sm:px-8 sm:py-28 lg:px-12 xl:px-16">
-          <div className="pointer-events-none absolute inset-0 field-notes-lines" />
-          <div className="relative mx-auto max-w-7xl">
-            <div className="grid gap-8 border-b border-[#1b1c1d]/10 pb-10 lg:grid-cols-[0.68fr_1.32fr] lg:items-end lg:gap-20">
-              <div><p className="eyebrow">{content.fieldNotes.eyebrow}</p><h2 className="mt-4 max-w-md font-serif text-5xl leading-[0.94] tracking-[-0.06em] sm:text-6xl">{content.fieldNotes.heading}</h2></div>
-              <p className="max-w-2xl text-base leading-7 text-[#625f5a]">{content.fieldNotes.introduction}</p>
-            </div>
-            <div className="field-notes-grid mt-10 grid gap-3 lg:grid-cols-3">
-              {content.fieldNotes.entries.map((note) => <article key={note.title} className="field-note-card"><div className="flex items-center justify-between gap-3"><p>{note.category}</p><span>{note.tag}</span></div><h3>{note.title}</h3><p>{note.text}</p></article>)}
-            </div>
-          </div>
-        </section>
-
         <section id="philosophy" className="theme-light-surface px-5 py-20 sm:px-8 sm:py-28 lg:px-12 xl:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col justify-between gap-6 border-b border-[#1b1c1d]/10 pb-10 sm:flex-row sm:items-end">
@@ -623,7 +599,6 @@ export default function Home() {
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-3 text-[11px] sm:flex-row sm:items-center">
           <p>© {new Date().getFullYear()} {content.identity.name}. {content.footer.left}</p>
           <p className="uppercase tracking-[0.12em] text-[#8e8c87]">{content.footer.right}</p>
-          <button type="button" onClick={() => setDebugOpen(true)} className="footer-debug-button">{content.debug.openLabel} <ScanLine className="h-3.5 w-3.5" aria-hidden="true" /></button>
         </div>
       </footer>
     </div>

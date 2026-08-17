@@ -12,15 +12,13 @@ To update the site, open that one file and change the text inside quotation mark
 | --- | --- |
 | Name, location, availability, desktop rail label | `identity` |
 | Hero title, intro, buttons, resume PDF path, visual carousel captions | `hero` |
-| Work projects, technologies, calls to action, and System X-Ray lenses | `work.projects` |
+| Work projects, technologies, and calls to action | `work.projects` |
 | Practice statements, disciplines, and skills | `practice` |
 | Biography, fact cards, and professional experience | `about` and `experience` |
-| Field Notes heading, introduction, and three editable observations | `fieldNotes` |
 | Engineering principles | `philosophy` |
 | Email and social destinations | `contact` |
 | Contact-form labels, placeholders, and visitor messages | `contact.form` |
 | Footer wording | `footer` |
-| Design Debug Mode labels and visible design-system details | `debug` |
 
 Keep quotation marks, commas, brackets, and braces intact. For a new project or principle, copy the nearest existing object inside its list and replace only the values.
 

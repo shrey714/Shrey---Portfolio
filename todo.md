@@ -279,3 +279,6 @@
 - [x] Remove unused Decap media-folder configuration to stop optional missing-media lookups.
 - [x] Route Decap GitHub API save requests through a constrained same-origin proxy so browser CORS does not block content commits.
 - [ ] Verify the deployed editor receives a valid configuration and transitions from GitHub login to the editable portfolio form.
+
+- [x] Restore Decap’s required valid media configuration without enabling unused media uploads or noisy repository lookups.
+- [x] Audit and correct all production-facing origin references to https://shrey-patel-profile.vercel.app/.

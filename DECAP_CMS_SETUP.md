@@ -6,7 +6,7 @@ This project uses Decap CMS with the GitHub backend. The public portfolio is ser
 
 | Setting | Production value | Purpose |
 |---|---|---|
-| `CANONICAL_ORIGIN` | `https://shrey-portfolio.vercel.app` | Canonical URL, Open Graph URLs, structured-data URL, and OAuth callback origin. |
+| `CANONICAL_ORIGIN` | `https://shrey-patel-profile.vercel.app` | Canonical URL, Open Graph URLs, structured-data URL, and OAuth callback origin. |
 | `SITE_NAME` | `Shrey Patel` | Open Graph site name. |
 | `GITHUB_CLIENT_ID` | GitHub OAuth App Client ID | Starts the Decap GitHub login flow. |
 | `GITHUB_CLIENT_SECRET` | GitHub OAuth App Client Secret | Server-only authorization-code exchange; never expose it in client code. |
@@ -19,8 +19,8 @@ The OAuth App must be registered with the following production values.
 
 | GitHub OAuth field | Required value |
 |---|---|
-| Homepage URL | `https://shrey-portfolio.vercel.app` |
-| Authorization callback / redirect URI | `https://shrey-portfolio.vercel.app/api/decap/callback` |
+| Homepage URL | `https://shrey-patel-profile.vercel.app` |
+| Authorization callback / redirect URI | `https://shrey-patel-profile.vercel.app/api/decap/callback` |
 | Wildcard redirect matching | Disabled |
 | Device Flow | Disabled |
 | Expiring user tokens | Disabled |

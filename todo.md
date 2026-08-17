@@ -159,4 +159,4 @@
 - [x] Add targeted configuration coverage, validate desktop and mobile layouts, and confirm the production build.
 - [x] Add true scroll-progress evidence-frame motion while preserving reduced-motion and dark-mode behavior.
 - [x] Add frontend interaction coverage for active-step updates, tab semantics, progress state, and motion fallback.
-- [ ] Save a local review checkpoint only; do not push these changes to GitHub until the user explicitly approves.
+- [x] Save a local review checkpoint only; do not push these changes to GitHub until the user explicitly approves.

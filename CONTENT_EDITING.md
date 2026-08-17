@@ -26,7 +26,7 @@ The GitHub commit starts the linked Vercel deployment. After its build succeeds,
 
 Keep every required field populated. The deployment build validates the content structure before it emits the site, so an incomplete field or unsupported project visual kind fails early instead of quietly breaking the public page. Use complete absolute URLs for external links and use either a complete absolute URL or a leading-slash site path for the resume and image URLs.
 
-Use **Manage media** in the top-right of `/admin` to upload images and PDF files. Uploads are stored privately in Vercel Blob and served from a cacheable site-owned media URL. Copy the generated URL into the relevant content field: use it for **Hero image URL**, **Social share image URL**, or **Resume → PDF URL**. The normal Decap media folder stays empty; it exists only to satisfy the CMS configuration contract.
+Use the native **Media** panel in `/admin` to upload, select, and delete images and PDF files. The Decap panel is backed by private Vercel Blob storage rather than the GitHub `content/media` directory, so media binaries are not committed to the repository. Select an asset to insert its cacheable site-owned URL into **Hero image URL**, **Social share image URL**, or **Resume → PDF URL**. The normal Decap media folder stays empty; it exists only to satisfy the CMS configuration contract.
 
 ## Rollback
 

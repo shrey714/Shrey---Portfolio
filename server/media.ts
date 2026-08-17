@@ -1,4 +1,4 @@
-import { get, list, put } from "@vercel/blob";
+import { del, get, list, put } from "@vercel/blob";
 import express, { type Express, type Request, type Response } from "express";
 import { isAuthorizedEditorToken } from "./_core/decap.js";
 import { ENV } from "./_core/env.js";
@@ -40,14 +40,91 @@ async function requirePortfolioOwner(req: Request, res: Response) {
     return false;
   }
   if (!(await isAuthorizedEditorToken(token))) {
-    res.status(403).json({ message: "Only the configured portfolio owner may upload media." });
+    res.status(403).json({ message: "Only the configured portfolio owner may manage media." });
     return false;
   }
   return true;
 }
 
-function mediaManagerDocument() {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex,nofollow" /><title>Portfolio media</title><style>body{margin:0;background:#f6f4ef;color:#1b1c1d;font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.shell{max-width:780px;margin:0 auto;padding:48px 24px 80px}a{color:inherit}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6b6a66}.back{display:inline-block;margin-bottom:32px;font-size:13px}.card{background:#fff;border:1px solid #dedbd4;border-radius:18px;padding:24px;margin-top:22px}.field{display:block;margin:14px 0 8px;font-weight:650}input,select,button{font:inherit}input,select{box-sizing:border-box;width:100%;border:1px solid #c9c5bd;border-radius:10px;padding:11px;background:#fff}button{border:0;border-radius:999px;background:#1b1c1d;color:#fff;padding:11px 16px;cursor:pointer}button:disabled{opacity:.6;cursor:wait}.note{color:#67655f;font-size:13px}.status{margin-top:14px;font-size:14px}.items{display:grid;gap:10px;margin-top:16px}.item{display:flex;gap:12px;justify-content:space-between;align-items:center;border-top:1px solid #e2dfd8;padding-top:10px}.item code{font-size:12px;overflow-wrap:anywhere}.item button{font-size:12px;padding:7px 11px;background:#456fe8}.empty{color:#67655f}.error{color:#9a2f2f}.success{color:#146c43}</style></head><body><main class="shell"><a class="back" href="/admin">← Back to content editor</a><p class="eyebrow">Private asset manager</p><h1>Portfolio media</h1><p>Upload an image or resume PDF to the portfolio’s private Vercel Blob store. Use the generated site URL in the relevant Decap field.</p><section class="card"><form id="upload-form"><label class="field" for="file">Media file</label><input id="file" name="file" type="file" accept="image/avif,image/gif,image/jpeg,image/png,image/webp,application/pdf" required /><label class="field" for="category">Folder</label><select id="category" name="category"><option value="uploads">General upload</option><option value="hero">Hero image</option><option value="social">Social image</option><option value="resume">Resume</option></select><p class="note">Allowed: AVIF, GIF, JPEG, PNG, WebP, and PDF. Maximum size: 12 MB. The file remains private in storage and is served only from this site’s media route.</p><button type="submit">Upload media</button><p id="status" class="status" aria-live="polite"></p></form></section><section class="card"><h2>Available media</h2><p class="note">Copy a site URL, then paste it into Decap. Use a hero/social URL for images and a resume URL for the Download Resume field.</p><div id="items" class="items"><p class="empty">Loading media…</p></div></section></main><script>const state=document.getElementById("status"),items=document.getElementById("items"),form=document.getElementById("upload-form");function token(){try{return JSON.parse(localStorage.getItem("decap-cms-user")||"{}").token||""}catch{return ""}}function auth(){const value=token();return value?{Authorization:"Bearer "+value}:{}}function setStatus(message,kind=""){state.textContent=message;state.className="status "+kind}async function copy(value){await navigator.clipboard.writeText(value);setStatus("Site URL copied. Paste it into the matching Decap field.","success")}function render(media){items.replaceChildren();if(!media.length){const empty=document.createElement("p");empty.className="empty";empty.textContent="No portfolio media uploaded yet.";items.append(empty);return}for(const entry of media){const row=document.createElement("div");row.className="item";const text=document.createElement("code");text.textContent=entry.publicUrl;const button=document.createElement("button");button.type="button";button.textContent="Copy URL";button.addEventListener("click",()=>copy(entry.publicUrl));row.append(text,button);items.append(row)}}async function load(){const response=await fetch("/api/media/list",{headers:auth()});if(!response.ok){throw new Error(response.status===401?"Sign in through the content editor first.":"Unable to load media.")}render((await response.json()).media)}form.addEventListener("submit",async event=>{event.preventDefault();const file=document.getElementById("file").files[0];const category=document.getElementById("category").value;if(!file)return;const button=form.querySelector("button");button.disabled=true;setStatus("Uploading…");try{const response=await fetch("/api/media/upload?filename="+encodeURIComponent(file.name)+"&category="+encodeURIComponent(category),{method:"POST",headers:{...auth(),"Content-Type":file.type||"application/octet-stream"},body:file});const data=await response.json();if(!response.ok)throw new Error(data.message||"Upload failed.");setStatus("Upload complete. The site URL is ready to copy below.","success");document.getElementById("file").value="";await load()}catch(error){setStatus(error instanceof Error?error.message:"Upload failed.","error")}finally{button.disabled=false}});load().catch(error=>setStatus(error instanceof Error?error.message:"Unable to load media.","error"));</script></body></html>`;
+function mediaLibraryScript() {
+  return `(() => {
+  const MAX_FILE_BYTES = ${MAX_UPLOAD_BYTES};
+  const TOKEN_KEY = "decap-cms-user";
+  const getToken = () => {
+    try { return JSON.parse(localStorage.getItem(TOKEN_KEY) || "{}").token || ""; } catch { return ""; }
+  };
+  const authHeaders = () => {
+    const token = getToken();
+    return token ? { Authorization: "Bearer " + token } : {};
+  };
+  const request = async (url, options = {}) => {
+    const response = await fetch(url, { ...options, headers: { ...authHeaders(), ...(options.headers || {}) } });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(body.message || "Media request failed.");
+    return body;
+  };
+  const isImage = pathname => /\\.(avif|gif|jpe?g|png|webp)$/i.test(pathname);
+  const createElement = (tag, properties = {}) => Object.assign(document.createElement(tag), properties);
+  const mediaLibrary = {
+    name: "vercel-blob",
+    init: async ({ handleInsert } = {}) => {
+      let dialog;
+      const close = () => { dialog?.remove(); dialog = undefined; };
+      const show = async () => {
+        close();
+        dialog = createElement("div", { className: "vercel-blob-media-overlay" });
+        dialog.innerHTML = '<style>.vercel-blob-media-overlay{position:fixed;z-index:2147483647;inset:0;background:rgba(20,21,23,.68);display:grid;place-items:center;padding:24px;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.vercel-blob-media-dialog{box-sizing:border-box;width:min(920px,100%);max-height:min(760px,100%);overflow:auto;border-radius:18px;background:#f6f4ef;color:#1b1c1d;padding:24px;box-shadow:0 24px 80px rgba(0,0,0,.36)}.vercel-blob-media-head{display:flex;justify-content:space-between;gap:16px;align-items:start}.vercel-blob-media-head h2{margin:0;font-size:24px}.vercel-blob-media-head p{margin:6px 0 0;color:#68665f}.vercel-blob-media-close,.vercel-blob-media-upload,.vercel-blob-media-use,.vercel-blob-media-delete{border:0;border-radius:999px;padding:9px 13px;font:600 13px system-ui;cursor:pointer}.vercel-blob-media-close{background:transparent;border:1px solid #c9c5bd}.vercel-blob-media-upload,.vercel-blob-media-use{background:#1b1c1d;color:#fff}.vercel-blob-media-delete{background:#fff;color:#9a2f2f;border:1px solid #dfb5b5}.vercel-blob-media-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0}.vercel-blob-media-controls input,.vercel-blob-media-controls select{padding:9px;border:1px solid #c9c5bd;border-radius:9px;background:#fff;font:14px system-ui}.vercel-blob-media-controls input[type=file]{min-width:220px}.vercel-blob-media-status{min-height:22px;margin:0 0 14px;font-size:13px;color:#67655f}.vercel-blob-media-status.error{color:#9a2f2f}.vercel-blob-media-status.success{color:#146c43}.vercel-blob-media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}.vercel-blob-media-item{background:#fff;border:1px solid #dedbd4;border-radius:12px;overflow:hidden}.vercel-blob-media-preview{display:grid;place-items:center;aspect-ratio:4/3;background:#e9e6df;color:#666;font-size:13px}.vercel-blob-media-preview img{width:100%;height:100%;object-fit:cover}.vercel-blob-media-meta{padding:10px}.vercel-blob-media-path{display:block;min-height:36px;overflow-wrap:anywhere;font:12px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace}.vercel-blob-media-actions{display:flex;gap:7px;margin-top:10px}.vercel-blob-media-empty{color:#67655f}</style><section class="vercel-blob-media-dialog" role="dialog" aria-modal="true" aria-label="Vercel Blob media library"><div class="vercel-blob-media-head"><div><h2>Media assets</h2><p>Stored privately in Vercel Blob and delivered from this site.</p></div><button class="vercel-blob-media-close" type="button">Close</button></div><div class="vercel-blob-media-controls"><input class="vercel-blob-media-file" type="file" accept="image/avif,image/gif,image/jpeg,image/png,image/webp,application/pdf" /><select class="vercel-blob-media-category"><option value="uploads">General upload</option><option value="hero">Hero image</option><option value="social">Social image</option><option value="resume">Resume</option></select><button class="vercel-blob-media-upload" type="button">Upload</button></div><p class="vercel-blob-media-status" aria-live="polite"></p><div class="vercel-blob-media-grid"></div></section>';
+        document.body.append(dialog);
+        const root = dialog.querySelector(".vercel-blob-media-dialog");
+        const closeButton = dialog.querySelector(".vercel-blob-media-close");
+        const uploadButton = dialog.querySelector(".vercel-blob-media-upload");
+        const fileInput = dialog.querySelector(".vercel-blob-media-file");
+        const category = dialog.querySelector(".vercel-blob-media-category");
+        const status = dialog.querySelector(".vercel-blob-media-status");
+        const grid = dialog.querySelector(".vercel-blob-media-grid");
+        const setStatus = (message = "", kind = "") => { status.textContent = message; status.className = "vercel-blob-media-status " + kind; };
+        const refresh = async () => {
+          setStatus("Loading media…");
+          try {
+            const { media } = await request("/api/media/list");
+            grid.replaceChildren();
+            if (!media.length) { grid.append(createElement("p", { className: "vercel-blob-media-empty", textContent: "No media uploaded yet." })); }
+            for (const entry of media) {
+              const item = createElement("article", { className: "vercel-blob-media-item" });
+              const preview = createElement("div", { className: "vercel-blob-media-preview" });
+              if (isImage(entry.pathname)) preview.append(createElement("img", { src: entry.publicUrl, alt: "" })); else preview.textContent = "PDF";
+              const meta = createElement("div", { className: "vercel-blob-media-meta" });
+              meta.append(createElement("code", { className: "vercel-blob-media-path", textContent: entry.pathname }));
+              const actions = createElement("div", { className: "vercel-blob-media-actions" });
+              const use = createElement("button", { className: "vercel-blob-media-use", type: "button", textContent: "Use" });
+              use.addEventListener("click", () => { handleInsert?.(entry.publicUrl); close(); });
+              const remove = createElement("button", { className: "vercel-blob-media-delete", type: "button", textContent: "Delete" });
+              remove.addEventListener("click", async () => { if (!confirm("Delete this media file permanently?")) return; try { await request("/api/media/" + entry.pathname, { method: "DELETE" }); setStatus("Media deleted.", "success"); await refresh(); } catch (error) { setStatus(error.message || "Delete failed.", "error"); } });
+              actions.append(use, remove); meta.append(actions); item.append(preview, meta); grid.append(item);
+            }
+            setStatus();
+          } catch (error) { setStatus(error.message || "Unable to load media. Sign in through Decap first.", "error"); }
+        };
+        closeButton.addEventListener("click", close);
+        dialog.addEventListener("click", event => { if (event.target === dialog) close(); });
+        uploadButton.addEventListener("click", async () => {
+          const file = fileInput.files?.[0];
+          if (!file) return setStatus("Choose a file first.", "error");
+          if (file.size > MAX_FILE_BYTES) return setStatus("Media files must be 12 MB or smaller.", "error");
+          uploadButton.disabled = true; setStatus("Uploading…");
+          try {
+            await request("/api/media/upload?filename=" + encodeURIComponent(file.name) + "&category=" + encodeURIComponent(category.value), { method: "POST", headers: { "Content-Type": file.type || "application/octet-stream" }, body: file });
+            fileInput.value = ""; setStatus("Upload complete.", "success"); await refresh();
+          } catch (error) { setStatus(error.message || "Upload failed.", "error"); } finally { uploadButton.disabled = false; }
+        });
+        await refresh();
+        root.focus?.();
+      };
+      return { show, hide: close, enableStandalone: () => true };
+    },
+  };
+  if (window.CMS?.registerMediaLibrary) window.CMS.registerMediaLibrary(mediaLibrary);
+})();`;
 }
 
 async function serveMedia(req: Request, res: Response) {
@@ -76,9 +153,9 @@ async function serveMedia(req: Request, res: Response) {
 }
 
 export function registerMediaRoutes(app: Express) {
-  app.get("/admin/media", (_req, res) => {
-    res.set("X-Robots-Tag", "noindex, nofollow");
-    res.type("html").send(mediaManagerDocument());
+  app.get("/admin/vercel-blob-media-library.js", (_req, res) => {
+    res.set({ "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow" });
+    res.type("application/javascript").send(mediaLibraryScript());
   });
 
   app.get("/api/media/list", async (req, res) => {
@@ -112,6 +189,19 @@ export function registerMediaRoutes(app: Express) {
       res.status(201).json({ pathname: blob.pathname, publicUrl: publicMediaUrl(blob.pathname) });
     } catch {
       res.status(502).json({ message: "Media upload failed. Please try again." });
+    }
+  });
+
+  app.delete("/api/media/*", async (req, res) => {
+    if (!(await requirePortfolioOwner(req, res))) return;
+    const rawPath = (req.params as Record<string, unknown>)["0"];
+    const pathname = typeof rawPath === "string" ? rawPath : "";
+    if (!isAllowedPortfolioMediaPath(pathname)) return res.status(404).json({ message: "Media not found." });
+    try {
+      await del(pathname, { token: ENV.blobReadWriteToken });
+      res.status(204).end();
+    } catch {
+      res.status(502).json({ message: "Media deletion failed. Please try again." });
     }
   });
 

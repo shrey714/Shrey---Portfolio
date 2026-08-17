@@ -17,11 +17,5 @@
     }
   ],
   "cleanUrls": true,
-  "trailingSlash": false,
-  "crons": [
-    {
-      "path": "/api/contact-rate-limit-cleanup",
-      "schedule": "0 3 * * *"
-    }
-  ]
+  "trailingSlash": false
 }

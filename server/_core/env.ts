@@ -11,7 +11,6 @@ export const ENV = {
   telegramChatId: process.env.TELEGRAM_CHAT_ID ?? "",
   kvRestApiUrl: process.env.KV_REST_API_URL ?? "",
   kvRestApiToken: process.env.KV_REST_API_TOKEN ?? "",
-  cronSecret: process.env.CRON_SECRET ?? "",
   canonicalOrigin: (process.env.CANONICAL_ORIGIN ?? "https://shreypatel.dev").replace(/\/$/, ""),
   siteName: process.env.SITE_NAME ?? "Shrey Patel",
   githubClientId: process.env.GITHUB_CLIENT_ID ?? "",

@@ -267,3 +267,5 @@
 
 - [x] Replace contact rate-limit persistence with secure atomic Upstash Redis TTL operations using the Vercel-provided `KV_REST_API_URL` and `KV_REST_API_TOKEN` variables.
 - [x] Remove the database-schema dependency from public contact delivery while retaining existing validation, honeypot, cooldown, Telegram delivery, and safe failure behavior.
+
+- [x] Remove the obsolete Vercel daily rate-limit cleanup cron and its Telegram cleanup-success and failure notification paths because Redis TTL expires cooldown keys automatically.

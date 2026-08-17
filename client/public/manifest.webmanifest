@@ -1,0 +1,9 @@
+{
+  "name": "Shrey Patel — UI Designer & Frontend Developer",
+  "short_name": "Shrey Patel",
+  "description": "Portfolio of Shrey Patel, a UI designer, frontend developer, UX architect, and software engineer.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f4ef",
+  "theme_color": "#456FE8"
+}

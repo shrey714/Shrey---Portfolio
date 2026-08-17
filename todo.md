@@ -174,4 +174,10 @@
 - [x] Replace the large light/dark switch with a compact current-mode icon button across desktop and mobile placements.
 - [x] Add a purposeful sun-to-moon icon transition that respects reduced-motion preferences and retains accessible labels and focus states.
 - [x] Verify icon control behavior, contrast, responsive placement, tests, TypeScript, and production build.
-- [ ] Save a local-only review checkpoint without pushing to GitHub.
+- [x] Save a local-only review checkpoint without pushing to GitHub.
+
+# Approved Compact Appearance Icon Push
+
+- [ ] Inspect the latest local and remote GitHub branch state before publication.
+- [ ] Commit the approved compact appearance-icon change and the associated local portfolio refinements.
+- [ ] Push the approved commit to GitHub `main` and verify the remote commit identifier.

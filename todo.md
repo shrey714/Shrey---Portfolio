@@ -251,3 +251,8 @@
 
 - [x] Route `/api/trpc/*` contact submissions into the Vercel Express application rather than a static 404 response.
 - [x] Replace the Manus-only hero image path with a directly reachable CDN asset and verify image delivery.
+
+- [x] Define explicit Vercel route mappings so `/api/*` and `/admin` reach the correct server function instead of Vercel’s static 404 handler.
+- [ ] Verify the deployed contact endpoint returns tRPC JSON and the deployed `/admin` endpoint returns the Decap editor shell.
+
+- [x] During active Vercel troubleshooting, automatically push each validated corrective commit to GitHub `main` and report its commit ID without asking separately.

@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import fs from "node:fs";
 import path from "node:path";
 import type { Express, Request } from "express";
 import { parse as parseCookies } from "cookie";
@@ -155,10 +156,19 @@ function unavailable(res: Parameters<Express["get"]>[1] extends (...args: infer 
   return res.status(503).type("text/plain").send("The content editor has not been configured yet.");
 }
 
+function resolveAdminShell() {
+  const candidates = [
+    path.resolve(import.meta.dirname, "../../client/public/admin/index.html"),
+    path.resolve(import.meta.dirname, "../..", "dist", "public", "admin", "index.html"),
+    path.resolve(process.cwd(), "dist", "public", "admin", "index.html"),
+  ];
+  return candidates.find(candidate => fs.existsSync(candidate)) ?? candidates[0];
+}
+
 export function registerDecapRoutes(app: Express) {
   app.get("/admin", (_req, res) => {
     res.set("X-Robots-Tag", "noindex, nofollow");
-    res.sendFile(path.resolve(import.meta.dirname, "../../client/public/admin/index.html"));
+    res.sendFile(resolveAdminShell());
   });
 
   app.get("/api/decap/config", (req, res) => {

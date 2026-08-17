@@ -35,3 +35,9 @@
 - [x] Add a coordinated closing transition for the navigation backdrop, panel, and links.
 - [x] Validate the refined mobile header and menu at relevant scroll positions.
 - [x] Save and deliver the interaction refinement checkpoint.
+
+# Contact Label Contrast Correction
+
+- [x] Apply a dedicated light contact-label color that is readable on the cobalt surface.
+- [x] Verify the label remains correct in light and dark themes.
+- [x] Save and deliver the contrast correction checkpoint.

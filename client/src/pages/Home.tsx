@@ -493,7 +493,7 @@ export default function Home() {
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-10 lg:grid-cols-[0.68fr_1.32fr] lg:gap-20">
               <div>
-                <p className="eyebrow text-white/65">Contact</p>
+                <p className="eyebrow contact-eyebrow">Contact</p>
                 <p className="mt-5 max-w-xs text-sm leading-6 text-white/75">Have an interesting idea, a technical problem to explore, or simply want to compare notes?</p>
               </div>
               <div>

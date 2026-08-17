@@ -296,6 +296,10 @@
   color: #456fe8;
 }
 
+.contact-eyebrow {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
 .dark .portfolio .philosophy-entry {
   background: transparent !important;
   border-color: rgba(255, 255, 255, 0.15) !important;

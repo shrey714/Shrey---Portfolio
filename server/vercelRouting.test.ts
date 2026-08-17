@@ -41,5 +41,15 @@ test("unified Vercel entry provides Decap's conventional configuration fallback"
   expect(response.status).toBe(200);
   expect(response.headers.get("content-type")).toContain("text/yaml");
   expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
-  expect(await response.text()).toContain('"repo":"shrey714/Shrey---Portfolio"');
+  const config = await response.json() as { backend: Record<string, string>; media_folder?: string; public_folder?: string };
+  expect(config.backend.repo).toBe("shrey714/Shrey---Portfolio");
+  expect(config.backend.api_root).toBe(`${origin}/api/decap/github`);
+  expect(config.media_folder).toBeUndefined();
+  expect(config.public_folder).toBeUndefined();
+});
+
+test("Decap GitHub proxy rejects unauthenticated repository calls without contacting GitHub", async () => {
+  const response = await fetch(`${origin}/api/decap/github/repos/shrey714/Shrey---Portfolio/git/blobs`);
+  expect(response.status).toBe(401);
+  expect(await response.json()).toMatchObject({ message: "Editor authentication is required." });
 });

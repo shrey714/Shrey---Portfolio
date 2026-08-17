@@ -12,11 +12,12 @@ describe("Decap CMS configuration", () => {
       branch: "main",
       base_url: "https://shrey-portfolio.vercel.app",
       auth_endpoint: "api/decap/auth",
+      api_root: "https://shrey-portfolio.vercel.app/api/decap/github",
     });
     expect(portfolio.file).toBe("content/portfolio.json");
     expect(portfolio.fields.map(field => field.name)).toContain("seo");
-    expect(config.media_folder).toBe("content/media");
-    expect(config.public_folder).toBe("/media");
+    expect(config).not.toHaveProperty("media_folder");
+    expect(config).not.toHaveProperty("public_folder");
     expect(config.editor.preview).toBe(false);
   });
 

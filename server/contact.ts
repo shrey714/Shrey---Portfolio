@@ -1,12 +1,10 @@
 import { createHash } from "node:crypto";
-import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { contactRateLimits } from "../drizzle/schema.js";
-import { getDb } from "./db.js";
 import { ENV } from "./_core/env.js";
 
 export const CONTACT_RATE_LIMIT_MS = 90_000;
 export const TELEGRAM_TIMEOUT_MS = 8_000;
+const CONTACT_RATE_LIMIT_KEY_PREFIX = "portfolio:contact:cooldown:";
 
 export const contactSubmissionSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name.").max(80, "Please keep your name under 80 characters."),
@@ -29,28 +27,44 @@ export function retryAfterSeconds(nextAllowedAt: Date, now = new Date()): number
   return Math.max(1, Math.ceil((nextAllowedAt.getTime() - now.getTime()) / 1_000));
 }
 
-export async function reserveContactSubmission(ip: string, now = new Date()): Promise<number | null> {
-  const db = await getDb();
-  if (!db) throw new Error("Contact delivery storage is unavailable.");
+type UpstashResponse = { result?: unknown; error?: string };
 
-  const ipHash = hashNetworkKey(ip);
-  const nextAllowedAt = new Date(now.getTime() + CONTACT_RATE_LIMIT_MS);
+async function runUpstashCommand(command: string[]): Promise<unknown> {
+  const url = (process.env.KV_REST_API_URL ?? ENV.kvRestApiUrl).replace(/\/$/, "");
+  const token = process.env.KV_REST_API_TOKEN ?? ENV.kvRestApiToken;
+  if (!url || !token) throw new Error("Contact delivery storage is unavailable.");
 
-  return db.transaction(async tx => {
-    const [existing] = await tx.select().from(contactRateLimits).where(eq(contactRateLimits.ipHash, ipHash)).limit(1);
-
-    if (existing && existing.nextAllowedAt > now) {
-      return retryAfterSeconds(existing.nextAllowedAt, now);
-    }
-
-    if (existing) {
-      await tx.update(contactRateLimits).set({ nextAllowedAt }).where(eq(contactRateLimits.ipHash, ipHash));
-    } else {
-      await tx.insert(contactRateLimits).values({ ipHash, nextAllowedAt });
-    }
-
-    return null;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(command),
   });
+  const payload = (await response.json().catch(() => null)) as UpstashResponse | null;
+  if (!response.ok || !payload || payload.error) throw new Error("Contact delivery storage is unavailable.");
+  return payload.result;
+}
+
+/**
+ * Atomically reserve the current network key for the cooldown period. Redis
+ * expires the opaque hash automatically, removing the former database cleanup
+ * dependency and preserving concurrency safety across Vercel functions.
+ */
+export async function reserveContactSubmission(ip: string, _now = new Date()): Promise<number | null> {
+  const key = `${CONTACT_RATE_LIMIT_KEY_PREFIX}${hashNetworkKey(ip)}`;
+  const result = await runUpstashCommand(["SET", key, "1", "PX", String(CONTACT_RATE_LIMIT_MS), "NX"]);
+  if (result === "OK") return null;
+
+  const remainingMs = await runUpstashCommand(["PTTL", key]);
+  const milliseconds = typeof remainingMs === "number" ? remainingMs : Number(remainingMs);
+  if (Number.isFinite(milliseconds) && milliseconds > 0) return Math.max(1, Math.ceil(milliseconds / 1_000));
+
+  // A key can expire between SET NX and PTTL. Retry once so a legitimate user
+  // is not rejected merely because Redis completed expiry during the lookup.
+  const retry = await runUpstashCommand(["SET", key, "1", "PX", String(CONTACT_RATE_LIMIT_MS), "NX"]);
+  return retry === "OK" ? null : Math.ceil(CONTACT_RATE_LIMIT_MS / 1_000);
 }
 
 function escapeTelegramHtml(value: string): string {

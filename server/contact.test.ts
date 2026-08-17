@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { contactSubmissionSchema, deliverContactToTelegram, formatTelegramContactMessage, getClientIp, hasTelegramConfiguration, retryAfterSeconds, TELEGRAM_TIMEOUT_MS } from "./contact";
+import { contactSubmissionSchema, deliverContactToTelegram, formatTelegramContactMessage, getClientIp, hasTelegramConfiguration, reserveContactSubmission, retryAfterSeconds, TELEGRAM_TIMEOUT_MS } from "./contact";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -26,6 +26,28 @@ describe("contact submission security", () => {
 
   it("calculates a positive cooldown for blocked repeat submissions", () => {
     expect(retryAfterSeconds(new Date("2026-08-17T10:00:30Z"), new Date("2026-08-17T10:00:00Z"))).toBe(30);
+  });
+
+  it("uses an atomic Redis TTL reservation for contact cooldowns", async () => {
+    vi.stubEnv("KV_REST_API_URL", "https://redis.example.test");
+    vi.stubEnv("KV_REST_API_TOKEN", "test-token");
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ result: "OK" }) }));
+
+    await expect(reserveContactSubmission("198.51.100.7")).resolves.toBeNull();
+    expect(fetch).toHaveBeenCalledWith(
+      "https://redis.example.test",
+      expect.objectContaining({ body: expect.stringContaining('"SET"') })
+    );
+  });
+
+  it("returns Redis TTL seconds for a blocked repeat submission", async () => {
+    vi.stubEnv("KV_REST_API_URL", "https://redis.example.test");
+    vi.stubEnv("KV_REST_API_TOKEN", "test-token");
+    vi.stubGlobal("fetch", vi.fn()
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ result: null }) })
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ result: 42_100 }) }));
+
+    await expect(reserveContactSubmission("198.51.100.7")).resolves.toBe(43);
   });
 
   it("uses the proxy-resolved address with a socket-address fallback", () => {

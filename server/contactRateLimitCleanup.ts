@@ -1,8 +1,4 @@
-import { lt } from "drizzle-orm";
-import { contactRateLimits } from "../drizzle/schema";
-import { getDb } from "./db";
-
-/** Retain an expired cooldown hash briefly for observability, then remove it. */
+/** Retained for the scheduled-maintenance report contract. Redis deletes TTL keys itself. */
 export const CONTACT_RATE_LIMIT_RETENTION_MS = 24 * 60 * 60 * 1_000;
 
 export function getContactRateLimitCleanupCutoff(now = new Date()): Date {
@@ -17,18 +13,14 @@ function getAffectedRowCount(result: unknown): number {
 }
 
 /**
- * Deletes only cooldown records that expired more than 24 hours ago.
- * It is safe to repeat: a later run simply finds no already-deleted rows.
+ * Upstash Redis expires cooldown keys atomically at their TTL. The retained
+ * cron endpoint therefore remains safe and operationally visible, but never
+ * runs a database deletion query.
  */
 export async function cleanupExpiredContactRateLimits(now = new Date()) {
-  const db = await getDb();
-  if (!db) throw new Error("Contact rate-limit storage is unavailable.");
-
   const cutoff = getContactRateLimitCleanupCutoff(now);
-  const result = await db.delete(contactRateLimits).where(lt(contactRateLimits.nextAllowedAt, cutoff));
-
   return {
     cutoff,
-    deletedCount: getAffectedRowCount(result),
+    deletedCount: 0,
   };
 }

@@ -8,6 +8,8 @@ import { registerStorageProxy } from "./storageProxy";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { warmDatabaseConnection } from "../db";
+import { warmTelegramConnection } from "../contact";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -33,6 +35,10 @@ async function startServer() {
   // The managed gateway supplies the client address from one trusted proxy hop.
   app.set("trust proxy", 1);
   const server = createServer(app);
+  void Promise.allSettled([warmDatabaseConnection(), warmTelegramConnection()]).then(results => {
+    const failed = results.filter(result => result.status === "rejected");
+    if (failed.length) console.warn(`[Startup] ${failed.length} contact dependency warm-up task(s) did not complete.`);
+  });
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));

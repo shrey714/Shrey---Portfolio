@@ -20,12 +20,16 @@ export const appRouter = router({
   }),
   contact: router({
     submit: publicProcedure.input(contactSubmissionSchema).mutation(async ({ ctx, input }) => {
+      const requestStartedAt = performance.now();
       // Honeypot submissions receive a generic success response and never reach Telegram.
       if (input.website) return { accepted: true, blocked: true } as const;
 
       const ip = getClientIp(ctx.req.ip, ctx.req.socket.remoteAddress);
+      const rateLimitStartedAt = performance.now();
       const retryAfter = await reserveContactSubmission(ip);
+      const rateLimitDuration = performance.now() - rateLimitStartedAt;
       if (retryAfter) {
+        ctx.res.setHeader("Server-Timing", `rate-limit;dur=${rateLimitDuration.toFixed(1)}`);
         throw new TRPCError({
           code: "TOO_MANY_REQUESTS",
           message: `Please wait ${retryAfter} seconds before sending another message.`,
@@ -33,7 +37,12 @@ export const appRouter = router({
       }
 
       try {
+        const telegramStartedAt = performance.now();
         await deliverContactToTelegram(input);
+        const telegramDuration = performance.now() - telegramStartedAt;
+        const totalDuration = performance.now() - requestStartedAt;
+        ctx.res.setHeader("Server-Timing", `rate-limit;dur=${rateLimitDuration.toFixed(1)}, telegram;dur=${telegramDuration.toFixed(1)}, total;dur=${totalDuration.toFixed(1)}`);
+        console.info("[Contact] Delivery timing", { rateLimitMs: Math.round(rateLimitDuration), telegramMs: Math.round(telegramDuration), totalMs: Math.round(totalDuration) });
       } catch (error) {
         console.error("[Contact] Telegram delivery failed", { error: error instanceof Error ? error.message : "unknown" });
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Your message could not be sent right now. Please try again shortly or use the email link." });

@@ -6,6 +6,7 @@ import { getDb } from "./db";
 import { ENV } from "./_core/env";
 
 export const CONTACT_RATE_LIMIT_MS = 90_000;
+export const TELEGRAM_TIMEOUT_MS = 8_000;
 
 export const contactSubmissionSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name.").max(80, "Please keep your name under 80 characters."),
@@ -72,12 +73,35 @@ export function hasTelegramConfiguration(token: string, chatId: string): boolean
   return Boolean(token.trim() && chatId.trim());
 }
 
+async function telegramRequest(path: string, init?: RequestInit): Promise<Response> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), TELEGRAM_TIMEOUT_MS);
+
+  try {
+    return await fetch(`https://api.telegram.org/bot${ENV.telegramBotToken}/${path}`, { ...init, signal: controller.signal });
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") {
+      throw new Error("Telegram contact delivery timed out.");
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+/** Establishes the upstream connection during server startup so the first visitor does not pay the warm-up cost. */
+export async function warmTelegramConnection(): Promise<void> {
+  if (!hasTelegramConfiguration(ENV.telegramBotToken, ENV.telegramChatId)) return;
+  const response = await telegramRequest("getMe");
+  if (!response.ok) throw new Error("Telegram contact connection warm-up failed.");
+}
+
 export async function deliverContactToTelegram(input: ContactSubmission): Promise<void> {
   if (!hasTelegramConfiguration(ENV.telegramBotToken, ENV.telegramChatId)) {
     throw new Error("Telegram contact delivery is not configured.");
   }
 
-  const response = await fetch(`https://api.telegram.org/bot${ENV.telegramBotToken}/sendMessage`, {
+  const response = await telegramRequest("sendMessage", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

@@ -31,3 +31,5 @@ If you ever rotate the Telegram bot token or change the destination chat, update
 The public Contact section has been checked in the running portfolio. It exposes labelled name, email, and message fields; a concealed honeypot field; a visible submit action; a live status region; a privacy note; and an email fallback.
 
 The visible form was also populated with valid browser-side input and submitted in the running preview. Its submit control correctly changed to the pending state while the server processed the submission.
+
+The upstream-failure path is covered by an automated test that simulates a Telegram timeout. The server converts that condition into the existing retry-safe visitor error rather than waiting indefinitely.

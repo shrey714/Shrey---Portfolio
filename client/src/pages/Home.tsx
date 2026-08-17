@@ -120,7 +120,7 @@ export default function Home() {
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "", website: "" });
-  const [contactStatus, setContactStatus] = useState<"idle" | "success" | "error">("idle");
+  const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [contactError, setContactError] = useState("");
   const menuCloseTimer = useRef<number | null>(null);
   const contactMutation = trpc.contact.submit.useMutation({
@@ -151,7 +151,7 @@ export default function Home() {
 
   const submitContact = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setContactStatus("idle");
+    setContactStatus("sending");
     setContactError("");
     contactMutation.mutate(contactForm);
   };
@@ -503,7 +503,7 @@ export default function Home() {
                   <label className="contact-form-field mt-4"><span>{content.contact.form.messageLabel}</span><textarea required minLength={12} maxLength={1500} rows={5} value={contactForm.message} onChange={event => setContactForm(current => ({ ...current, message: event.target.value }))} placeholder={content.contact.form.messagePlaceholder} /></label>
                   <label className="contact-form-honeypot" aria-hidden="true"><span>Website</span><input tabIndex={-1} autoComplete="off" value={contactForm.website} onChange={event => setContactForm(current => ({ ...current, website: event.target.value }))} /></label>
                   <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><button type="submit" disabled={contactMutation.isPending} className="contact-form-submit">{contactMutation.isPending ? <><Loader2 className="h-4 w-4 animate-spin" />{content.contact.form.submittingLabel}</> : <>{content.contact.form.submitLabel}<ArrowUpRight className="h-4 w-4" /></>}</button><p className="max-w-sm text-xs leading-5 text-white/65">{content.contact.form.privacyNote}</p></div>
-                  <div className="mt-4 min-h-6 text-sm" aria-live="polite">{contactStatus === "success" && <p className="font-semibold text-white">{content.contact.form.successMessage}</p>}{contactStatus === "error" && <p className="font-medium text-white">{contactError}</p>}</div>
+                  <div className="mt-4 min-h-6 text-sm" aria-live="polite">{contactStatus === "sending" && <p className="font-medium text-white/85">{content.contact.form.sendingMessage}</p>}{contactStatus === "success" && <p className="font-semibold text-white">{content.contact.form.successMessage}</p>}{contactStatus === "error" && <p className="font-medium text-white">{contactError}</p>}</div>
                 </form>
                 <p className="mt-5 text-sm text-white/75">{content.contact.form.fallbackMessage} <a href={`mailto:${content.contact.email}`} className="font-semibold underline underline-offset-4 transition-opacity hover:opacity-75">{content.contact.email}</a></p>
                 <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 text-sm font-semibold">

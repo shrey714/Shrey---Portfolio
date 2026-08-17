@@ -199,6 +199,7 @@ export const portfolioContent = {
       messagePlaceholder: "A little context about your idea, team, or technical challenge…",
       submitLabel: "Send securely",
       submittingLabel: "Sending…",
+      sendingMessage: "Connecting to Telegram securely…",
       successMessage: "Message sent. I’ll get back to you soon.",
       fallbackMessage: "For longer context, you can also email directly.",
       privacyNote: "Your message is delivered privately and is not stored on this website.",

@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -16,6 +16,13 @@ export async function getDb() {
     }
   }
   return _db;
+}
+
+/** Opens the managed database connection during server startup rather than on a visitor's first form submission. */
+export async function warmDatabaseConnection(): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  await db.execute(sql`SELECT 1`);
 }
 
 export async function upsertUser(user: InsertUser): Promise<void> {

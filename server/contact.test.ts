@@ -1,5 +1,9 @@
-import { describe, expect, it } from "vitest";
-import { contactSubmissionSchema, formatTelegramContactMessage, getClientIp, hasTelegramConfiguration, retryAfterSeconds } from "./contact";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { contactSubmissionSchema, deliverContactToTelegram, formatTelegramContactMessage, getClientIp, hasTelegramConfiguration, retryAfterSeconds, TELEGRAM_TIMEOUT_MS } from "./contact";
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 
 describe("contact submission security", () => {
   it("rejects malformed, oversized, and honeypot submissions", () => {
@@ -33,5 +37,21 @@ describe("contact submission security", () => {
     expect(hasTelegramConfiguration("token", "chat")).toBe(true);
     expect(hasTelegramConfiguration("", "chat")).toBe(false);
     expect(hasTelegramConfiguration("token", "")).toBe(false);
+  });
+
+  it("uses a bounded upstream timeout for predictable visitor feedback", () => {
+    expect(TELEGRAM_TIMEOUT_MS).toBeGreaterThanOrEqual(5_000);
+    expect(TELEGRAM_TIMEOUT_MS).toBeLessThanOrEqual(10_000);
+  });
+
+  it("returns a retry-safe timeout error when Telegram does not respond", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new DOMException("aborted", "AbortError")));
+
+    await expect(deliverContactToTelegram({
+      name: "Shrey Patel",
+      email: "hello@example.com",
+      message: "A legitimate contact submission with enough useful detail.",
+      website: "",
+    })).rejects.toThrow("timed out");
   });
 });

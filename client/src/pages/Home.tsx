@@ -22,9 +22,9 @@ import {
   Sun,
   X,
 } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/contexts/ThemeContext";
 import { portfolioContent as content } from "@/content/portfolioContent";
+import { getAppearanceToggleState } from "@/lib/appearanceToggle";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
 import { trpc } from "@/lib/trpc";
 
@@ -37,18 +37,22 @@ function AnchorArrow() {
   return <ArrowUpRight aria-hidden="true" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />;
 }
 
-function ThemeToggle({ variant = "rail" }: { variant?: "rail" | "mobile" }) {
+function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
-  const mobile = variant === "mobile";
+  const toggleState = getAppearanceToggleState(isDark, {
+    light: content.ui.themeLightLabel,
+    dark: content.ui.themeDarkLabel,
+  });
 
   return (
-    <div className={`theme-toggle flex items-center gap-2 rounded-full border border-[#1b1c1d]/12 bg-white/55 p-1.5 text-[#5f5d59] backdrop-blur-sm ${mobile ? "" : "w-fit"}`}>
-      <Sun aria-hidden="true" className={`h-3.5 w-3.5 transition-colors ${isDark ? "text-[#8c8a85]" : "text-[#456fe8]"}`} />
-      <Switch checked={isDark} onCheckedChange={toggleTheme} aria-label={isDark ? content.ui.themeLightLabel : content.ui.themeDarkLabel} />
-      <Moon aria-hidden="true" className={`h-3.5 w-3.5 transition-colors ${isDark ? "text-[#9fb2ff]" : "text-[#8c8a85]"}`} />
-      {!mobile && <span className="sr-only">{isDark ? "Dark mode active" : "Light mode active"}</span>}
-    </div>
+    <button type="button" onClick={toggleTheme} className="appearance-icon-button" data-theme={toggleState.theme} aria-label={toggleState.ariaLabel} aria-pressed={isDark} title={toggleState.ariaLabel}>
+      <span className="appearance-icon-stage" aria-hidden="true">
+        <Sun className="appearance-icon appearance-icon-sun" />
+        <Moon className="appearance-icon appearance-icon-moon" />
+      </span>
+      <span className="sr-only">{toggleState.status}</span>
+    </button>
   );
 }
 
@@ -293,7 +297,7 @@ export default function Home() {
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <a href="#top" tabIndex={showMobileIdentity ? 0 : -1} aria-hidden={!showMobileIdentity} className={`mobile-header-identity text-sm font-semibold tracking-[-0.03em] ${showMobileIdentity ? "is-visible" : ""}`} aria-label={content.ui.homeAriaLabel}>{content.identity.name}</a>
           <div className="flex items-center gap-2">
-            <ThemeToggle variant="mobile" />
+            <ThemeToggle />
             <button
               type="button"
               onClick={() => (menuOpen ? closeMenu() : openMenu())}
@@ -322,7 +326,7 @@ export default function Home() {
               </a>
             ))}
           </div>
-          <div className="mt-5 flex items-center justify-between border-t border-[#1b1c1d]/10 pt-4"><span className="text-[11px] text-[#777571]">Choose an appearance</span><ThemeToggle variant="mobile" /></div>
+          <div className="mt-5 flex justify-end border-t border-[#1b1c1d]/10 pt-4"><ThemeToggle /></div>
         </nav>
       </div>
 

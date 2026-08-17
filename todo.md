@@ -167,4 +167,11 @@
 - [x] Remove the walkthrough-only client tests and browser-test dependencies, retaining only the evidence-motion coverage.
 - [x] Restore the original concise Selected Work composition while keeping the requested evidence-frame motion.
 - [x] Validate desktop and mobile layouts, tests, TypeScript, and production build.
+- [x] Save a local-only review checkpoint without pushing to GitHub.
+
+# Compact Appearance Icon Control
+
+- [x] Replace the large light/dark switch with a compact current-mode icon button across desktop and mobile placements.
+- [x] Add a purposeful sun-to-moon icon transition that respects reduced-motion preferences and retains accessible labels and focus states.
+- [x] Verify icon control behavior, contrast, responsive placement, tests, TypeScript, and production build.
 - [ ] Save a local-only review checkpoint without pushing to GitHub.

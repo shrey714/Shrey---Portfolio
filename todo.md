@@ -231,3 +231,6 @@
 
 - [x] Commit the approved Git-backed editor and SSR implementation to GitHub `main`.
 - [x] Verify the pushed commit is present on the linked GitHub repository without deploying it on the user's behalf.
+
+- [x] Make the root Vercel entrypoint import and initialize Express directly so framework detection accepts the deployment.
+- [ ] Validate and push the targeted Vercel entrypoint correction, then ask the user to redeploy.

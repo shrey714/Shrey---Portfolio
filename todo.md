@@ -117,7 +117,7 @@
 - [x] Move the Practice visual callout into a non-overlapping position within the component.
 - [x] Align the System Note and Signal / Decision / Response labels on a shared footer row.
 - [x] Verify the corrected component in dark mode and responsive widths.
-- [ ] Save and deliver the alignment correction checkpoint.
+- [x] Save and deliver the alignment correction checkpoint.
 
 # Scheduled Rate-Limit Record Cleanup
 
@@ -126,4 +126,4 @@
 - [x] Add an authenticated daily scheduled endpoint that invokes the cleanup independently of page loads and contact submissions.
 - [x] Add unit coverage for the cleanup boundary and scheduled-handler authorization behavior.
 - [x] Validate the production build and save the cleanup implementation checkpoint.
-- [ ] After the Vercel production deployment, add a strong CRON_SECRET environment variable so the declared daily schedule can run.
+- [x] Document the user-owned Vercel CRON_SECRET activation step; the route fails closed until the secret is configured after deployment.

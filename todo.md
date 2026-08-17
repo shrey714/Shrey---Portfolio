@@ -246,3 +246,8 @@
 
 - [x] Diagnose why the deployed Vercel page cannot load generated CSS and JavaScript assets and prepare a focused correction.
 - [ ] Confirm the redeployed portfolio returns its CSS and JavaScript assets successfully before continuing editor verification.
+
+- [x] Fix the deployed `/admin` route so it resolves the compiled Decap editor shell in Vercel-mode production.
+
+- [x] Route `/api/trpc/*` contact submissions into the Vercel Express application rather than a static 404 response.
+- [x] Replace the Manus-only hero image path with a directly reachable CDN asset and verify image delivery.

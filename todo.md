@@ -57,3 +57,11 @@
 - [x] Animate captions in sync with each slide change while respecting reduced-motion preferences.
 - [x] Verify readable overlays at desktop and mobile widths.
 - [x] Save and deliver the refined carousel checkpoint.
+
+# Dark Carousel Surface and Timing
+
+- [x] Apply a coherent dark theme to the carousel frame, footer, captions, indicators, and controls.
+- [x] Ensure each CSS-built visual state has readable dark-mode metadata and annotation treatment.
+- [x] Reduce the automatic slide interval while preserving hover, focus, and reduced-motion behavior.
+- [x] Validate dark carousel contrast and responsive composition.
+- [x] Save and deliver the dark-carousel refinement checkpoint.

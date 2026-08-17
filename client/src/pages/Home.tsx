@@ -203,7 +203,7 @@ export default function Home() {
 
   useEffect(() => {
     if (heroPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setTimeout(() => setActiveHeroSlide((slide) => (slide + 1) % heroSlides.length), 5600);
+    const timer = window.setTimeout(() => setActiveHeroSlide((slide) => (slide + 1) % heroSlides.length), 3800);
     return () => window.clearTimeout(timer);
   }, [activeHeroSlide, heroPaused]);
 

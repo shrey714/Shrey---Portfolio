@@ -440,6 +440,47 @@
 .hero-detail-dot.dot-two { right: 35%; bottom: 23%; background: #1b1c1d; }
 .hero-detail .hero-visual-annotation { color: white; }
 
+/* Dark carousel treatment: a single charcoal frame supports every visual state and keeps footer copy readable. */
+.dark .hero-carousel {
+  border-color: rgba(255, 255, 255, 0.17) !important;
+  background: #1b1d20 !important;
+  box-shadow: 0 28px 80px -46px rgba(0, 0, 0, 0.9) !important;
+}
+
+.dark .hero-carousel-footer {
+  background: #1b1d20;
+}
+
+.dark .hero-carousel .hero-carousel-copy [class*="text-[#66645f]"] {
+  color: rgba(239, 238, 233, 0.78) !important;
+}
+
+.dark .hero-carousel .hero-carousel-actions [class*="text-[#6c6a67]"] {
+  color: rgba(239, 238, 233, 0.65) !important;
+}
+
+.dark .hero-carousel .hero-carousel-dot { background: rgba(255, 255, 255, 0.24); }
+.dark .hero-carousel .hero-carousel-dot.is-active { background: #96aaff; }
+.dark .hero-carousel .hero-carousel-control { border-color: rgba(255, 255, 255, 0.2); background: #111216; }
+.dark .hero-carousel .hero-carousel-control:hover { background: #5678ed; }
+
+.dark .hero-carousel .hero-systems { background: #1f2126; color: #ecebe6; }
+.dark .hero-carousel .hero-systems::after { background: radial-gradient(circle at 50% 50%, rgba(120, 148, 255, 0.27), transparent 32%), linear-gradient(110deg, transparent 0 48%, rgba(255, 255, 255, 0.06) 48% 49%, transparent 49%); }
+.dark .hero-carousel .hero-systems .hero-visual-topline { color: rgba(239, 238, 233, 0.63); }
+.dark .hero-carousel .hero-systems .hero-system-node { border-color: rgba(255, 255, 255, 0.16); background: #292c32; color: #ecebe6; }
+.dark .hero-carousel .hero-systems .node-b { background: #5b7eee; color: white; }
+.dark .hero-carousel .hero-systems .hero-system-link { background: rgba(255, 255, 255, 0.38); }
+.dark .hero-carousel .hero-systems .hero-system-orbit { border-color: rgba(150, 170, 255, 0.65); }
+
+.dark .hero-carousel .hero-detail { background: #202228; color: #ecebe6; }
+.dark .hero-carousel .hero-detail::after { background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0.65px, transparent 0.8px); }
+.dark .hero-carousel .hero-detail .hero-visual-topline { color: rgba(239, 238, 233, 0.63); }
+.dark .hero-carousel .hero-detail-board { border-color: rgba(255, 255, 255, 0.14); background: rgba(255, 255, 255, 0.06); box-shadow: 0 14px 32px -25px rgba(0, 0, 0, 0.8); }
+.dark .hero-carousel .hero-detail-block { border-color: rgba(255, 255, 255, 0.14); }
+.dark .hero-carousel .hero-detail-block.block-two { background: #0f1013; }
+.dark .hero-carousel .hero-detail-block.block-three { background: #3a3d44; }
+.dark .hero-carousel .hero-detail-dot { border-color: #202228; }
+
 @keyframes hero-visual-enter { from { opacity: 0; transform: scale(1.018); } to { opacity: 1; transform: scale(1); } }
 @keyframes hero-copy-enter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 

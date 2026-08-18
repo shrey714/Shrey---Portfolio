@@ -351,3 +351,5 @@
 - [x] Redesign the Skills component with technology-specific icons, stronger visual hierarchy, and minimal accessible motion.
 
 - [x] Remove the small two-letter technology token boxes from Skills cards while retaining the approved icon-led design.
+
+- [x] Remove the leftover empty vertical space in Skills cards after the technology token boxes were removed.

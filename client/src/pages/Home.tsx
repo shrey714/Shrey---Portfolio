@@ -475,15 +475,15 @@ export default function Home() {
                 const Icon = visual.Icon;
 
                 return (
-                  <article key={skill.name} style={{ transitionDelay: `${index * 35}ms` }} className="group relative min-h-52 overflow-hidden rounded-[1.2rem] border border-[#1b1c1d]/10 bg-[#f6f4ef] p-5 shadow-[0_16px_35px_-32px_rgba(27,28,29,0.65)] transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[0_22px_42px_-28px_rgba(27,28,29,0.35)] motion-reduce:transform-none motion-reduce:transition-none">
+                  <article key={skill.name} style={{ transitionDelay: `${index * 35}ms` }} className="group relative min-h-44 overflow-hidden rounded-[1.2rem] border border-[#1b1c1d]/10 bg-[#f6f4ef] p-5 shadow-[0_16px_35px_-32px_rgba(27,28,29,0.65)] transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[0_22px_42px_-28px_rgba(27,28,29,0.35)] motion-reduce:transform-none motion-reduce:transition-none">
                     <div className={`pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full border ${visual.ringColor} opacity-45 transition-transform duration-500 group-hover:scale-125 motion-reduce:transform-none`} />
                     <div className="relative flex h-full flex-col">
                       <div className="flex items-start justify-between gap-3">
                         <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${visual.iconSurface} ${visual.iconColor} transition-transform duration-300 group-hover:rotate-3 group-hover:scale-105 motion-reduce:transform-none`}><Icon className="h-5 w-5" aria-hidden="true" /></div>
                         <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#9b9994]">0{index + 1}</span>
                       </div>
-                      <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#686662]">{skill.name}</p>
-                      <p className="mt-auto pt-5 text-xs leading-5 text-[#777571]">{skill.tools}</p>
+                      <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#686662]">{skill.name}</p>
+                      <p className="mt-4 text-xs leading-5 text-[#777571]">{skill.tools}</p>
                     </div>
                   </article>
                 );

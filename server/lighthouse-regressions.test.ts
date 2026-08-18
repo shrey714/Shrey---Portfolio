@@ -168,6 +168,19 @@ describe("Lighthouse regressions", () => {
     expect(ssrConfig).toContain('"react": "preact/compat"');
   });
 
+  it("batches evidence-card geometry reads before writing motion styles", async () => {
+    const home = await readFile(projectFile("client/src/pages/Home.tsx"), "utf8");
+    const productEvidence = home.slice(home.indexOf("function ProductEvidence"), home.indexOf("function SystemsEvidence"));
+
+    expect(home).toContain("function useBatchedEvidenceScrollMotion");
+    expect(home).toContain("const measuredElements = Array.from(evidenceElements.current");
+    expect(home).toContain("measuredElements.forEach");
+    expect(home.match(/getBoundingClientRect\(\)/g) ?? []).toHaveLength(1);
+    expect(home.match(/addEventListener\("scroll", requestScrollMotion/g) ?? []).toHaveLength(1);
+    expect(productEvidence).not.toContain("getBoundingClientRect");
+    expect(productEvidence).not.toContain("style.setProperty");
+  });
+
   it("does not retain the removed public-router and data-client chain", async () => {
     const legacyFiles = [
       "client/src/main.tsx",

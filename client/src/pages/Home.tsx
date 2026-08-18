@@ -3,7 +3,7 @@
  * Warm porcelain, ink typography, Cobalt Mist accents, off-center content rail,
  * and restrained motion communicate a product-minded engineering practice.
  */
-import { type CSSProperties, type FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Award,
   ArrowDown,
@@ -80,38 +80,58 @@ function HeroVisual({ index }: { index: number }) {
   return <div className="hero-visual hero-detail" aria-label={hero.slides[3].alt} role="img"><div className="hero-visual-topline"><span>{hero.slides[3].metaLeft}</span><span>{hero.slides[3].metaRight}</span></div><div className="hero-detail-board"><div className="hero-detail-block block-one" /><div className="hero-detail-block block-two" /><div className="hero-detail-block block-three" /><div className="hero-detail-dot dot-one" /><div className="hero-detail-dot dot-two" /></div><div className="hero-visual-annotation">{hero.slides[3].annotation}</div></div>;
 }
 
-function ProductEvidence({ project }: { project: WorkProject }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const evidenceRef = useRef<HTMLDivElement | null>(null);
+type EvidenceRegistration = (element: HTMLDivElement | null) => () => void;
+
+function useBatchedEvidenceScrollMotion(): EvidenceRegistration {
+  const evidenceElements = useRef(new Set<HTMLDivElement>());
+  const requestScrollMotionRef = useRef<() => void>(() => {});
+
+  const registerEvidence = useCallback((element: HTMLDivElement | null) => {
+    if (!element) return () => {};
+
+    evidenceElements.current.add(element);
+    requestScrollMotionRef.current();
+    return () => evidenceElements.current.delete(element);
+  }, []);
 
   useEffect(() => {
-    const element = evidenceRef.current;
-    if (!element) return;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let animationFrame: number | null = null;
 
     const resetScrollMotion = () => {
-      element.style.removeProperty("--evidence-scroll-y");
-      element.style.removeProperty("--evidence-scroll-scale");
+      evidenceElements.current.forEach((element) => {
+        element.style.removeProperty("--evidence-scroll-y");
+        element.style.removeProperty("--evidence-scroll-scale");
+      });
     };
 
     const updateScrollMotion = () => {
       animationFrame = null;
       if (reducedMotion.matches) {
         resetScrollMotion();
-        setIsVisible(true);
         return;
       }
 
-      const bounds = element.getBoundingClientRect();
-      const motion = getEvidenceScrollMotion({ top: bounds.top, height: bounds.height, viewportHeight: window.innerHeight }, reducedMotion.matches);
-      if (!motion) {
-        resetScrollMotion();
-        return;
-      }
+      const viewportHeight = window.innerHeight;
+      // Read all geometry before writing any style so one card cannot force layout for the next.
+      const measuredElements = Array.from(evidenceElements.current, (element) => {
+        const { top, height } = element.getBoundingClientRect();
+        return {
+          element,
+          motion: getEvidenceScrollMotion({ top, height, viewportHeight }, false),
+        };
+      });
 
-      element.style.setProperty("--evidence-scroll-y", `${motion.translateY}px`);
-      element.style.setProperty("--evidence-scroll-scale", motion.scale.toString());
+      measuredElements.forEach(({ element, motion }) => {
+        if (!motion) {
+          element.style.removeProperty("--evidence-scroll-y");
+          element.style.removeProperty("--evidence-scroll-scale");
+          return;
+        }
+
+        element.style.setProperty("--evidence-scroll-y", `${motion.translateY}px`);
+        element.style.setProperty("--evidence-scroll-scale", motion.scale.toString());
+      });
     };
 
     const requestScrollMotion = () => {
@@ -119,11 +139,41 @@ function ProductEvidence({ project }: { project: WorkProject }) {
     };
 
     const handleMotionPreference = () => {
+      if (reducedMotion.matches) resetScrollMotion();
+      else requestScrollMotion();
+    };
+
+    requestScrollMotionRef.current = requestScrollMotion;
+    requestScrollMotion();
+    window.addEventListener("scroll", requestScrollMotion, { passive: true });
+    window.addEventListener("resize", requestScrollMotion);
+    reducedMotion.addEventListener("change", handleMotionPreference);
+
+    return () => {
+      requestScrollMotionRef.current = () => {};
+      window.removeEventListener("scroll", requestScrollMotion);
+      window.removeEventListener("resize", requestScrollMotion);
+      reducedMotion.removeEventListener("change", handleMotionPreference);
+      if (animationFrame !== null) window.cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
+  return registerEvidence;
+}
+
+function ProductEvidence({ project, registerEvidence }: { project: WorkProject; registerEvidence: EvidenceRegistration }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const evidenceRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const element = evidenceRef.current;
+    if (!element) return;
+    const unregisterEvidence = registerEvidence(element);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const handleMotionPreference = () => {
       if (reducedMotion.matches) {
-        resetScrollMotion();
         setIsVisible(true);
-      } else {
-        requestScrollMotion();
       }
     };
 
@@ -140,19 +190,14 @@ function ProductEvidence({ project }: { project: WorkProject }) {
     );
 
     observer.observe(element);
-    requestScrollMotion();
-    window.addEventListener("scroll", requestScrollMotion, { passive: true });
-    window.addEventListener("resize", requestScrollMotion);
     reducedMotion.addEventListener("change", handleMotionPreference);
 
     return () => {
+      unregisterEvidence();
       observer.disconnect();
-      window.removeEventListener("scroll", requestScrollMotion);
-      window.removeEventListener("resize", requestScrollMotion);
       reducedMotion.removeEventListener("change", handleMotionPreference);
-      if (animationFrame !== null) window.cancelAnimationFrame(animationFrame);
     };
-  }, []);
+  }, [registerEvidence]);
 
   const header = <div className="flex items-center justify-between border-b border-white/10 pb-3 text-[8px] font-semibold uppercase tracking-[0.14em] text-white/45"><span>{project.visualMeta}</span><span className="flex gap-1.5"><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-[#456fe8]" /></span></div>;
   const rows = project.visualRows.map((row, index) => <div key={row} className="flex items-center gap-3"><span className={`h-1.5 w-1.5 shrink-0 rounded-full ${index === 1 ? "bg-[#456fe8]" : "bg-white/25"}`} /><span className="h-1.5 flex-1 rounded-full bg-white/20" /><span className="h-1.5 w-9 rounded-full bg-white/10" /></div>);
@@ -211,6 +256,7 @@ export default function Home() {
   const [contactError, setContactError] = useState("");
   const [contactSubmitting, setContactSubmitting] = useState(false);
   const menuCloseTimer = useRef<number | null>(null);
+  const registerEvidence = useBatchedEvidenceScrollMotion();
   const observedIds = useMemo(() => navItems.map((item) => item.id), []);
   const activeNavIndex = getActiveNavigationIndex(observedIds, active);
   const openMenu = () => {
@@ -463,7 +509,7 @@ export default function Home() {
                 );
                 const visual = (
                   <a href={primaryUrl} target="_blank" rel="noreferrer" className={`relative block transition-transform duration-300 hover:-translate-y-1 ${project.visualLayout === "layout-3" ? "lg:max-w-[31rem]" : ""}`} aria-label={project.ariaLabel}>
-                    <ProductEvidence project={project} />
+                    <ProductEvidence project={project} registerEvidence={registerEvidence} />
                     <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
                   </a>
                 );

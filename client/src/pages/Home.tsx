@@ -61,7 +61,7 @@ function ThemeToggle() {
 }
 
 function HeroVisual({ index }: { index: number }) {
-  if (index === 0) return <img src={hero.imageUrl} alt={hero.slides[0].alt} fetchPriority="high" className="h-full w-full rounded-[1.15rem] object-cover" />;
+  if (index === 0) return <img src={hero.imageUrl} alt={hero.slides[0].alt} fetchPriority="high" decoding="async" width={1571} height={1080} className="h-full w-full rounded-[1.15rem] object-cover" />;
 
   if (index === 1) return <div className="hero-visual hero-interface" aria-label={hero.slides[1].alt} role="img"><div className="hero-visual-topline"><span>{hero.slides[1].metaLeft}</span><span>{hero.slides[1].metaRight}</span></div><div className="hero-interface-grid"><div className="hero-interface-rail"><i /><i className="is-active" /><i /><i /></div><div className="hero-interface-body"><div className="hero-line short" /><div className="hero-line wide" /><div className="hero-interface-cards"><div /><div className="is-cobalt" /><div /></div><div className="hero-table-lines"><i /><i /><i /><i /></div></div></div><div className="hero-visual-annotation">{hero.slides[1].annotation}</div></div>;
 
@@ -149,7 +149,7 @@ function ProductEvidence({ project }: { project: WorkProject }) {
   const customImage = project.visualLayout === "custom-image" && project.visualImageUrl;
 
   const layout = (() => {
-    if (customImage) return <div className="relative aspect-[16/10] overflow-hidden rounded-[1rem] border border-white/10 bg-[#202124]"><img src={project.visualImageUrl} alt={`Project visual for ${project.name}`} className="h-full w-full object-cover" /><div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-4 pt-12"><p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/70">Custom project image</p></div></div>;
+    if (customImage) return <div className="relative aspect-[16/10] overflow-hidden rounded-[1rem] border border-white/10 bg-[#202124]"><img src={project.visualImageUrl} alt={`Project visual for ${project.name}`} loading="lazy" decoding="async" className="h-full w-full object-cover" /><div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-4 pt-12"><p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/70">Custom project image</p></div></div>;
 
     if (project.visualLayout === "layout-1") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.34fr_0.66fr] gap-3"><div className="rounded-lg border border-white/9 bg-white/[0.035] p-2.5"><div className="h-1.5 w-12 rounded-full bg-white/35" /><div className="mt-4 space-y-2">{[0, 1, 2, 3].map(item => <div key={item} className={`h-5 rounded-md border border-white/[0.06] ${item === 1 ? "bg-[#456fe8]/80" : "bg-white/[0.045]"}`} />)}</div><div className="mt-4 rounded-md border border-[#456fe8]/40 bg-[#456fe8]/15 p-2"><div className="h-1.5 w-8 rounded-full bg-[#9fb2ff]" /><div className="mt-2 h-1 w-full rounded-full bg-white/15" /></div></div><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex items-start justify-between"><div><div className="h-1.5 w-20 rounded-full bg-white/65" /><div className="mt-2 h-1.5 w-14 rounded-full bg-white/20" /></div><div className="h-6 w-10 rounded-md bg-[#456fe8]" /></div><div className="mt-5 grid grid-cols-3 gap-2">{[0, 1, 2].map(item => <div key={item} className="rounded-md border border-white/[0.08] bg-white/[0.035] p-2"><div className="h-1 w-5 rounded-full bg-white/25" /><div className={`mt-3 h-8 rounded ${item === 1 ? "bg-[#456fe8]/60" : "bg-white/[0.09]"}`} /></div>)}</div><div className="mt-4 space-y-2.5">{rows}</div></div></div></div>;
 
@@ -183,7 +183,7 @@ function AchievementMark({ entry }: { entry: AchievementEntry }) {
   const image = getAchievementVisualKind(entry) === "image";
 
   if (image) {
-    return <div className="flex h-7 w-7 shrink-0 items-center justify-center sm:h-8 sm:w-8"><img src={entry.visualImageUrl} alt={entry.imageAlt} className="h-full w-full object-contain" /></div>;
+    return <div className="flex h-7 w-7 shrink-0 items-center justify-center sm:h-8 sm:w-8"><img src={entry.visualImageUrl} alt={entry.imageAlt} loading="lazy" decoding="async" width={32} height={32} className="h-full w-full object-contain" /></div>;
   }
 
   return <div role="img" aria-label={entry.imageAlt} title={entry.visualLabel} className="flex h-7 w-7 shrink-0 items-center justify-center text-[#456fe8] sm:h-8 sm:w-8"><Award className="h-4 w-4" aria-hidden="true" /></div>;
@@ -332,7 +332,7 @@ export default function Home() {
 
       <aside className="theme-light-surface fixed inset-y-0 left-0 z-40 hidden w-72 flex-col border-r border-[#1b1c1d]/10 bg-[#f6f4ef] px-7 py-8 lg:flex">
         <span aria-hidden="true" className="absolute bottom-0 left-0 top-0 w-1 bg-[#456fe8]" />
-        <a href="#top" aria-label={content.ui.homeAriaLabel}><p className="text-sm font-semibold tracking-[-0.04em]">{content.identity.name}</p><p className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.15em] text-[#676766]">{content.identity.pageDescriptor}</p></a>
+        <a href="#top"><p className="text-sm font-semibold tracking-[-0.04em]">{content.identity.name}</p><p className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.15em] text-[#676766]">{content.identity.pageDescriptor}</p></a>
 
         <nav className="relative mt-20 flex flex-col gap-1" aria-label={content.ui.sectionNavigationLabel} style={{ "--active-nav-index": activeNavIndex } as CSSProperties}>
           <span aria-hidden="true" className="sidebar-nav-active-indicator pointer-events-none absolute inset-x-0 top-0 h-10 rounded-lg bg-white/75 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"><span className="absolute right-2 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#456fe8]" /></span>

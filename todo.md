@@ -369,3 +369,5 @@
 - [x] Add subtle cobalt hover feedback and slight horizontal movement for inactive desktop sidebar links.
 
 - [x] Remove sidebar hover color changes and restore neutral inactive sidebar colors in dark mode while retaining the hover shift.
+
+- [x] Apply and validate low-risk Lighthouse-guided performance improvements without changing current portfolio functionality or design.

@@ -306,7 +306,11 @@
 }
 
 .dark .portfolio .theme-light-surface .sidebar-nav-inactive span:first-child {
-  color: #777a80 !important;
+  color: #858993 !important;
+}
+
+.dark .portfolio .theme-work-surface .eyebrow {
+  color: #b7c7ff !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

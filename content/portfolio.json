@@ -42,6 +42,41 @@
           "Designing Java and Spring services around real operational constraints.",
           "Working across SQL data flows, business logic, and user-facing product details."
         ]
+      },
+      {
+        "company": "Wells Fargo",
+        "role": "Software Developer Intern",
+        "date": "May 2023 — July 2023",
+        "description": "Developed an NLP-based tool to address inconsistent metadata element names across platforms including Collibra and EMH. The tool analyzed business data-element descriptions to generate related technical data elements and presented results with confidence scores.",
+        "responsibilityLabel": "Internship contributions",
+        "responsibilities": [
+          "Developed an NLP model for inconsistent metadata element names across Collibra and EMH.",
+          "Built analysis of business data-element descriptions to generate related technical data elements.",
+          "Implemented a user-friendly interface for data-element inputs, generated outputs, and confidence scores."
+        ]
+      },
+      {
+        "company": "Surabhi.io",
+        "role": "Software Developer Intern",
+        "date": "Sept 2022 — Feb 2023",
+        "description": "Contributed to SURABHI.io, a Social Commerce application from Deep-Tech Computing Private Limited that helps local businesses around the world.",
+        "responsibilityLabel": "Internship contributions",
+        "responsibilities": [
+          "Worked on the Django web application.",
+          "Worked on the React Native mobile application."
+        ]
+      },
+      {
+        "company": "ZolutionTech",
+        "role": "React Native Intern",
+        "date": "Feb 2022 — March 2022",
+        "description": "Implemented React Native components and integrated third-party libraries for the application experience.",
+        "responsibilityLabel": "Internship contributions",
+        "responsibilities": [
+          "Implemented a range of React Native components.",
+          "Integrated third-party libraries including navigation and NativeBase.",
+          "Collaborated with quality developers, designers, and fellow interns."
+        ]
       }
     ]
   },

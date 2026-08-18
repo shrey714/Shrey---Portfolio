@@ -337,3 +337,5 @@
 - [x] Verify the merged canonical resume-media correction on GitHub main and the deployed portfolio before closing the production checklist.
 
 - [x] Convert the Experience editor and public portfolio section to support adding, editing, reordering, and rendering multiple roles.
+
+- [x] Add the supplied Wells Fargo, Surabhi.io, and ZolutionTech internship roles as structured editable experience entries.

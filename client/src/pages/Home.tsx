@@ -564,7 +564,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contact" className="bg-[#456fe8] px-5 py-20 text-white sm:px-8 sm:py-28 lg:px-12 xl:px-16">
+      </main>
+
+      <footer className="lg:ml-72">
+        <section id="contact" className="footer-contact-panel bg-[#456fe8] px-5 py-20 text-white sm:px-8 sm:py-28 lg:mx-8 lg:my-8 lg:overflow-hidden lg:rounded-[2rem] lg:border lg:border-white/15 lg:px-12 lg:shadow-[0_28px_65px_-42px_rgba(27,28,29,0.58)] xl:mx-12 xl:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-10 lg:grid-cols-[0.68fr_1.32fr] lg:gap-20">
               <div>
@@ -593,12 +596,12 @@ export default function Home() {
             </div>
           </div>
         </section>
-      </main>
 
-      <footer className="theme-footer px-5 py-7 sm:px-8 lg:ml-72 lg:px-12 xl:px-16">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-3 text-[11px] sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} {content.identity.name}. {content.footer.left}</p>
-          <p className="uppercase tracking-[0.12em] text-[#8e8c87]">{content.footer.right}</p>
+        <div className="theme-footer px-5 py-7 sm:px-8 lg:px-12 xl:px-16">
+          <div className="mx-auto flex max-w-7xl flex-col justify-between gap-3 text-[11px] sm:flex-row sm:items-center">
+            <p>© {new Date().getFullYear()} {content.identity.name}. {content.footer.left}</p>
+            <p className="uppercase tracking-[0.12em] text-[#8e8c87]">{content.footer.right}</p>
+          </div>
         </div>
       </footer>
     </div>

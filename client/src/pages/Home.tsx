@@ -150,7 +150,7 @@ function ProductEvidence({ project }: { project: WorkProject }) {
 
     if (project.visualLayout === "layout-2") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.45fr_0.55fr] gap-3"><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex items-center justify-between"><span className="h-2 w-12 rounded-full bg-white/45" /><span className="h-5 w-5 rounded-md bg-[#456fe8]" /></div><div className="mt-4 grid grid-cols-2 gap-2">{[0, 1, 2, 3].map(item => <div key={item} className={`aspect-square rounded-md border border-white/[0.08] ${item === 2 ? "bg-[#456fe8]/65" : "bg-white/[0.055]"}`} />)}</div></div><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex gap-2"><div className="h-16 flex-1 rounded-md bg-[#456fe8]/50" /><div className="h-16 w-9 rounded-md bg-white/[0.09]" /></div><div className="mt-4 space-y-2.5">{rows}</div></div></div></div>;
 
-    if (project.visualLayout === "layout-3") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="relative mt-4 flex aspect-[16/8] items-center justify-center overflow-hidden rounded-lg border border-white/8 bg-[radial-gradient(circle_at_center,rgba(69,111,232,0.34),transparent_38%)]"><span className="absolute h-28 w-28 rounded-full border border-[#456fe8]/70" /><span className="absolute h-52 w-52 rounded-full border border-dashed border-white/15" /><div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-white/25 bg-[#456fe8] text-[8px] font-semibold uppercase tracking-[0.13em] text-white">Flow</div><div className="absolute left-[12%] top-[20%] h-11 w-16 rounded-md border border-white/15 bg-white/[0.07]" /><div className="absolute bottom-[17%] right-[12%] h-11 w-16 rounded-md border border-white/15 bg-white/[0.07]" /><span className="absolute left-[28%] top-[38%] h-px w-[23%] rotate-[18deg] bg-[#456fe8]/80" /><span className="absolute bottom-[35%] right-[28%] h-px w-[23%] -rotate-[20deg] bg-[#456fe8]/80" /></div></div>;
+    if (project.visualLayout === "layout-3") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="relative mt-4 flex aspect-[16/7] items-center justify-center overflow-hidden rounded-lg border border-white/8 bg-[radial-gradient(circle_at_center,rgba(69,111,232,0.34),transparent_38%)]"><span className="absolute h-24 w-24 rounded-full border border-[#456fe8]/70" /><span className="absolute h-44 w-44 rounded-full border border-dashed border-white/15" /><div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-white/25 bg-[#456fe8] text-[8px] font-semibold uppercase tracking-[0.13em] text-white">Flow</div><div className="absolute left-[12%] top-[20%] h-9 w-14 rounded-md border border-white/15 bg-white/[0.07]" /><div className="absolute bottom-[17%] right-[12%] h-9 w-14 rounded-md border border-white/15 bg-white/[0.07]" /><span className="absolute left-[28%] top-[38%] h-px w-[23%] rotate-[18deg] bg-[#456fe8]/80" /><span className="absolute bottom-[35%] right-[28%] h-px w-[23%] -rotate-[20deg] bg-[#456fe8]/80" /></div></div>;
 
     if (project.visualLayout === "layout-4") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.62fr_0.38fr] gap-3"><div className="relative min-h-40 overflow-hidden rounded-lg bg-[#456fe8]"><span className="absolute left-4 top-4 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/70">Editorial</span><div className="absolute -bottom-7 -right-6 h-32 w-32 rounded-full border-[18px] border-white/20" /><div className="absolute bottom-4 left-4 h-3 w-24 rounded-full bg-white/80" /><div className="absolute bottom-10 left-4 h-2 w-16 rounded-full bg-white/35" /></div><div className="space-y-3"><div className="h-20 rounded-lg border border-white/10 bg-white/[0.055]" /><div className="h-16 rounded-lg border border-white/10 bg-[#456fe8]/30" /><div className="h-8 rounded-lg border border-white/10 bg-white/[0.055]" /></div></div></div>;
 
@@ -416,7 +416,7 @@ export default function Home() {
                 const details = (
                   <div className="lg:pb-2">
                     <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.14em] text-[#a8a6a2]"><span>{project.meta}</span><span>{project.date}</span></div>
-                    <h3 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">{project.name}</h3>
+                    <h3 className="mt-4 text-2xl font-semibold tracking-[-0.05em] lg:text-[1.65rem]">{project.name}</h3>
                     <p className="mt-2 text-base text-[#d0cdc7]">{project.type}</p>
                     <p className="mt-5 text-sm leading-6 text-[#aaa8a3]">{project.description}</p>
                     <div className="mt-6 flex flex-wrap gap-2 text-[10px] font-medium uppercase tracking-[0.11em] text-[#bab7b1]">
@@ -429,13 +429,13 @@ export default function Home() {
                   </div>
                 );
                 const visual = (
-                  <a href={primaryUrl} target="_blank" rel="noreferrer" className="relative block transition-transform duration-300 hover:-translate-y-1" aria-label={project.ariaLabel}>
+                  <a href={primaryUrl} target="_blank" rel="noreferrer" className={`relative block transition-transform duration-300 hover:-translate-y-1 ${project.visualLayout === "layout-3" ? "lg:max-w-[31rem]" : ""}`} aria-label={project.ariaLabel}>
                     <ProductEvidence project={project} />
                     <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
                   </a>
                 );
 
-                return <article key={project.name} className="group grid gap-7 lg:grid-cols-[minmax(0,1.42fr)_minmax(260px,0.58fr)] lg:items-end lg:gap-12">{visualFirst ? <>{visual}{details}</> : <><div className="order-2 lg:order-1">{details}</div><div className="order-1 lg:order-2">{visual}</div></>}</article>;
+                return <article key={project.name} className="group grid gap-7 lg:grid-cols-2 lg:items-end lg:gap-10">{visualFirst ? <>{visual}{details}</> : <><div className="order-2 lg:order-1">{details}</div><div className="order-1 lg:order-2">{visual}</div></>}</article>;
               })}
             </div>
           </div>

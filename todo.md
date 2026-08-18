@@ -343,3 +343,5 @@
 - [x] Add Istine Package Manager, FliplookAI, and Bill Splitter as editable projects, and add supplied GitHub and live links for all portfolio projects.
 
 - [x] Replace project visual-kind labels with named layouts, add new visual presets, and support an optional media-library project image override.
+
+- [x] Rebalance project card text and visual proportions and make the Layout 3 project visual more compact.

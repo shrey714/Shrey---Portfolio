@@ -313,3 +313,5 @@
 - [ ] Complete the single owner-authenticated Decap Media field-selection and live publish verification when the user is available; no further local implementation work remains.
 
 - [x] Adjust the desktop hero composition so its role metadata and Wells Fargo line fit completely inside the initial viewport at the reported 2048×1396 aspect ratio.
+
+- [x] Reposition the Based in Bangalore callout so it does not cover carousel captions, controls, or visual content at narrow desktop and tablet sizes.

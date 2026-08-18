@@ -438,7 +438,7 @@
 
 .theme-footer {
   border-top: 1px solid rgba(27, 28, 29, 0.1);
-  background: #e9e6df;
+  background: var(--background);
   color: #555451;
 }
 

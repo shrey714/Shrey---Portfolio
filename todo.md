@@ -323,3 +323,5 @@
 - [x] Match the dark-mode footer background exactly to the dark sidebar surface.
 
 - [x] Remove the remaining rendered dark-mode color discrepancy between the footer and sidebar by consolidating their effective background rules.
+
+- [x] Restore a visible but restrained right divider on the desktop sidebar in dark mode without altering light mode.

@@ -273,6 +273,14 @@
   background-color: #17191c !important;
 }
 
+/* The fixed desktop rail shares the page ground in dark mode. Give its only
+   exposed edge a slightly stronger divider so the reading frame remains clear. */
+@media (min-width: 1024px) {
+  .dark .portfolio > aside.theme-light-surface {
+    border-right-color: rgba(255, 255, 255, 0.22) !important;
+  }
+}
+
 .dark .portfolio .theme-light-surface .dot-field,
 .dark .portfolio .theme-soft-surface .dot-field {
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0.65px, transparent 0.8px);

@@ -355,3 +355,5 @@
 - [x] Remove the leftover empty vertical space in Skills cards after the technology token boxes were removed.
 
 - [x] Add an editable Achievements and Participation section with per-entry visual placeholders and an official GDSC mark where suitable.
+
+- [x] Refine Achievements and Participation into a compact list with a small logo or placeholder at left and achievement information at right.

@@ -4,6 +4,19 @@ import { describe, expect, it } from "vitest";
 
 const projectFile = (relativePath: string) => resolve(process.cwd(), relativePath);
 
+function relativeLuminance(hex: string) {
+  const channels = hex.slice(1).match(/.{2}/g)?.map((value) => Number.parseInt(value, 16) / 255);
+  if (!channels || channels.length !== 3) throw new Error(`Expected a six-digit hex color, received ${hex}`);
+
+  const [red, green, blue] = channels.map((channel) => (channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+}
+
+function contrastRatio(foreground: string, background: string) {
+  const [lighter, darker] = [relativeLuminance(foreground), relativeLuminance(background)].sort((first, second) => second - first);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
 describe("Lighthouse regressions", () => {
   it("keeps viewport zoom available for low-vision users", async () => {
     const document = await readFile(projectFile("client/index.html"), "utf8");
@@ -51,17 +64,21 @@ describe("Lighthouse regressions", () => {
     expect(styles).toContain(".hero-carousel-dot::before");
   });
 
-  it("keeps desktop microcopy and the Selected Work eyebrow above PageSpeed contrast thresholds", async () => {
+  it("uses Axe AA-safe colors for the PageSpeed-flagged desktop text", async () => {
     const [home, styles] = await Promise.all([
       readFile(projectFile("client/src/pages/Home.tsx"), "utf8"),
       readFile(projectFile("client/src/index.css"), "utf8"),
     ]);
 
-    expect(home).toContain("text-[#696765]");
-    expect(home).toContain("text-[#71706c]");
-    expect(home).toContain("text-[#6d6b67]");
-    expect(styles).toContain(".theme-work-surface .eyebrow");
-    expect(styles).toContain("color: #aebff6;");
-    expect(styles).toContain("#achievements .eyebrow");
+    expect(styles).toContain("color: #5f5d59;");
+    expect(styles).toContain("--primary: #3455b8;");
+    expect(home).toContain('text-[#5f5d59]');
+    expect(home).toContain('text-[#3455b8]');
+    expect(home).not.toContain('text-[#777571]');
+    expect(home).not.toContain('text-[#706e6a]');
+    expect(home).not.toContain('text-[#456fe8]">{principle.number}');
+    expect(contrastRatio("#5f5d59", "#eeece6")).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio("#3455b8", "#f6f4ef")).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio("#3455b8", "#eeece6")).toBeGreaterThanOrEqual(4.5);
   });
 });

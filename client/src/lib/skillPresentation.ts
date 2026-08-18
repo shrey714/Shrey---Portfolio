@@ -8,14 +8,14 @@ type SkillVisual = {
 };
 
 const visualBySkill: Record<string, SkillVisual> = {
-  "Android technologies": { Icon: Smartphone, iconSurface: "bg-[#456fe8]/12", iconColor: "text-[#456fe8]", ringColor: "border-[#456fe8]/30" },
-  "Backend technologies": { Icon: Server, iconSurface: "bg-[#243d61]/10", iconColor: "text-[#365d8d]", ringColor: "border-[#365d8d]/25" },
-  "Frontend technologies": { Icon: Monitor, iconSurface: "bg-[#7178ad]/12", iconColor: "text-[#5d6495]", ringColor: "border-[#5d6495]/25" },
+  "Android technologies": { Icon: Smartphone, iconSurface: "bg-[#3455b8]/12", iconColor: "text-[#3455b8]", ringColor: "border-[#3455b8]/30" },
+  "Backend technologies": { Icon: Server, iconSurface: "bg-[#243d61]/10", iconColor: "text-[#274a78]", ringColor: "border-[#274a78]/25" },
+  "Frontend technologies": { Icon: Monitor, iconSurface: "bg-[#7178ad]/12", iconColor: "text-[#484f80]", ringColor: "border-[#484f80]/25" },
   "Programming languages": { Icon: Code2, iconSurface: "bg-[#1b1c1d]/8", iconColor: "text-[#343434]", ringColor: "border-[#1b1c1d]/18" },
-  "Other stacks": { Icon: Palette, iconSurface: "bg-[#c27f48]/12", iconColor: "text-[#9a6032]", ringColor: "border-[#9a6032]/25" },
+  "Other stacks": { Icon: Palette, iconSurface: "bg-[#c27f48]/12", iconColor: "text-[#81491f]", ringColor: "border-[#81491f]/25" },
 };
 
-const fallbackVisual: SkillVisual = { Icon: Sparkles, iconSurface: "bg-[#456fe8]/12", iconColor: "text-[#456fe8]", ringColor: "border-[#456fe8]/30" };
+const fallbackVisual: SkillVisual = { Icon: Sparkles, iconSurface: "bg-[#3455b8]/12", iconColor: "text-[#3455b8]", ringColor: "border-[#3455b8]/30" };
 
 const markByTechnology: Record<string, string> = {
   "React Native": "RN",

@@ -184,7 +184,7 @@ function SystemsEvidence() {
         <div className="relative flex aspect-square items-center justify-center rounded-full border border-[#456fe8]/30 bg-[#456fe8]/8"><div className="absolute h-[70%] w-[70%] rounded-full border border-dashed border-[#456fe8]/45" /><div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-[#1b1c1d]/15 bg-[#1b1c1d] text-[9px] font-semibold uppercase tracking-[0.14em] text-white">{content.practice.visualFlow}</div><div className="absolute right-1 top-5 h-3 w-3 rounded-full border-2 border-[#f5f3ed] bg-[#456fe8]" /></div>
         <div className="space-y-3"><div className="ml-auto h-14 w-full rounded-lg border border-[#1b1c1d]/10 bg-white/70" /><div className="ml-auto h-6 w-3/4 rounded-lg border border-[#1b1c1d]/10 bg-white/55" /><div className="ml-auto h-10 w-full rounded-lg border border-[#1b1c1d]/10 bg-[#1b1c1d]/[0.06]" /></div>
       </div>
-      <div className="relative mt-6 flex flex-wrap items-baseline justify-between gap-x-5 gap-y-2 border-t border-[#1b1c1d]/10 pt-4 text-[9px] font-semibold uppercase tracking-[0.13em] text-[#777571]"><span className="whitespace-nowrap">{content.practice.visualSystemNote}</span><span className="whitespace-nowrap text-[#456fe8]">{content.practice.visualTag}</span></div>
+      <div className="relative mt-6 flex flex-wrap items-baseline justify-between gap-x-5 gap-y-2 border-t border-[#1b1c1d]/10 pt-4 text-[9px] font-semibold uppercase tracking-[0.13em] text-[#5f5d59]"><span className="whitespace-nowrap">{content.practice.visualSystemNote}</span><span className="whitespace-nowrap text-[#3455b8]">{content.practice.visualTag}</span></div>
     </div>
   );
 }
@@ -196,7 +196,7 @@ function AchievementMark({ entry }: { entry: AchievementEntry }) {
     return <div className="flex h-7 w-7 shrink-0 items-center justify-center sm:h-8 sm:w-8"><img src={entry.visualImageUrl} alt={entry.imageAlt} loading="lazy" decoding="async" width={32} height={32} className="h-full w-full object-contain" /></div>;
   }
 
-  return <div role="img" aria-label={entry.imageAlt} title={entry.visualLabel} className="flex h-7 w-7 shrink-0 items-center justify-center text-[#456fe8] sm:h-8 sm:w-8"><Award className="h-4 w-4" aria-hidden="true" /></div>;
+  return <div role="img" aria-label={entry.imageAlt} title={entry.visualLabel} className="flex h-7 w-7 shrink-0 items-center justify-center text-[#3455b8] sm:h-8 sm:w-8"><Award className="h-4 w-4" aria-hidden="true" /></div>;
 }
 
 export default function Home() {
@@ -332,13 +332,13 @@ export default function Home() {
         <button type="button" className="mobile-menu-backdrop" tabIndex={menuOpen ? 0 : -1} aria-label="Close navigation" onClick={closeMenu} />
         <nav className="mobile-menu-panel theme-light-surface" aria-label={content.ui.mobileNavigationLabel} aria-hidden={!menuOpen}>
           <div className="flex items-end justify-between border-b border-[#1b1c1d]/10 pb-4">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#777571]">{content.ui.navigateLabel}</p>
-            <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#456fe8]">00—04</span>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#5f5d59]">{content.ui.navigateLabel}</p>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#3455b8]">00—04</span>
           </div>
           <div className="mt-3 space-y-1">
             {navItems.map((item) => (
               <a key={item.id} href={`#${item.id}`} onClick={closeMenu} tabIndex={menuOpen ? 0 : -1} className="mobile-menu-link group flex items-center justify-between rounded-xl px-3 py-3.5 text-base font-semibold tracking-[-0.025em] text-[#343434] transition-colors hover:bg-white/80">
-                <span className="flex items-center gap-3"><span className="text-[10px] font-semibold tabular-nums text-[#456fe8]">{item.number}</span>{item.label}</span>
+                <span className="flex items-center gap-3"><span className="text-[10px] font-semibold tabular-nums text-[#3455b8]">{item.number}</span>{item.label}</span>
                 <ChevronRight className="h-4 w-4 opacity-40 transition-transform group-hover:translate-x-0.5" />
               </a>
             ))}
@@ -358,20 +358,20 @@ export default function Home() {
               key={item.id}
               href={`#${item.id}`}
               className={`group relative z-10 flex h-10 items-center gap-3 rounded-lg px-2 text-[13px] transition-[color,transform] duration-200 ${
-                active === item.id ? "text-[#456fe8]" : "sidebar-nav-inactive text-[#777673]"
+                active === item.id ? "text-[#3455b8]" : "sidebar-nav-inactive text-[#5f5d59]"
               }`}
             >
-              <span className={`text-[10px] tabular-nums ${active === item.id ? "text-[#456fe8]" : "text-[#aaa8a3]"}`}>{item.number}</span>
-              <span className={`font-medium tracking-[-0.01em] ${active === item.id ? "text-[#456fe8]" : ""}`}>{item.label}</span>
+              <span className={`text-[10px] tabular-nums ${active === item.id ? "text-[#3455b8]" : "text-[#5f5d59]"}`}>{item.number}</span>
+              <span className={`font-medium tracking-[-0.01em] ${active === item.id ? "text-[#3455b8]" : ""}`}>{item.label}</span>
             </a>
           ))}
         </nav>
 
         <div className="mt-auto border-t border-[#1b1c1d]/10 pt-5">
-          <div className="mb-4 flex items-center justify-between"><span className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">{content.identity.appearanceLabel}</span><ThemeToggle /></div>
-          <p className="flex items-center gap-2 text-[11px] font-medium text-[#676766]"><span className="h-1.5 w-1.5 rounded-full bg-[#456fe8]" /> {content.identity.availability}</p>
-          <p className="mt-3 flex items-center gap-2 text-[11px] text-[#898783]"><MapPin className="h-3.5 w-3.5" /> {content.identity.location}</p>
-          <p className="mt-1 text-[11px] text-[#898783]">{content.identity.railNote}</p>
+          <div className="mb-4 flex items-center justify-between"><span className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#5f5d59]">{content.identity.appearanceLabel}</span><ThemeToggle /></div>
+          <p className="flex items-center gap-2 text-[11px] font-medium text-[#5f5d59]"><span className="h-1.5 w-1.5 rounded-full bg-[#3455b8]" /> {content.identity.availability}</p>
+          <p className="mt-3 flex items-center gap-2 text-[11px] text-[#5f5d59]"><MapPin className="h-3.5 w-3.5" /> {content.identity.location}</p>
+          <p className="mt-1 text-[11px] text-[#5f5d59]">{content.identity.railNote}</p>
         </div>
       </aside>
 
@@ -382,14 +382,14 @@ export default function Home() {
           <div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-12 lg:min-h-[calc(100svh-6rem)]">
             <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(340px,0.72fr)] lg:gap-16">
               <div className="max-w-3xl pt-2 lg:pt-20">
-                <div className="reveal-in mb-8 [animation-delay:20ms]"><p className="text-sm font-semibold tracking-[-0.04em]">{content.identity.name}</p><p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#777571]">{content.identity.roleDescriptor}</p></div>
+                <div className="reveal-in mb-8 [animation-delay:20ms]"><p className="text-sm font-semibold tracking-[-0.04em]">{content.identity.name}</p><p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#5f5d59]">{content.identity.roleDescriptor}</p></div>
                 <div className="reveal-in flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#62615e] [animation-delay:40ms]">
                   <span className="h-px w-7 bg-[#456fe8]" />
                   {hero.roleLine}
                 </div>
                 <h1 className="reveal-in mt-7 font-serif text-[clamp(3.35rem,8vw,7.3rem)] leading-[0.88] tracking-[-0.07em] text-[#1b1c1d] [animation-delay:120ms]">
                   {hero.heading[0]}
-                  <span className="block pl-[0.06em] text-[#456fe8]">{hero.heading[1]}</span>
+                  <span className="block pl-[0.06em] text-[#3455b8]">{hero.heading[1]}</span>
                   <span className="block">{hero.heading[2]}</span>
                 </h1>
                 <p className="reveal-in mt-8 max-w-xl text-[17px] leading-7 tracking-[-0.02em] text-[#595856] [animation-delay:200ms] sm:text-lg">
@@ -413,7 +413,7 @@ export default function Home() {
                   <div className="relative aspect-[16/11] overflow-hidden rounded-[1.15rem]">
                     <div key={activeHeroSlide} className="hero-slide h-full w-full"><HeroVisual index={activeHeroSlide} /></div>
                   </div>
-                  <div className="hero-carousel-footer"><div key={activeHeroSlide} className="hero-carousel-copy" aria-live="polite"><p className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#456fe8]">{hero.slides[activeHeroSlide].label}</p><p className="mt-1 max-w-[15rem] text-[10px] leading-4 text-[#66645f]">{hero.slides[activeHeroSlide].caption}</p></div><div className="hero-carousel-actions"><span className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#696765]">0{activeHeroSlide + 1} / 0{hero.slides.length}</span><div className="flex gap-1.5"><button type="button" onClick={() => showHeroSlide(activeHeroSlide - 1)} className="hero-carousel-control" aria-label={hero.previousVisualLabel}><ChevronLeft className="h-3.5 w-3.5" /></button><button type="button" onClick={() => showHeroSlide(activeHeroSlide + 1)} className="hero-carousel-control" aria-label={hero.nextVisualLabel}><ChevronRight className="h-3.5 w-3.5" /></button></div></div><div className="hero-carousel-indicators" role="tablist" aria-label={hero.carouselSelectorLabel}>{hero.slides.map((slide, index) => <button key={slide.label} type="button" role="tab" aria-selected={activeHeroSlide === index} aria-label={`Show ${slide.label}`} onClick={() => showHeroSlide(index)} className={`hero-carousel-dot ${activeHeroSlide === index ? "is-active" : ""}`} />)}</div></div>
+                  <div className="hero-carousel-footer"><div key={activeHeroSlide} className="hero-carousel-copy" aria-live="polite"><p className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#3455b8]">{hero.slides[activeHeroSlide].label}</p><p className="mt-1 max-w-[15rem] text-[10px] leading-4 text-[#5f5d59]">{hero.slides[activeHeroSlide].caption}</p></div><div className="hero-carousel-actions"><span className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#5f5d59]">0{activeHeroSlide + 1} / 0{hero.slides.length}</span><div className="flex gap-1.5"><button type="button" onClick={() => showHeroSlide(activeHeroSlide - 1)} className="hero-carousel-control" aria-label={hero.previousVisualLabel}><ChevronLeft className="h-3.5 w-3.5" /></button><button type="button" onClick={() => showHeroSlide(activeHeroSlide + 1)} className="hero-carousel-control" aria-label={hero.nextVisualLabel}><ChevronRight className="h-3.5 w-3.5" /></button></div></div><div className="hero-carousel-indicators" role="tablist" aria-label={hero.carouselSelectorLabel}>{hero.slides.map((slide, index) => <button key={slide.label} type="button" role="tab" aria-selected={activeHeroSlide === index} aria-label={`Show ${slide.label}`} onClick={() => showHeroSlide(index)} className={`hero-carousel-dot ${activeHeroSlide === index ? "is-active" : ""}`} />)}</div></div>
                 </div>
                 <div className="ml-0 mt-4 hidden w-44 rounded-2xl border border-[#1b1c1d]/10 bg-[#f6f4ef]/90 p-4 shadow-[0_18px_45px_-30px_rgba(27,28,29,0.45)] backdrop-blur sm:block lg:ml-4">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#767570]">{hero.basedInLabel}</p>
@@ -493,7 +493,7 @@ export default function Home() {
               <div className="grid gap-x-8 gap-y-8 sm:grid-cols-2">
                 {content.practice.disciplines.map((discipline, index) => (
                   <div key={discipline.title} className="border-t border-[#1b1c1d]/12 pt-4">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#456fe8]">0{index + 1}</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#3455b8]">0{index + 1}</p>
                     <h3 className="mt-3 text-lg font-semibold tracking-[-0.035em]">{discipline.title}</h3>
                     <p className="mt-2 max-w-xs text-sm leading-6 text-[#6a6865]">{discipline.text}</p>
                   </div>
@@ -551,8 +551,8 @@ export default function Home() {
                 <p className="eyebrow">{content.about.eyebrow}</p>
                 <h2 className="mt-4 font-serif text-5xl leading-[0.94] tracking-[-0.06em] sm:text-6xl">{content.about.heading}</h2>
                 <div className="mt-8 space-y-3 text-sm text-[#64625e]">
-                  <p className="flex items-center gap-2"><MapPin className="h-4 w-4 text-[#456fe8]" /> {content.identity.location}</p>
-                  <p className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[#456fe8]" /> {content.about.experienceLabel}</p>
+                  <p className="flex items-center gap-2"><MapPin className="h-4 w-4 text-[#3455b8]" /> {content.identity.location}</p>
+                  <p className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[#3455b8]" /> {content.about.experienceLabel}</p>
                 </div>
               </div>
               <div>
@@ -561,9 +561,9 @@ export default function Home() {
                 <div className="mt-10 grid gap-4 sm:grid-cols-3">
                   {content.about.facts.map((fact) => (
                     <div key={fact.label} className="border-t border-[#1b1c1d]/12 pt-4">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">{fact.label}</p>
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#5f5d59]">{fact.label}</p>
                       <p className="mt-2 text-sm font-semibold tracking-[-0.025em]">{fact.primary}</p>
-                      <p className="mt-1 text-xs text-[#706e6a]">{fact.secondary}</p>
+                      <p className="mt-1 text-xs text-[#5f5d59]">{fact.secondary}</p>
                     </div>
                   ))}
                 </div>
@@ -581,11 +581,11 @@ export default function Home() {
                     <article key={`${entry.company}-${entry.role}-${entry.date}`} className="border-b border-[#1b1c1d]/10 pb-10 last:border-b-0 last:pb-0">
                       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                         <div><h3 className="text-2xl font-semibold tracking-[-0.05em]">{entry.company}</h3><p className="mt-1 text-sm text-[#676561]">{entry.role}</p></div>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">{entry.date}</p>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#5f5d59]">{entry.date}</p>
                       </div>
                       <p className="mt-6 max-w-2xl text-base leading-7 text-[#5d5b58]">{entry.description}</p>
                       <ul className="mt-7 grid gap-3 sm:grid-cols-2" aria-label={entry.responsibilityLabel}>
-                        {entry.responsibilities.map((item) => <li key={item} className="flex gap-3 text-sm leading-6 text-[#595754]"><Check className="mt-1 h-3.5 w-3.5 shrink-0 text-[#456fe8]" />{item}</li>)}
+                        {entry.responsibilities.map((item) => <li key={item} className="flex gap-3 text-sm leading-6 text-[#595754]"><Check className="mt-1 h-3.5 w-3.5 shrink-0 text-[#3455b8]" />{item}</li>)}
                       </ul>
                     </article>
                   ))}
@@ -604,7 +604,7 @@ export default function Home() {
             <div className="mt-6">
               {content.philosophy.principles.map((principle) => (
                 <article key={principle.number} className="philosophy-entry group grid grid-cols-[2.65rem_minmax(0,1fr)] gap-x-4 gap-y-3 py-7 sm:grid-cols-[80px_minmax(0,1fr)_minmax(0,0.9fr)] sm:items-baseline sm:gap-x-7 sm:gap-y-0">
-                  <p className="pt-1 text-[11px] font-semibold tracking-[0.14em] text-[#456fe8]">{principle.number}</p>
+                  <p className="pt-1 text-[11px] font-semibold tracking-[0.14em] text-[#3455b8]">{principle.number}</p>
                   <h3 className="text-2xl font-semibold tracking-[-0.045em] transition-transform duration-200 group-hover:translate-x-1">{principle.title}</h3>
                   <p className="col-span-2 max-w-xl text-sm leading-6 text-[#686663] sm:col-span-1 sm:max-w-none">{principle.text}</p>
                 </article>

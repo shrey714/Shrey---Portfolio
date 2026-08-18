@@ -47,12 +47,12 @@
 }
 
 :root {
-  --primary: #456fe8;
+  --primary: #3455b8;
   --primary-foreground: #ffffff;
-  --sidebar-primary: #456fe8;
+  --sidebar-primary: #3455b8;
   --sidebar-primary-foreground: #ffffff;
   --chart-1: #95aaf0;
-  --chart-2: #456fe8;
+  --chart-2: #3455b8;
   --chart-3: #1b1c1d;
   --chart-4: #928f87;
   --chart-5: #dad6ce;
@@ -66,20 +66,20 @@
   --secondary: #eeece6;
   --secondary-foreground: #3d3d3c;
   --muted: #eeece6;
-  --muted-foreground: #706e6a;
+  --muted-foreground: #5f5d59;
   --accent: #e5e9fb;
   --accent-foreground: #1b1c1d;
   --destructive: #b93c3c;
   --destructive-foreground: #ffffff;
   --border: #dedbd3;
   --input: #dedbd3;
-  --ring: #456fe8;
+  --ring: #3455b8;
   --sidebar: #f6f4ef;
   --sidebar-foreground: #1b1c1d;
   --sidebar-accent: #eeece6;
   --sidebar-accent-foreground: #1b1c1d;
   --sidebar-border: #dedbd3;
-  --sidebar-ring: #456fe8;
+  --sidebar-ring: #3455b8;
 }
 
 .dark {
@@ -142,7 +142,7 @@
   }
 
   ::selection {
-    background: #456fe8;
+    background: #3455b8;
     color: #ffffff;
   }
 }
@@ -188,7 +188,7 @@
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #777571;
+    color: #5f5d59;
   }
 
   /* Scoped PageSpeed contrast corrections retain the established editorial

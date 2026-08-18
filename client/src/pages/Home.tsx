@@ -7,6 +7,7 @@ import { type CSSProperties, type FormEvent, useCallback, useEffect, useMemo, us
 import {
   Award,
   ArrowDown,
+  ArrowUp,
   ArrowUpRight,
   Check,
   ChevronLeft,
@@ -30,6 +31,7 @@ import { getAchievementVisualKind } from "@/lib/achievementPresentation";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
 import { getSkillVisual } from "@/lib/skillPresentation";
 import { getActiveNavigationIndex } from "@/lib/sidebarNavigation";
+import { getScrollToTopBehavior, shouldShowScrollToTop } from "@/lib/scrollToTop";
 
 const hero = content.hero;
 const navItems = content.navigation;
@@ -249,6 +251,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuMounted, setMenuMounted] = useState(false);
   const [showMobileIdentity, setShowMobileIdentity] = useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "", website: "" });
@@ -272,6 +275,11 @@ export default function Home() {
   };
 
   const showHeroSlide = (index: number) => setActiveHeroSlide((index + hero.slides.length) % hero.slides.length);
+
+  const scrollToTop = () => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: getScrollToTopBehavior(prefersReducedMotion) });
+  };
 
   const submitContact = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -317,10 +325,14 @@ export default function Home() {
   }, [observedIds]);
 
   useEffect(() => {
-    const updateMobileIdentity = () => setShowMobileIdentity(window.scrollY > 150);
-    updateMobileIdentity();
-    window.addEventListener("scroll", updateMobileIdentity, { passive: true });
-    return () => window.removeEventListener("scroll", updateMobileIdentity);
+    const updateScrollAffordances = () => {
+      setShowMobileIdentity(window.scrollY > 150);
+      setShowScrollToTop(shouldShowScrollToTop(window.scrollY));
+    };
+
+    updateScrollAffordances();
+    window.addEventListener("scroll", updateScrollAffordances, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollAffordances);
   }, []);
 
   useEffect(() => {
@@ -699,6 +711,19 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <button
+        type="button"
+        onClick={scrollToTop}
+        className={`scroll-to-top-button ${showScrollToTop ? "is-visible" : ""}`}
+        aria-label={content.ui.scrollToTopLabel}
+        aria-hidden={!showScrollToTop}
+        tabIndex={showScrollToTop ? 0 : -1}
+        title={content.ui.scrollToTopLabel}
+      >
+        <ArrowUp className="h-4 w-4" aria-hidden="true" />
+        <span className="hidden sm:inline">Top</span>
+      </button>
     </div>
   );
 }

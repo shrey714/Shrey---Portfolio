@@ -150,7 +150,7 @@ export const portfolioContentSchema = z.object({
     }).strict(),
   }).strict(),
   footer: z.object({ left: text, right: text }).strict(),
-  ui: z.object({ homeAriaLabel: text, mobileNavigationLabel: text, sectionNavigationLabel: text, navigateLabel: text, themeLightLabel: text, themeDarkLabel: text }).strict(),
+  ui: z.object({ homeAriaLabel: text, mobileNavigationLabel: text, sectionNavigationLabel: text, navigateLabel: text, themeLightLabel: text, themeDarkLabel: text, scrollToTopLabel: text }).strict(),
   seo: z.object({
     title: text,
     description: text,

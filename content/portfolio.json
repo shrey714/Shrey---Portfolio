@@ -358,7 +358,8 @@
     "sectionNavigationLabel": "Section navigation",
     "navigateLabel": "Navigate",
     "themeLightLabel": "Switch to light mode",
-    "themeDarkLabel": "Switch to dark mode"
+    "themeDarkLabel": "Switch to dark mode",
+    "scrollToTopLabel": "Scroll to top"
   },
   "hero": {
     "nextVisualLabel": "Show next visual",

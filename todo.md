@@ -309,3 +309,7 @@
 
 - [x] Complete all remaining noninteractive Decap Media, cleanup, production-hardening, and validation work before requesting one consolidated morning review.
 - [x] Produce one consolidated morning checklist covering only owner-authenticated interactions that cannot be exercised without the user’s GitHub session.
+
+- [ ] Complete the single owner-authenticated Decap Media field-selection and live publish verification when the user is available; no further local implementation work remains.
+
+- [x] Adjust the desktop hero composition so its role metadata and Wells Fargo line fit completely inside the initial viewport at the reported 2048×1396 aspect ratio.

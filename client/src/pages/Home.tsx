@@ -335,7 +335,7 @@ export default function Home() {
         <a href="#top" aria-label={content.ui.homeAriaLabel}><p className="text-sm font-semibold tracking-[-0.04em]">{content.identity.name}</p><p className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.15em] text-[#676766]">{content.identity.pageDescriptor}</p></a>
 
         <nav className="relative mt-20 flex flex-col gap-1" aria-label={content.ui.sectionNavigationLabel} style={{ "--active-nav-index": activeNavIndex } as CSSProperties}>
-          <span aria-hidden="true" className="sidebar-nav-active-indicator pointer-events-none absolute inset-x-0 top-0 h-10 rounded-lg bg-white/75 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none" />
+          <span aria-hidden="true" className="sidebar-nav-active-indicator pointer-events-none absolute inset-x-0 top-0 h-10 rounded-lg bg-white/75 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"><span className="absolute right-2 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#456fe8]" /></span>
           {navItems.map((item) => (
             <a
               key={item.id}
@@ -345,8 +345,7 @@ export default function Home() {
               }`}
             >
               <span className={`text-[10px] tabular-nums ${active === item.id ? "text-[#456fe8]" : "text-[#aaa8a3]"}`}>{item.number}</span>
-              <span className="font-medium tracking-[-0.01em]">{item.label}</span>
-              <span className={`ml-auto h-1.5 w-1.5 rounded-full transition-all ${active === item.id ? "scale-100 bg-[#456fe8]" : "scale-0 bg-[#456fe8]"}`} />
+              <span className={`font-medium tracking-[-0.01em] ${active === item.id ? "text-[#456fe8]" : ""}`}>{item.label}</span>
             </a>
           ))}
         </nav>

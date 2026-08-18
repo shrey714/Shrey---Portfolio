@@ -363,3 +363,5 @@
 - [x] Fix uploaded achievement images not rendering when entries remain set to the placeholder visual mode in Decap CMS.
 
 - [x] Refine the desktop sidebar active link with a cobalt title and a single animated rounded selection indicator.
+
+- [x] Fix the active sidebar title’s cobalt color in dark mode and attach the active dot to the sliding indicator.

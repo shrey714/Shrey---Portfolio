@@ -330,6 +330,8 @@
 
 - [x] Create a pull request from the approved local production-hardening review branch into GitHub main without changing the live branch.
 
-- [ ] Verify the owner-selected Decap resume URL resolves through the correct site-owned media route before publishing the content update.
+- [x] Verify the owner-selected Decap resume URL resolves through the correct site-owned media route before publishing the content update.
 
 - [x] Correct Decap’s resume-media insertion so it cannot publish an invalid legacy `/media/...` route and instead returns the canonical private Blob delivery URL.
+
+- [x] Verify the merged canonical resume-media correction on GitHub main and the deployed portfolio before closing the production checklist.

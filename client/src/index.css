@@ -300,6 +300,15 @@
   }
 }
 
+.dark .portfolio .theme-light-surface .sidebar-nav-inactive,
+.dark .portfolio .theme-light-surface .sidebar-nav-inactive span {
+  color: #aaa9a5 !important;
+}
+
+.dark .portfolio .theme-light-surface .sidebar-nav-inactive span:first-child {
+  color: #777a80 !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .sidebar-nav-inactive {
     transition-property: color !important;

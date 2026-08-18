@@ -367,3 +367,5 @@
 - [x] Fix the active sidebar title’s cobalt color in dark mode and attach the active dot to the sliding indicator.
 
 - [x] Add subtle cobalt hover feedback and slight horizontal movement for inactive desktop sidebar links.
+
+- [x] Remove sidebar hover color changes and restore neutral inactive sidebar colors in dark mode while retaining the hover shift.

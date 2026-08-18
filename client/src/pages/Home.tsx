@@ -60,7 +60,18 @@ function ThemeToggle() {
 }
 
 function HeroVisual({ index }: { index: number }) {
-  if (index === 0) return <img src={hero.imageUrl} alt={hero.slides[0].alt} fetchPriority="high" decoding="async" width={1571} height={1080} className="h-full w-full rounded-[1.15rem] object-cover" />;
+  if (index === 0) {
+    const mobileHeroImageUrl = hero.imageUrl.endsWith("/shrey-hero-editorial-1024.webp")
+      ? "/api/media/portfolio/hero/shrey-hero-editorial-768.webp"
+      : undefined;
+
+    return (
+      <picture>
+        {mobileHeroImageUrl && <source media="(max-width: 767px)" srcSet={mobileHeroImageUrl} type="image/webp" />}
+        <img src={hero.imageUrl} alt={hero.slides[0].alt} fetchPriority="high" decoding="async" width={1571} height={1080} className="h-full w-full rounded-[1.15rem] object-cover" />
+      </picture>
+    );
+  }
 
   if (index === 1) return <div className="hero-visual hero-interface" aria-label={hero.slides[1].alt} role="img"><div className="hero-visual-topline"><span>{hero.slides[1].metaLeft}</span><span>{hero.slides[1].metaRight}</span></div><div className="hero-interface-grid"><div className="hero-interface-rail"><i /><i className="is-active" /><i /><i /></div><div className="hero-interface-body"><div className="hero-line short" /><div className="hero-line wide" /><div className="hero-interface-cards"><div /><div className="is-cobalt" /><div /></div><div className="hero-table-lines"><i /><i /><i /><i /></div></div></div><div className="hero-visual-annotation">{hero.slides[1].annotation}</div></div>;
 

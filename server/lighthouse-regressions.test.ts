@@ -31,6 +31,8 @@ describe("Lighthouse regressions", () => {
     const home = await readFile(projectFile("client/src/pages/Home.tsx"), "utf8");
 
     expect(home).toContain('fetchPriority="high"');
+    expect(home).toContain('media="(max-width: 767px)"');
+    expect(home).toContain('shrey-hero-editorial-768.webp');
     expect(home).toContain('loading="lazy" decoding="async" width={32} height={32}');
     expect(home).toContain('loading="lazy" decoding="async" className="h-full w-full object-cover"');
   });

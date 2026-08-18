@@ -381,3 +381,5 @@
 - [x] Implement and validate approved deeper Lighthouse optimizations for JavaScript delivery, font loading, and final hero-media reduction.
 
 - [x] Align contact honeypot validation with the intended silent-success behavior while preserving Telegram and cooldown protections.
+
+- [x] Investigate and improve the supplied mobile PageSpeed performance report before addressing the desktop accessibility report.

@@ -277,7 +277,7 @@
    exposed edge a slightly stronger divider so the reading frame remains clear. */
 @media (min-width: 1024px) {
   .dark .portfolio > aside.theme-light-surface {
-    border-right-color: rgba(255, 255, 255, 0.22) !important;
+    border-right-color: var(--sidebar-border) !important;
   }
 }
 

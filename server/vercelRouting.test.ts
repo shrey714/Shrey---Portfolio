@@ -59,7 +59,7 @@ test("unified Vercel entry provides Decap's conventional configuration fallback"
   expect(config.backend.repo).toBe("shrey714/Shrey---Portfolio");
   expect(config.backend.api_root).toBe(`${origin}/api/decap/github`);
   expect(config.media_folder).toBe("content/media");
-  expect(config.public_folder).toBe("/media");
+  expect(config.public_folder).toBe("/api/media/portfolio");
 });
 
 test("Decap GitHub proxy rejects unauthenticated repository calls without contacting GitHub", async () => {

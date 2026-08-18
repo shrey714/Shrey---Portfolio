@@ -17,7 +17,7 @@ describe("Decap CMS configuration", () => {
     expect(portfolio.file).toBe("content/portfolio.json");
     expect(portfolio.fields.map(field => field.name)).toContain("seo");
     expect(config.media_folder).toBe("content/media");
-    expect(config.public_folder).toBe("/media");
+    expect(config.public_folder).toBe("/api/media/portfolio");
     expect(config.media_library).toEqual({ name: "vercel-blob" });
     expect(config.editor.preview).toBe(false);
 

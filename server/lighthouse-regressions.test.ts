@@ -77,6 +77,11 @@ describe("Lighthouse regressions", () => {
     expect(home).not.toContain('text-[#777571]');
     expect(home).not.toContain('text-[#706e6a]');
     expect(home).not.toContain('text-[#456fe8]">{principle.number}');
+    expect(home).not.toContain('text-[#767570]');
+    expect(home).not.toContain('text-[#73716e]');
+    expect(home).not.toContain('text-[#9b9994]');
+    expect(home).not.toContain('<span className="px-1 text-[#aaa8a3]">·</span>');
+    expect(home).not.toContain('text-[#8e8c87]');
     expect(contrastRatio("#5f5d59", "#eeece6")).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio("#3455b8", "#f6f4ef")).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio("#3455b8", "#eeece6")).toBeGreaterThanOrEqual(4.5);

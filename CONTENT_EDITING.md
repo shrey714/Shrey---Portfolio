@@ -28,6 +28,10 @@ Keep every required field populated. The deployment build validates the content 
 
 Use the native **Media** panel in `/admin` to upload, select, and delete images and PDF files. The Decap panel is backed by private Vercel Blob storage rather than the GitHub `content/media` directory, so media binaries are not committed to the repository. Select an asset to insert its cacheable site-owned URL into **Hero image URL**, **Social share image URL**, or **Resume → PDF URL**. The normal Decap media folder stays empty; it exists only to satisfy the CMS configuration contract.
 
+### Project visuals
+
+Each project in **Selected work** can use one of five presentation presets: **Layout 1 — Workflow dashboard**, **Layout 2 — Commerce board**, **Layout 3 — System map**, **Layout 4 — Editorial showcase**, or **Layout 5 — Analytics panel**. They change only the decorative visual frame, not the project copy or links. Select **Custom image** when you want to use your own project image instead, then choose an image from the native Media panel in **Custom project image**.
+
 ### Adding an experience
 
 Open **Experience** in **Portfolio content**, then use **Add Experience entries** to create another role. Each entry includes its company, role, date range, description, responsibility label, and responsibility list. Decap lets you reorder the entries; the public portfolio presents them in that same order, so place your most recent role first.

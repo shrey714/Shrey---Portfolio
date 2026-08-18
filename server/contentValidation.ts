@@ -5,6 +5,27 @@ const text = z.string().trim().min(1);
 const link = z.string().trim().refine(value => value.startsWith("/") || /^https?:\/\//.test(value), "Expected an absolute URL or site-relative path");
 const listOfText = z.array(text).min(1);
 const labelledText = z.object({ title: text, text }).strict();
+const projectSchema = z.object({
+  visualLayout: z.enum(["layout-1", "layout-2", "layout-3", "layout-4", "layout-5", "custom-image"]),
+  visualImageUrl: link.optional(),
+  meta: text,
+  date: text,
+  name: text,
+  type: text,
+  description: text,
+  technologies: listOfText,
+  cta: text,
+  ariaLabel: text,
+  repositoryUrl: link,
+  liveUrl: link.optional(),
+  visualMeta: text,
+  visualTitle: text,
+  visualRows: listOfText,
+}).strict().superRefine((project, context) => {
+  if (project.visualLayout === "custom-image" && !project.visualImageUrl) {
+    context.addIssue({ code: "custom", path: ["visualImageUrl"], message: "Choose a custom project image when using the Custom image visual." });
+  }
+});
 
 export const portfolioContentSchema = z.object({
   identity: z.object({ name: text, pageDescriptor: text, roleDescriptor: text, location: text, availability: text, railNote: text, appearanceLabel: text }).strict(),
@@ -39,22 +60,7 @@ export const portfolioContentSchema = z.object({
     eyebrow: text,
     heading: text,
     introduction: text,
-    projects: z.array(z.object({
-      kind: z.enum(["clinic", "commerce"]),
-      meta: text,
-      date: text,
-      name: text,
-      type: text,
-      description: text,
-      technologies: listOfText,
-      cta: text,
-      ariaLabel: text,
-      repositoryUrl: link,
-      liveUrl: link.optional(),
-      visualMeta: text,
-      visualTitle: text,
-      visualRows: listOfText,
-    }).strict()).min(2),
+    projects: z.array(projectSchema).min(2),
   }).strict(),
   practice: z.object({
     eyebrow: text,

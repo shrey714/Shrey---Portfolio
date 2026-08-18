@@ -27,6 +27,13 @@ describe("Decap CMS configuration", () => {
     expect(resume.fields.find(field => field.name === "url")?.widget).toBe("file");
     expect(hero.fields.find(field => field.name === "imageUrl")?.widget).toBe("image");
     expect(seo.fields.find(field => field.name === "shareImage")?.widget).toBe("image");
+
+    const work = portfolio.fields.find(field => field.name === "work") as { fields: Array<{ name: string; fields: Array<{ name: string; fields: Array<{ name: string; widget?: string; required?: boolean; options?: unknown[] }> }> }> };
+    const projectFields = work.fields.find(field => field.name === "projects")?.fields ?? [];
+    const visualLayout = projectFields.find(field => field.name === "visualLayout");
+    const customImage = projectFields.find(field => field.name === "visualImageUrl");
+    expect(visualLayout?.options).toHaveLength(6);
+    expect(customImage).toMatchObject({ widget: "image", required: false });
   });
 
   it("accepts only the configured repository owner as an editor", () => {

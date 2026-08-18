@@ -13,10 +13,16 @@ describe("portfolio content validation", () => {
     expect(() => validatePortfolioContent(invalid)).toThrow(/visualRows/);
   });
 
-  it("rejects an unsupported project visual kind", () => {
+  it("rejects an unsupported project visual layout", () => {
     const invalid = structuredClone(portfolioContent) as typeof portfolioContent;
-    invalid.work.projects[0].kind = "unknown";
-    expect(() => validatePortfolioContent(invalid)).toThrow(/kind/);
+    invalid.work.projects[0].visualLayout = "unknown";
+    expect(() => validatePortfolioContent(invalid)).toThrow(/visualLayout/);
+  });
+
+  it("requires a custom image when the custom-image layout is selected", () => {
+    const invalid = structuredClone(portfolioContent) as typeof portfolioContent;
+    invalid.work.projects[0].visualLayout = "custom-image";
+    expect(() => validatePortfolioContent(invalid)).toThrow(/visualImageUrl/);
   });
 
   it("rejects a project without a source destination", () => {

@@ -15,6 +15,7 @@ type DecapField = {
   name: string;
   widget?: string;
   required?: boolean;
+  hint?: string;
   fields?: DecapField[];
   field?: DecapField;
   default?: unknown;
@@ -22,7 +23,7 @@ type DecapField = {
 
 const stringField = (name: string, label: string, required = true): DecapField => ({ name, label, widget: "string", required });
 const textField = (name: string, label: string, required = true): DecapField => ({ name, label, widget: "text", required });
-const mediaField = (name: string, label: string, widget: "file" | "image"): DecapField => ({ name, label, widget, required: true });
+const mediaField = (name: string, label: string, widget: "file" | "image", required = true, hint?: string): DecapField => ({ name, label, widget, required, hint });
 const listOfStrings = (name: string, label: string): DecapField => ({ name, label, widget: "list", field: stringField("value", "Value") });
 const objectField = (name: string, label: string, fields: DecapField[]): DecapField => ({ name, label, widget: "object", fields });
 const listOfObjects = (name: string, label: string, fields: DecapField[]): DecapField => ({ name, label, widget: "list", fields });
@@ -52,7 +53,15 @@ function portfolioFields(): DecapField[] {
     objectField("work", "Selected work", [
       stringField("eyebrow", "Eyebrow"), stringField("heading", "Heading"), textField("introduction", "Introduction"),
       listOfObjects("projects", "Projects", [
-        { name: "kind", label: "Visual kind", widget: "select", options: ["clinic", "commerce"] } as DecapField,
+        { name: "visualLayout", label: "Project visual", widget: "select", options: [
+          { label: "Layout 1 — Workflow dashboard", value: "layout-1" },
+          { label: "Layout 2 — Commerce board", value: "layout-2" },
+          { label: "Layout 3 — System map", value: "layout-3" },
+          { label: "Layout 4 — Editorial showcase", value: "layout-4" },
+          { label: "Layout 5 — Analytics panel", value: "layout-5" },
+          { label: "Custom image — Upload or choose an image below", value: "custom-image" },
+        ] } as DecapField,
+        mediaField("visualImageUrl", "Custom project image", "image", false, "Use this only when Project visual is set to Custom image."),
         stringField("meta", "Meta"), stringField("date", "Date"), stringField("name", "Project name"), stringField("type", "Project type"),
         textField("description", "Description"), listOfStrings("technologies", "Technologies"), stringField("cta", "Button label"),
         stringField("ariaLabel", "Button accessibility label"), stringField("repositoryUrl", "GitHub or source URL"), stringField("liveUrl", "Live project URL", false), stringField("visualMeta", "Visual meta"), stringField("visualTitle", "Visual title"),

@@ -30,7 +30,7 @@ import { trpc } from "@/lib/trpc";
 
 const hero = content.hero;
 const navItems = content.navigation;
-type WorkProject = (typeof content.work.projects)[number];
+type WorkProject = (typeof content.work.projects)[number] & { visualImageUrl?: string };
 
 function AnchorArrow() {
   return <ArrowUpRight aria-hidden="true" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />;
@@ -66,7 +66,6 @@ function HeroVisual({ index }: { index: number }) {
 }
 
 function ProductEvidence({ project }: { project: WorkProject }) {
-  const clinic = project.kind === "clinic";
   const [isVisible, setIsVisible] = useState(false);
   const evidenceRef = useRef<HTMLDivElement | null>(null);
 
@@ -140,39 +139,25 @@ function ProductEvidence({ project }: { project: WorkProject }) {
     };
   }, []);
 
-  return (
-    <div ref={evidenceRef} className={`project-evidence relative overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#26272a] p-3 shadow-[0_24px_55px_-40px_rgba(0,0,0,0.8)] ${isVisible ? "is-visible" : ""}`}>
-      <div className="project-evidence-glow absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(69,111,232,0.22),transparent_35%)]" />
-      <div className="relative rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">
-        <div className="flex items-center justify-between border-b border-white/10 pb-3 text-[8px] font-semibold uppercase tracking-[0.14em] text-white/45">
-          <span>{project.visualMeta}</span>
-          <span className="flex gap-1.5"><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-[#456fe8]" /></span>
-        </div>
-        <div className={`mt-4 grid gap-3 ${clinic ? "grid-cols-[0.34fr_0.66fr]" : "grid-cols-[0.45fr_0.55fr]"}`}>
-          <div className="rounded-lg border border-white/9 bg-white/[0.035] p-2.5">
-            <div className="h-1.5 w-12 rounded-full bg-white/35" />
-            <div className="mt-4 space-y-2">
-              {[0, 1, 2, 3].map((item) => <div key={item} className={`h-5 rounded-md border border-white/[0.06] ${item === 1 ? "bg-[#456fe8]/80" : "bg-white/[0.045]"}`} />)}
-            </div>
-            <div className="mt-4 rounded-md border border-[#456fe8]/40 bg-[#456fe8]/15 p-2">
-              <div className="h-1.5 w-8 rounded-full bg-[#9fb2ff]" />
-              <div className="mt-2 h-1 w-full rounded-full bg-white/15" />
-            </div>
-          </div>
-          <div className="rounded-lg border border-white/9 bg-white/[0.035] p-3">
-            <div className="flex items-start justify-between"><div><div className="h-1.5 w-20 rounded-full bg-white/65" /><div className="mt-2 h-1.5 w-14 rounded-full bg-white/20" /></div><div className="h-6 w-10 rounded-md bg-[#456fe8]" /></div>
-            <div className="mt-5 grid grid-cols-3 gap-2">
-              {[0, 1, 2].map((item) => <div key={item} className="rounded-md border border-white/[0.08] bg-white/[0.035] p-2"><div className="h-1 w-5 rounded-full bg-white/25" /><div className={`mt-3 h-8 rounded ${item === 1 ? "bg-[#456fe8]/60" : "bg-white/[0.09]"}`} /></div>)}
-            </div>
-            <div className="mt-4 space-y-2.5">
-              {project.visualRows.map((row, index) => <div key={row} className="flex items-center gap-3"><span className={`h-1.5 w-1.5 shrink-0 rounded-full ${index === 1 ? "bg-[#456fe8]" : "bg-white/25"}`} /><span className="h-1.5 flex-1 rounded-full bg-white/20" /><span className="h-1.5 w-9 rounded-full bg-white/10" /></div>)}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="relative flex items-end justify-between px-1 pb-1 pt-4 text-white"><p className="max-w-[12rem] text-xs font-medium tracking-[-0.02em] text-white/80 sm:text-sm">{project.visualTitle}</p><span className="rounded-full border border-white/14 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.13em] text-white/60">Evidence frame</span></div>
-    </div>
-  );
+  const header = <div className="flex items-center justify-between border-b border-white/10 pb-3 text-[8px] font-semibold uppercase tracking-[0.14em] text-white/45"><span>{project.visualMeta}</span><span className="flex gap-1.5"><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-[#456fe8]" /></span></div>;
+  const rows = project.visualRows.map((row, index) => <div key={row} className="flex items-center gap-3"><span className={`h-1.5 w-1.5 shrink-0 rounded-full ${index === 1 ? "bg-[#456fe8]" : "bg-white/25"}`} /><span className="h-1.5 flex-1 rounded-full bg-white/20" /><span className="h-1.5 w-9 rounded-full bg-white/10" /></div>);
+  const customImage = project.visualLayout === "custom-image" && project.visualImageUrl;
+
+  const layout = (() => {
+    if (customImage) return <div className="relative aspect-[16/10] overflow-hidden rounded-[1rem] border border-white/10 bg-[#202124]"><img src={project.visualImageUrl} alt={`Project visual for ${project.name}`} className="h-full w-full object-cover" /><div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-4 pt-12"><p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/70">Custom project image</p></div></div>;
+
+    if (project.visualLayout === "layout-1") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.34fr_0.66fr] gap-3"><div className="rounded-lg border border-white/9 bg-white/[0.035] p-2.5"><div className="h-1.5 w-12 rounded-full bg-white/35" /><div className="mt-4 space-y-2">{[0, 1, 2, 3].map(item => <div key={item} className={`h-5 rounded-md border border-white/[0.06] ${item === 1 ? "bg-[#456fe8]/80" : "bg-white/[0.045]"}`} />)}</div><div className="mt-4 rounded-md border border-[#456fe8]/40 bg-[#456fe8]/15 p-2"><div className="h-1.5 w-8 rounded-full bg-[#9fb2ff]" /><div className="mt-2 h-1 w-full rounded-full bg-white/15" /></div></div><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex items-start justify-between"><div><div className="h-1.5 w-20 rounded-full bg-white/65" /><div className="mt-2 h-1.5 w-14 rounded-full bg-white/20" /></div><div className="h-6 w-10 rounded-md bg-[#456fe8]" /></div><div className="mt-5 grid grid-cols-3 gap-2">{[0, 1, 2].map(item => <div key={item} className="rounded-md border border-white/[0.08] bg-white/[0.035] p-2"><div className="h-1 w-5 rounded-full bg-white/25" /><div className={`mt-3 h-8 rounded ${item === 1 ? "bg-[#456fe8]/60" : "bg-white/[0.09]"}`} /></div>)}</div><div className="mt-4 space-y-2.5">{rows}</div></div></div></div>;
+
+    if (project.visualLayout === "layout-2") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.45fr_0.55fr] gap-3"><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex items-center justify-between"><span className="h-2 w-12 rounded-full bg-white/45" /><span className="h-5 w-5 rounded-md bg-[#456fe8]" /></div><div className="mt-4 grid grid-cols-2 gap-2">{[0, 1, 2, 3].map(item => <div key={item} className={`aspect-square rounded-md border border-white/[0.08] ${item === 2 ? "bg-[#456fe8]/65" : "bg-white/[0.055]"}`} />)}</div></div><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex gap-2"><div className="h-16 flex-1 rounded-md bg-[#456fe8]/50" /><div className="h-16 w-9 rounded-md bg-white/[0.09]" /></div><div className="mt-4 space-y-2.5">{rows}</div></div></div></div>;
+
+    if (project.visualLayout === "layout-3") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="relative mt-4 flex aspect-[16/8] items-center justify-center overflow-hidden rounded-lg border border-white/8 bg-[radial-gradient(circle_at_center,rgba(69,111,232,0.34),transparent_38%)]"><span className="absolute h-28 w-28 rounded-full border border-[#456fe8]/70" /><span className="absolute h-52 w-52 rounded-full border border-dashed border-white/15" /><div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-white/25 bg-[#456fe8] text-[8px] font-semibold uppercase tracking-[0.13em] text-white">Flow</div><div className="absolute left-[12%] top-[20%] h-11 w-16 rounded-md border border-white/15 bg-white/[0.07]" /><div className="absolute bottom-[17%] right-[12%] h-11 w-16 rounded-md border border-white/15 bg-white/[0.07]" /><span className="absolute left-[28%] top-[38%] h-px w-[23%] rotate-[18deg] bg-[#456fe8]/80" /><span className="absolute bottom-[35%] right-[28%] h-px w-[23%] -rotate-[20deg] bg-[#456fe8]/80" /></div></div>;
+
+    if (project.visualLayout === "layout-4") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.62fr_0.38fr] gap-3"><div className="relative min-h-40 overflow-hidden rounded-lg bg-[#456fe8]"><span className="absolute left-4 top-4 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/70">Editorial</span><div className="absolute -bottom-7 -right-6 h-32 w-32 rounded-full border-[18px] border-white/20" /><div className="absolute bottom-4 left-4 h-3 w-24 rounded-full bg-white/80" /><div className="absolute bottom-10 left-4 h-2 w-16 rounded-full bg-white/35" /></div><div className="space-y-3"><div className="h-20 rounded-lg border border-white/10 bg-white/[0.055]" /><div className="h-16 rounded-lg border border-white/10 bg-[#456fe8]/30" /><div className="h-8 rounded-lg border border-white/10 bg-white/[0.055]" /></div></div></div>;
+
+    return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.37fr_0.63fr] gap-3"><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border-[10px] border-[#456fe8]/70 border-r-white/10 text-[9px] font-semibold text-white/70">72%</div><div className="mt-4 space-y-2">{["Signal", "Reach", "Trend"].map((label, index) => <div key={label} className="flex items-center justify-between text-[8px] text-white/45"><span>{label}</span><span className={index === 1 ? "text-[#9fb2ff]" : ""}>+{index + 2}%</span></div>)}</div></div><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex h-24 items-end gap-2">{[35, 58, 44, 76, 62, 90, 70].map((height, index) => <span key={index} style={{ height: `${height}%` }} className={`flex-1 rounded-t-sm ${index === 5 ? "bg-[#456fe8]" : "bg-white/15"}`} />)}</div><div className="mt-4 space-y-2.5">{rows}</div></div></div></div>;
+  })();
+
+  return <div ref={evidenceRef} className={`project-evidence relative overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#26272a] p-3 shadow-[0_24px_55px_-40px_rgba(0,0,0,0.8)] ${isVisible ? "is-visible" : ""}`}><div className="project-evidence-glow absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(69,111,232,0.22),transparent_35%)]" /><div className="relative">{layout}</div><div className="relative flex items-end justify-between px-1 pb-1 pt-4 text-white"><p className="max-w-[12rem] text-xs font-medium tracking-[-0.02em] text-white/80 sm:text-sm">{project.visualTitle}</p><span className="rounded-full border border-white/14 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.13em] text-white/60">{customImage ? "Custom image" : project.visualLayout.replace("layout-", "Layout ")}</span></div></div>;
 }
 
 function SystemsEvidence() {

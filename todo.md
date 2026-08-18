@@ -341,3 +341,5 @@
 - [x] Add the supplied Wells Fargo, Surabhi.io, and ZolutionTech internship roles as structured editable experience entries.
 
 - [x] Add Istine Package Manager, FliplookAI, and Bill Splitter as editable projects, and add supplied GitHub and live links for all portfolio projects.
+
+- [x] Replace project visual-kind labels with named layouts, add new visual presets, and support an optional media-library project image override.

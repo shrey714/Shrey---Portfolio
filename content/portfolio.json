@@ -124,7 +124,7 @@
         "cta": "Open live dashboard",
         "repositoryUrl": "https://github.com/shrey714/dardibook-dashboard",
         "liveUrl": "https://dashboard.dardibook.in/",
-        "kind": "clinic",
+        "visualLayout": "layout-1",
         "visualTitle": "Operational care, in view",
         "visualRows": [
           "Patient flow",
@@ -148,7 +148,7 @@
         "date": "In progress",
         "cta": "Open project",
         "repositoryUrl": "https://github.com/shrey714/Voice-AI",
-        "kind": "commerce",
+        "visualLayout": "layout-2",
         "visualTitle": "Inventory, from shelf to storefront",
         "visualRows": [
           "Catalog signal",
@@ -171,7 +171,7 @@
         "date": "Portfolio project",
         "cta": "Open project",
         "repositoryUrl": "https://github.com/shrey714/Istine-Package-manager",
-        "kind": "commerce",
+        "visualLayout": "layout-5",
         "visualTitle": "Package discovery, in context",
         "visualRows": [
           "Registry search",
@@ -196,7 +196,7 @@
         "cta": "Open live project",
         "repositoryUrl": "https://github.com/shrey714/flipkartGrid5.0_palakPaneer",
         "liveUrl": "https://fliplookai-frontend.netlify.app/",
-        "kind": "commerce",
+        "visualLayout": "layout-4",
         "visualTitle": "Style signals, made personal",
         "visualRows": [
           "Preference history",
@@ -219,7 +219,7 @@
         "cta": "Open live project",
         "repositoryUrl": "https://github.com/shrey714/Bill-Splitter",
         "liveUrl": "https://bill-splitter-shrey.netlify.app/",
-        "kind": "commerce",
+        "visualLayout": "layout-3",
         "visualTitle": "Shared costs, clearly tracked",
         "visualRows": [
           "Expense groups",

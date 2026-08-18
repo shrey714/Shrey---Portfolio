@@ -6,9 +6,10 @@ afterEach(() => {
 });
 
 describe("contact submission security", () => {
-  it("rejects malformed, oversized, and honeypot submissions", () => {
+  it("rejects malformed and oversized submissions while allowing the honeypot to be handled silently", () => {
     expect(contactSubmissionSchema.safeParse({ name: "A", email: "not-an-email", message: "short", website: "bot.example" }).success).toBe(false);
     expect(contactSubmissionSchema.safeParse({ name: "Shrey Patel", email: "hello@example.com", message: "A legitimate project enquiry with enough useful context.", website: "" }).success).toBe(true);
+    expect(contactSubmissionSchema.safeParse({ name: "Shrey Patel", email: "hello@example.com", message: "A legitimate project enquiry with enough useful context.", website: "bot.example" }).success).toBe(true);
   });
 
   it("escapes visitor supplied HTML before formatting a Telegram notification", () => {

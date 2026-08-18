@@ -377,3 +377,7 @@
 - [x] Review the updated Lighthouse report, quantify improvements, and identify any remaining approval-required optimizations.
 
 - [x] Resolve the remaining safe Lighthouse findings: contact-panel text contrast, hero-carousel dot hit areas, and the analytics placeholder request.
+
+- [x] Implement and validate approved deeper Lighthouse optimizations for JavaScript delivery, font loading, and final hero-media reduction.
+
+- [x] Align contact honeypot validation with the intended silent-success behavior while preserving Telegram and cooldown protections.

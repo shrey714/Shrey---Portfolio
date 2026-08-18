@@ -6,6 +6,7 @@ import { appRouter } from "../routers.js";
 import { createContext } from "./context.js";
 import { registerDecapRoutes } from "./decap.js";
 import { registerMediaRoutes } from "../media.js";
+import { registerContactApi } from "../contactApi.js";
 
 export function configureApplication(app: express.Express) {
   app.set("trust proxy", 1);
@@ -15,6 +16,7 @@ export function configureApplication(app: express.Express) {
   registerOAuthRoutes(app);
   registerDecapRoutes(app);
   registerMediaRoutes(app);
+  registerContactApi(app);
   app.use(
     "/api/trpc",
     createExpressMiddleware({

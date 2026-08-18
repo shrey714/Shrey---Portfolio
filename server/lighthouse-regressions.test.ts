@@ -19,6 +19,14 @@ describe("Lighthouse regressions", () => {
     expect(document).not.toContain('<script defer src="%VITE_ANALYTICS_ENDPOINT%/umami"');
   });
 
+  it("loads the unchanged Google font families without blocking the initial render", async () => {
+    const document = await readFile(projectFile("client/index.html"), "utf8");
+
+    expect(document).toContain('rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display');
+    expect(document).toContain('rel="stylesheet" media="print" onload="this.media=\'all\'"');
+    expect(document).toContain("<noscript><link");
+  });
+
   it("prioritizes the hero while deferring below-fold visual media", async () => {
     const home = await readFile(projectFile("client/src/pages/Home.tsx"), "utf8");
 

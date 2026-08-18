@@ -30,7 +30,6 @@ import { getAchievementVisualKind } from "@/lib/achievementPresentation";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
 import { getSkillVisual } from "@/lib/skillPresentation";
 import { getActiveNavigationIndex } from "@/lib/sidebarNavigation";
-import { trpc } from "@/lib/trpc";
 
 const hero = content.hero;
 const navItems = content.navigation;
@@ -199,18 +198,8 @@ export default function Home() {
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "", website: "" });
   const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [contactError, setContactError] = useState("");
+  const [contactSubmitting, setContactSubmitting] = useState(false);
   const menuCloseTimer = useRef<number | null>(null);
-  const contactMutation = trpc.contact.submit.useMutation({
-    onSuccess: () => {
-      setContactStatus("success");
-      setContactError("");
-      setContactForm({ name: "", email: "", message: "", website: "" });
-    },
-    onError: error => {
-      setContactStatus("error");
-      setContactError(error.message);
-    },
-  });
   const observedIds = useMemo(() => navItems.map((item) => item.id), []);
   const activeNavIndex = getActiveNavigationIndex(observedIds, active);
   const openMenu = () => {
@@ -227,11 +216,28 @@ export default function Home() {
 
   const showHeroSlide = (index: number) => setActiveHeroSlide((index + hero.slides.length) % hero.slides.length);
 
-  const submitContact = (event: FormEvent<HTMLFormElement>) => {
+  const submitContact = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setContactStatus("sending");
     setContactError("");
-    contactMutation.mutate(contactForm);
+    setContactSubmitting(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(contactForm),
+      });
+      const result = (await response.json().catch(() => null)) as { accepted?: boolean; message?: string } | null;
+      if (!response.ok || !result?.accepted) throw new Error(result?.message ?? "Your message could not be sent right now. Please try again shortly or use the email link.");
+      setContactStatus("success");
+      setContactForm({ name: "", email: "", message: "", website: "" });
+    } catch (error) {
+      setContactStatus("error");
+      setContactError(error instanceof Error ? error.message : "Your message could not be sent right now. Please try again shortly or use the email link.");
+    } finally {
+      setContactSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -615,7 +621,7 @@ export default function Home() {
                   </div>
                   <label className="contact-form-field mt-4"><span>{content.contact.form.messageLabel}</span><textarea required minLength={12} maxLength={1500} rows={5} value={contactForm.message} onChange={event => setContactForm(current => ({ ...current, message: event.target.value }))} placeholder={content.contact.form.messagePlaceholder} /></label>
                   <label className="contact-form-honeypot" aria-hidden="true"><span>Website</span><input tabIndex={-1} autoComplete="off" value={contactForm.website} onChange={event => setContactForm(current => ({ ...current, website: event.target.value }))} /></label>
-                  <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><button type="submit" disabled={contactMutation.isPending} className="contact-form-submit">{contactMutation.isPending ? <><Loader2 className="h-4 w-4 animate-spin" />{content.contact.form.submittingLabel}</> : <>{content.contact.form.submitLabel}<ArrowUpRight className="h-4 w-4" /></>}</button><p className="max-w-sm text-xs leading-5 text-white">{content.contact.form.privacyNote}</p></div>
+                  <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><button type="submit" disabled={contactSubmitting} className="contact-form-submit">{contactSubmitting ? <><Loader2 className="h-4 w-4 animate-spin" />{content.contact.form.submittingLabel}</> : <>{content.contact.form.submitLabel}<ArrowUpRight className="h-4 w-4" /></>}</button><p className="max-w-sm text-xs leading-5 text-white">{content.contact.form.privacyNote}</p></div>
                   <div className="mt-4 min-h-6 text-sm" aria-live="polite">{contactStatus === "sending" && <p className="font-medium text-white/85">{content.contact.form.sendingMessage}</p>}{contactStatus === "success" && <p className="font-semibold text-white">{content.contact.form.successMessage}</p>}{contactStatus === "error" && <p className="font-medium text-white">{contactError}</p>}</div>
                 </form>
                 <p className="mt-5 text-sm text-white">{content.contact.form.fallbackMessage} <a href={`mailto:${content.contact.email}`} className="font-semibold underline underline-offset-4 transition-opacity hover:opacity-75">{content.contact.email}</a></p>

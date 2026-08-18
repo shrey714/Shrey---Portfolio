@@ -1,4 +1,3 @@
-import type { QueryClient } from "@tanstack/react-query";
 import { portfolioContent } from "@/content/portfolioContent";
 
 export type HeadMeta = {
@@ -17,7 +16,7 @@ const homepageMeta: HeadMeta = {
   canonicalPath: "/",
 };
 
-export async function prefetchForPath(url: string, _queryClient: QueryClient): Promise<HeadMeta> {
+export async function prefetchForPath(url: string): Promise<HeadMeta> {
   const pathname = url.split("?", 1)[0] || "/";
   if (pathname === "/") return homepageMeta;
   if (pathname === "/admin") {

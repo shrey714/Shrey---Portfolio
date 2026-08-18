@@ -345,3 +345,5 @@
 - [x] Replace project visual-kind labels with named layouts, add new visual presets, and support an optional media-library project image override.
 
 - [x] Rebalance project card text and visual proportions and make the Layout 3 project visual more compact.
+
+- [x] Replace the editable Skills groups with the supplied Android, backend, frontend, programming-language, and other-stack categories.

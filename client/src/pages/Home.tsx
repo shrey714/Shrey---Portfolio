@@ -468,7 +468,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="mt-16 grid gap-px overflow-hidden rounded-[1.25rem] border border-[#1b1c1d]/10 bg-[#1b1c1d]/10 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-16 grid gap-px overflow-hidden rounded-[1.25rem] border border-[#1b1c1d]/10 bg-[#1b1c1d]/10 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
               {content.practice.skills.map((skill) => (
                 <div key={skill.name} className="min-h-28 bg-[#f6f4ef] p-5 transition-colors duration-200 hover:bg-white">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#777571]">{skill.name}</p>

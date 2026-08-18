@@ -363,20 +363,24 @@
     "visualSystemNote": "Signal / decision / response",
     "skills": [
       {
-        "name": "Frontend",
-        "tools": "React · Next.js · TypeScript"
+        "name": "Android technologies",
+        "tools": "React Native · Expo"
       },
       {
-        "name": "Backend",
-        "tools": "Java · Spring · REST APIs"
+        "name": "Backend technologies",
+        "tools": "Node.js · Express.js · MongoDB · Django"
       },
       {
-        "name": "Data",
-        "tools": "SQL · Firestore · DuckDB"
+        "name": "Frontend technologies",
+        "tools": "HTML · CSS · React.js"
       },
       {
-        "name": "Architecture",
-        "tools": "Systems · Events · Scale"
+        "name": "Programming languages",
+        "tools": "C · C++ · JavaScript · Python"
+      },
+      {
+        "name": "Other stacks",
+        "tools": "Git & GitHub · Bootstrap · Figma · Canva · Tailwind"
       }
     ],
     "heading": "The work behind the work.",

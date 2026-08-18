@@ -19,6 +19,12 @@ describe("portfolio content validation", () => {
     expect(() => validatePortfolioContent(invalid)).toThrow(/kind/);
   });
 
+  it("rejects a project without a source destination", () => {
+    const invalid = structuredClone(portfolioContent) as typeof portfolioContent;
+    delete (invalid.work.projects[0] as Partial<(typeof portfolioContent.work.projects)[number]>).repositoryUrl;
+    expect(() => validatePortfolioContent(invalid)).toThrow(/repositoryUrl/);
+  });
+
   it("requires at least one structured experience entry", () => {
     const invalid = structuredClone(portfolioContent) as typeof portfolioContent;
     invalid.experience.entries = [];

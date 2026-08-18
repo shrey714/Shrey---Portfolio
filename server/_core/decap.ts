@@ -55,7 +55,7 @@ function portfolioFields(): DecapField[] {
         { name: "kind", label: "Visual kind", widget: "select", options: ["clinic", "commerce"] } as DecapField,
         stringField("meta", "Meta"), stringField("date", "Date"), stringField("name", "Project name"), stringField("type", "Project type"),
         textField("description", "Description"), listOfStrings("technologies", "Technologies"), stringField("cta", "Button label"),
-        stringField("ariaLabel", "Button accessibility label"), stringField("visualMeta", "Visual meta"), stringField("visualTitle", "Visual title"),
+        stringField("ariaLabel", "Button accessibility label"), stringField("repositoryUrl", "GitHub or source URL"), stringField("liveUrl", "Live project URL", false), stringField("visualMeta", "Visual meta"), stringField("visualTitle", "Visual title"),
         listOfStrings("visualRows", "Visual rows"),
       ]),
     ]),

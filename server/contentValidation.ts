@@ -49,6 +49,8 @@ export const portfolioContentSchema = z.object({
       technologies: listOfText,
       cta: text,
       ariaLabel: text,
+      repositoryUrl: link,
+      liveUrl: link.optional(),
       visualMeta: text,
       visualTitle: text,
       visualRows: listOfText,

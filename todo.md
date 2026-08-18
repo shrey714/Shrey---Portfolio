@@ -339,3 +339,5 @@
 - [x] Convert the Experience editor and public portfolio section to support adding, editing, reordering, and rendering multiple roles.
 
 - [x] Add the supplied Wells Fargo, Surabhi.io, and ZolutionTech internship roles as structured editable experience entries.
+
+- [x] Add Istine Package Manager, FliplookAI, and Bill Splitter as editable projects, and add supplied GitHub and live links for all portfolio projects.

@@ -119,9 +119,11 @@
           "Razorpay"
         ],
         "name": "DardiBook",
-        "ariaLabel": "Discuss the DardiBook project",
+        "ariaLabel": "Open the DardiBook dashboard",
         "date": "2025",
-        "cta": "Discuss this case study",
+        "cta": "Open live dashboard",
+        "repositoryUrl": "https://github.com/shrey714/dardibook-dashboard",
+        "liveUrl": "https://dashboard.dardibook.in/",
         "kind": "clinic",
         "visualTitle": "Operational care, in view",
         "visualRows": [
@@ -142,9 +144,10 @@
           "Supabase"
         ],
         "name": "Shopkeeper AI",
-        "ariaLabel": "Discuss the Shopkeeper AI project",
+        "ariaLabel": "Open the Shopkeeper AI source repository",
         "date": "In progress",
-        "cta": "Ask about the build",
+        "cta": "Open project",
+        "repositoryUrl": "https://github.com/shrey714/Voice-AI",
         "kind": "commerce",
         "visualTitle": "Inventory, from shelf to storefront",
         "visualRows": [
@@ -154,6 +157,77 @@
         ],
         "type": "Inventory & online store management",
         "description": "One ecosystem for shopkeepers: a native mobile experience for day-to-day inventory and a customer-facing storefront for turning stock into commerce."
+      },
+      {
+        "visualMeta": "Istine / package discovery",
+        "meta": "03 — Developer tool",
+        "technologies": [
+          "React Native",
+          "NPM Registry API",
+          "Firebase"
+        ],
+        "name": "Istine Package Manager",
+        "ariaLabel": "Open the Istine Package Manager source repository",
+        "date": "Portfolio project",
+        "cta": "Open project",
+        "repositoryUrl": "https://github.com/shrey714/Istine-Package-manager",
+        "kind": "commerce",
+        "visualTitle": "Package discovery, in context",
+        "visualRows": [
+          "Registry search",
+          "Package community",
+          "Saved favourites"
+        ],
+        "type": "React Native package manager",
+        "description": "A React Native package-management application built with the NPM Registry API and Firebase. It includes package-specific communication groups, favourites, dynamic theming, notifications, advertising, and quizzes covering NPM, React, and Angular."
+      },
+      {
+        "visualMeta": "FliplookAI / fashion assistant",
+        "meta": "04 — GenAI experience",
+        "technologies": [
+          "React",
+          "Node.js",
+          "Python",
+          "Deep learning"
+        ],
+        "name": "FliplookAI",
+        "ariaLabel": "Open the FliplookAI live project",
+        "date": "Portfolio project",
+        "cta": "Open live project",
+        "repositoryUrl": "https://github.com/shrey714/flipkartGrid5.0_palakPaneer",
+        "liveUrl": "https://fliplookai-frontend.netlify.app/",
+        "kind": "commerce",
+        "visualTitle": "Style signals, made personal",
+        "visualRows": [
+          "Preference history",
+          "Outfit suggestions",
+          "Fashion recommendations"
+        ],
+        "type": "GenAI fashion assistant",
+        "description": "A GenAI-powered fashion assistant built with React, Node.js, and Python deep learning. It analyzes user history and preferences to deliver personalized outfit suggestions and customized fashion recommendations."
+      },
+      {
+        "visualMeta": "Bill Splitter / shared expenses",
+        "meta": "05 — Personal finance tool",
+        "technologies": [
+          "React Native",
+          "Firebase"
+        ],
+        "name": "Bill Splitter",
+        "ariaLabel": "Open the Bill Splitter live project",
+        "date": "Portfolio project",
+        "cta": "Open live project",
+        "repositoryUrl": "https://github.com/shrey714/Bill-Splitter",
+        "liveUrl": "https://bill-splitter-shrey.netlify.app/",
+        "kind": "commerce",
+        "visualTitle": "Shared costs, clearly tracked",
+        "visualRows": [
+          "Expense groups",
+          "Settlement tracking",
+          "Trip totals"
+        ],
+        "type": "Shared expense tracker",
+        "description": "A React Native and Firebase application for tracking group expenses. It records who owes whom, keeps trip-level totals, and includes an in-app payment feature to make settlement more convenient."
       }
     ]
   },

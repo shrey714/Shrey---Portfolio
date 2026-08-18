@@ -8,7 +8,7 @@ Portfolio copy is edited through the private **Decap CMS** at `/admin` after the
 |---|---|
 | Name, location, availability, and rail wording | **Identity** |
 | Hero heading, introductory copy, resume URL, and carousel content | **Hero** |
-| Projects, technologies, calls to action, and evidence-frame labels | **Selected work** |
+| Projects, technologies, source or live-project URLs, calls to action, and evidence-frame labels | **Selected work** |
 | Practice, disciplines, and skill groups | **Practice** |
 | Biography, experience history, and fact cards | **About** and **Experience** |
 | Principles | **Philosophy** |

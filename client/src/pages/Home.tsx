@@ -30,7 +30,6 @@ import { trpc } from "@/lib/trpc";
 
 const hero = content.hero;
 const navItems = content.navigation;
-const [firstProject, secondProject] = content.work.projects;
 type WorkProject = (typeof content.work.projects)[number];
 
 function AnchorArrow() {
@@ -426,39 +425,33 @@ export default function Home() {
             </div>
 
             <div className="mt-10 space-y-16 lg:mt-14 lg:space-y-24">
-              <article className="group grid gap-7 lg:grid-cols-[minmax(0,1.42fr)_minmax(260px,0.58fr)] lg:items-end lg:gap-12">
-                <a href="#contact" className="relative block transition-transform duration-300 hover:-translate-y-1" aria-label={firstProject.ariaLabel}>
-                  <ProductEvidence project={firstProject} />
-                  <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
-                </a>
-                <div className="lg:pb-2">
-                  <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.14em] text-[#a8a6a2]"><span>{firstProject.meta}</span><span>{firstProject.date}</span></div>
-                  <h3 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">{firstProject.name}</h3>
-                  <p className="mt-2 text-base text-[#d0cdc7]">{firstProject.type}</p>
-                  <p className="mt-5 text-sm leading-6 text-[#aaa8a3]">{firstProject.description}</p>
-                  <div className="mt-6 flex flex-wrap gap-2 text-[10px] font-medium uppercase tracking-[0.11em] text-[#bab7b1]">
-                    {firstProject.technologies.map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5">{tag}</span>)}
+              {content.work.projects.map((project, index) => {
+                const visualFirst = index % 2 === 0;
+                const primaryUrl = project.liveUrl || project.repositoryUrl;
+                const details = (
+                  <div className="lg:pb-2">
+                    <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.14em] text-[#a8a6a2]"><span>{project.meta}</span><span>{project.date}</span></div>
+                    <h3 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">{project.name}</h3>
+                    <p className="mt-2 text-base text-[#d0cdc7]">{project.type}</p>
+                    <p className="mt-5 text-sm leading-6 text-[#aaa8a3]">{project.description}</p>
+                    <div className="mt-6 flex flex-wrap gap-2 text-[10px] font-medium uppercase tracking-[0.11em] text-[#bab7b1]">
+                      {project.technologies.map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5">{tag}</span>)}
+                    </div>
+                    <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-semibold text-[#f4f1eb]">
+                      <a href={project.repositoryUrl} target="_blank" rel="noreferrer" className="group/link inline-flex items-center gap-2 hover:text-[#aebff6]">View source <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
+                      {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noreferrer" className="group/link inline-flex items-center gap-2 hover:text-[#aebff6]">{project.cta} <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>}
+                    </div>
                   </div>
-                  <a href="#contact" className="group/link mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#f4f1eb]">{firstProject.cta} <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
-                </div>
-              </article>
+                );
+                const visual = (
+                  <a href={primaryUrl} target="_blank" rel="noreferrer" className="relative block transition-transform duration-300 hover:-translate-y-1" aria-label={project.ariaLabel}>
+                    <ProductEvidence project={project} />
+                    <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
+                  </a>
+                );
 
-              <article className="group grid gap-7 lg:grid-cols-[minmax(260px,0.58fr)_minmax(0,1.42fr)] lg:items-end lg:gap-12">
-                <div className="order-2 lg:order-1 lg:pb-2">
-                  <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.14em] text-[#a8a6a2]"><span>{secondProject.meta}</span><span>{secondProject.date}</span></div>
-                  <h3 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">{secondProject.name}</h3>
-                  <p className="mt-2 text-base text-[#d0cdc7]">{secondProject.type}</p>
-                  <p className="mt-5 text-sm leading-6 text-[#aaa8a3]">{secondProject.description}</p>
-                  <div className="mt-6 flex flex-wrap gap-2 text-[10px] font-medium uppercase tracking-[0.11em] text-[#bab7b1]">
-                    {secondProject.technologies.map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5">{tag}</span>)}
-                  </div>
-                  <a href="#contact" className="group/link mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#f4f1eb]">{secondProject.cta} <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
-                </div>
-                <a href="#contact" className="order-1 relative block transition-transform duration-300 hover:-translate-y-1 lg:order-2" aria-label={secondProject.ariaLabel}>
-                  <ProductEvidence project={secondProject} />
-                  <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
-                </a>
-              </article>
+                return <article key={project.name} className="group grid gap-7 lg:grid-cols-[minmax(0,1.42fr)_minmax(260px,0.58fr)] lg:items-end lg:gap-12">{visualFirst ? <>{visual}{details}</> : <><div className="order-2 lg:order-1">{details}</div><div className="order-1 lg:order-2">{visual}</div></>}</article>;
+              })}
             </div>
           </div>
         </section>

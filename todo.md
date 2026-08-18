@@ -328,4 +328,4 @@
 
 - [x] Match the desktop dark-mode sidebar divider exactly to the shared horizontal separator weight.
 
-- [ ] Create a pull request from the approved local production-hardening review branch into GitHub main without changing the live branch.
+- [x] Create a pull request from the approved local production-hardening review branch into GitHub main without changing the live branch.

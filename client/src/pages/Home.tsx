@@ -362,7 +362,7 @@ export default function Home() {
         <section id="top" className="theme-light-surface relative isolate min-h-[calc(100svh-64px)] overflow-hidden px-5 pb-12 pt-16 sm:px-8 sm:pt-24 lg:min-h-screen lg:px-12 lg:pt-12 xl:px-16">
           <div className="pointer-events-none absolute inset-0 dot-field opacity-60" />
           <div className="pointer-events-none absolute -right-20 top-4 h-[27rem] w-[27rem] rounded-full bg-[#456fe8]/7 blur-3xl sm:h-[36rem] sm:w-[36rem]" />
-          <div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-12 lg:min-h-[calc(100vh-3rem)]">
+          <div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-12 lg:min-h-[calc(100svh-6rem)]">
             <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(340px,0.72fr)] lg:gap-16">
               <div className="max-w-3xl pt-2 lg:pt-20">
                 <div className="reveal-in mb-8 [animation-delay:20ms]"><p className="text-sm font-semibold tracking-[-0.04em]">{content.identity.name}</p><p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#777571]">{content.identity.roleDescriptor}</p></div>
@@ -398,7 +398,7 @@ export default function Home() {
                   </div>
                   <div className="hero-carousel-footer"><div key={activeHeroSlide} className="hero-carousel-copy" aria-live="polite"><p className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#456fe8]">{hero.slides[activeHeroSlide].label}</p><p className="mt-1 max-w-[15rem] text-[10px] leading-4 text-[#66645f]">{hero.slides[activeHeroSlide].caption}</p></div><div className="hero-carousel-actions"><span className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#6c6a67]">0{activeHeroSlide + 1} / 0{hero.slides.length}</span><div className="flex gap-1.5"><button type="button" onClick={() => showHeroSlide(activeHeroSlide - 1)} className="hero-carousel-control" aria-label={hero.previousVisualLabel}><ChevronLeft className="h-3.5 w-3.5" /></button><button type="button" onClick={() => showHeroSlide(activeHeroSlide + 1)} className="hero-carousel-control" aria-label={hero.nextVisualLabel}><ChevronRight className="h-3.5 w-3.5" /></button></div></div><div className="hero-carousel-indicators" role="tablist" aria-label={hero.carouselSelectorLabel}>{hero.slides.map((slide, index) => <button key={slide.label} type="button" role="tab" aria-selected={activeHeroSlide === index} aria-label={`Show ${slide.label}`} onClick={() => showHeroSlide(index)} className={`hero-carousel-dot ${activeHeroSlide === index ? "is-active" : ""}`} />)}</div></div>
                 </div>
-                <div className="absolute -bottom-4 -left-4 hidden w-44 rounded-2xl border border-[#1b1c1d]/10 bg-[#f6f4ef]/90 p-4 shadow-[0_18px_45px_-30px_rgba(27,28,29,0.45)] backdrop-blur sm:block">
+                <div className="ml-0 mt-4 hidden w-44 rounded-2xl border border-[#1b1c1d]/10 bg-[#f6f4ef]/90 p-4 shadow-[0_18px_45px_-30px_rgba(27,28,29,0.45)] backdrop-blur sm:block lg:ml-4">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#767570]">{hero.basedInLabel}</p>
                   <p className="mt-1 text-sm font-semibold tracking-[-0.03em]">{content.identity.location}</p>
                   <p className="mt-2 text-xs leading-4 text-[#73716e]">{hero.basedInDescription}</p>
@@ -564,7 +564,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contact" className="bg-[#456fe8] px-5 py-20 text-white sm:px-8 sm:py-28 lg:px-12 xl:px-16">
+      </main>
+
+      <footer className="lg:ml-72">
+        <section id="contact" className="footer-contact-panel bg-[#456fe8] px-5 py-20 text-white sm:px-8 sm:py-28 lg:mx-8 lg:my-8 lg:overflow-hidden lg:rounded-[2rem] lg:border lg:border-white/15 lg:px-12 lg:shadow-[0_28px_65px_-42px_rgba(27,28,29,0.58)] xl:mx-12 xl:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-10 lg:grid-cols-[0.68fr_1.32fr] lg:gap-20">
               <div>
@@ -593,12 +596,12 @@ export default function Home() {
             </div>
           </div>
         </section>
-      </main>
 
-      <footer className="border-t border-white/15 bg-[#1b1c1d] px-5 py-7 text-[#c8c6c1] sm:px-8 lg:ml-72 lg:px-12 xl:px-16">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-3 text-[11px] sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} {content.identity.name}. {content.footer.left}</p>
-          <p className="uppercase tracking-[0.12em] text-[#8e8c87]">{content.footer.right}</p>
+        <div className="theme-footer px-5 py-7 sm:px-8 lg:px-12 xl:px-16">
+          <div className="mx-auto flex max-w-7xl flex-col justify-between gap-3 text-[11px] sm:flex-row sm:items-center">
+            <p>© {new Date().getFullYear()} {content.identity.name}. {content.footer.left}</p>
+            <p className="uppercase tracking-[0.12em] text-[#8e8c87]">{content.footer.right}</p>
+          </div>
         </div>
       </footer>
     </div>

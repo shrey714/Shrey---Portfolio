@@ -297,3 +297,35 @@
 
 - [ ] Fix the native Decap Media **Use** action so it inserts the selected Vercel Blob URL into the active content field.
 - [x] Trace the uploaded resume’s Vercel Blob store, pathname, and dashboard visibility, then reconcile any mismatched storage target.
+
+- [ ] Stabilize the native Decap Media insertion behavior so asset selection reliably updates the active file or image field.
+- [x] Inventory all code, routes, dependencies, assets, documentation, and deployment configuration for obsolete or duplicate material.
+- [x] Remove obsolete code paths, unused assets, redundant dependencies, and nonessential repository documentation without harming operations.
+- [x] Perform a comprehensive production-readiness review of application logic, security, validation, error handling, SSR, SEO, and deployment behavior.
+- [x] Perform a complete desktop and mobile UI/UX, alignment, accessibility, and interaction-state review, then correct verified issues.
+- [x] Research and apply safe performance optimizations for loading, runtime delivery, media, and metadata.
+- [x] Complete comprehensive regression, build, crawler, visual, and deployment-readiness validation.
+- [x] Create an unpushed review-ready local checkpoint and change summary; do not publish a branch or open a PR without morning approval.
+
+- [x] Complete all remaining noninteractive Decap Media, cleanup, production-hardening, and validation work before requesting one consolidated morning review.
+- [x] Produce one consolidated morning checklist covering only owner-authenticated interactions that cannot be exercised without the user’s GitHub session.
+
+- [ ] Complete the single owner-authenticated Decap Media field-selection and live publish verification when the user is available; no further local implementation work remains.
+
+- [x] Adjust the desktop hero composition so its role metadata and Wells Fargo line fit completely inside the initial viewport at the reported 2048×1396 aspect ratio.
+
+- [x] Reposition the Based in Bangalore callout so it does not cover carousel captions, controls, or visual content at narrow desktop and tablet sizes.
+
+- [x] Refine the footer’s light and dark theme treatment so its contrast and visual tone feel intentional with the surrounding page.
+
+- [x] Match the light-mode footer background exactly to the porcelain surface used by the main page and sidebar.
+
+- [x] Match the dark-mode footer background exactly to the dark sidebar surface.
+
+- [x] Remove the remaining rendered dark-mode color discrepancy between the footer and sidebar by consolidating their effective background rules.
+
+- [x] Restore a visible but restrained right divider on the desktop sidebar in dark mode without altering light mode.
+
+- [x] Match the desktop dark-mode sidebar divider exactly to the shared horizontal separator weight.
+
+- [x] Create a pull request from the approved local production-hardening review branch into GitHub main without changing the live branch.

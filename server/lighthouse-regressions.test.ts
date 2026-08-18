@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -130,14 +130,14 @@ describe("Lighthouse regressions", () => {
     expect(renderedContrast(footerForeground, heroBase)).toBeGreaterThanOrEqual(4.5);
   });
 
-  it("keeps unused data-client providers out of the public bootstrap bundle", async () => {
-    const entry = await readFile(projectFile("client/src/main.tsx"), "utf8");
+  it("keeps unused data-client providers out of the public client entry", async () => {
+    const entry = await readFile(projectFile("client/src/entry-client.tsx"), "utf8");
 
     expect(entry).not.toContain("@tanstack/react-query");
     expect(entry).not.toContain("@trpc/client");
     expect(entry).not.toContain("superjson");
     expect(entry).not.toContain("trpc.Provider");
-    expect(entry).toContain('createRoot(document.getElementById("root")!).render(<App />);');
+    expect(entry).toContain('import { hydrate } from "preact";');
   });
 
   it("keeps unused routing and UI utility modules out of the public shell", async () => {
@@ -166,5 +166,31 @@ describe("Lighthouse regressions", () => {
     expect(serverEntry).toContain('import renderToString from "preact-render-to-string";');
     expect(clientConfig).toContain('"react": "preact/compat"');
     expect(ssrConfig).toContain('"react": "preact/compat"');
+  });
+
+  it("does not retain the removed public-router and data-client chain", async () => {
+    const legacyFiles = [
+      "client/src/main.tsx",
+      "client/src/const.ts",
+      "client/src/lib/trpc.ts",
+      "client/src/lib/utils.ts",
+      "client/src/_core/hooks/useAuth.ts",
+      "client/src/pages/NotFound.tsx",
+      "client/src/components/ui/button.tsx",
+      "client/src/components/ui/card.tsx",
+      "client/src/hooks/useComposition.ts",
+      "client/src/hooks/useMobile.tsx",
+      "client/src/hooks/usePersistFn.ts",
+    ];
+    const packageJson = JSON.parse(await readFile(projectFile("package.json"), "utf8")) as {
+      dependencies?: Record<string, string>;
+      devDependencies?: Record<string, string>;
+    };
+    const packages = { ...packageJson.dependencies, ...packageJson.devDependencies };
+
+    await Promise.all(legacyFiles.map((relativePath) => expect(access(projectFile(relativePath))).rejects.toThrow()));
+    ["wouter", "@tanstack/react-query", "@trpc/client", "@trpc/react-query", "tailwind-merge", "class-variance-authority", "clsx", "@builder.io/vite-plugin-jsx-loc", "react", "react-dom"].forEach((packageName) => {
+      expect(packages).not.toHaveProperty(packageName);
+    });
   });
 });

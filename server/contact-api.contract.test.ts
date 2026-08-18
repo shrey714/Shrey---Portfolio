@@ -16,6 +16,7 @@ describe("lightweight public contact delivery", () => {
   it("keeps the public hydration entry free of the former tRPC and React Query providers", () => {
     expect(clientEntrySource).not.toContain("@trpc/");
     expect(clientEntrySource).not.toContain("@tanstack/react-query");
-    expect(clientEntrySource).toContain("hydrateRoot(");
+    expect(clientEntrySource).toContain('import { hydrate } from "preact";');
+    expect(clientEntrySource).toContain("hydrate(<App />");
   });
 });

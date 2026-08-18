@@ -4,6 +4,10 @@ import { isAuthorizedEditorToken } from "./_core/decap.js";
 import { ENV } from "./_core/env.js";
 
 const MEDIA_PREFIX = "portfolio/";
+const MEDIA_CATEGORIES = ["hero", "social", "resume", "uploads"] as const;
+const LEGACY_MEDIA_ALIASES: Record<string, string> = {
+  "portfolio/1786995073404-7608fdc2-Shrey-Patel.pdf": "1786995073404-7608fdc2-Shrey-Patel.pdf",
+};
 const MAX_UPLOAD_BYTES = 12 * 1024 * 1024;
 const ALLOWED_CONTENT_TYPES = new Set([
   "image/avif",
@@ -31,6 +35,13 @@ function safeFilename(value: string) {
 
 export function isAllowedPortfolioMediaPath(pathname: string) {
   return pathname.startsWith(MEDIA_PREFIX) && pathname.length <= 260 && !pathname.includes("..") && /^[a-zA-Z0-9._/-]+$/.test(pathname);
+}
+
+export function mediaDeliveryCandidates(pathname: string) {
+  if (!isAllowedPortfolioMediaPath(pathname)) return [];
+  const relativePath = pathname.slice(MEDIA_PREFIX.length);
+  if (relativePath.includes("/")) return [pathname];
+  return [pathname, ...MEDIA_CATEGORIES.map(category => `${MEDIA_PREFIX}${category}/${relativePath}`), ...(LEGACY_MEDIA_ALIASES[pathname] ? [LEGACY_MEDIA_ALIASES[pathname]] : [])];
 }
 
 async function requirePortfolioOwner(req: Request, res: Response) {
@@ -134,14 +145,19 @@ function mediaLibraryScript() {
 
 async function serveMedia(req: Request, res: Response) {
   const pathname = String(req.params[0] ?? "");
-  if (!isAllowedPortfolioMediaPath(pathname)) return res.status(404).send("Not found");
+  const candidates = mediaDeliveryCandidates(pathname);
+  if (!candidates.length) return res.status(404).send("Not found");
 
   try {
-    const result = await get(pathname, {
-      access: "private",
-      token: ENV.blobReadWriteToken,
-      ifNoneMatch: req.get("if-none-match") ?? undefined,
-    });
+    let result;
+    for (const candidate of candidates) {
+      result = await get(candidate, {
+        access: "private",
+        token: ENV.blobReadWriteToken,
+        ifNoneMatch: req.get("if-none-match") ?? undefined,
+      });
+      if (result) break;
+    }
     if (!result) return res.status(404).send("Not found");
     res.status(result.statusCode);
     for (const header of ["content-type", "content-length", "content-disposition", "etag", "last-modified"]) {

@@ -120,7 +120,7 @@ export function buildDecapConfig(origin: string) {
       api_root: `${origin}${DECAP_GITHUB_PROXY_PATH}`,
     },
     media_folder: "content/media",
-    public_folder: "/media",
+    public_folder: "/api/media/portfolio",
     media_library: { name: "vercel-blob" },
     publish_mode: "simple",
     editor: { preview: false },

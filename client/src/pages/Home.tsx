@@ -177,15 +177,14 @@ function SystemsEvidence() {
   );
 }
 
-function AchievementMark({ entry, index }: { entry: AchievementEntry; index: number }) {
-  const placeholderTone = ["bg-[#456fe8]/10 text-[#456fe8]", "bg-[#1b1c1d]/[0.06] text-[#343434]", "bg-[#c27f48]/10 text-[#9a6032]"][index % 3];
+function AchievementMark({ entry }: { entry: AchievementEntry }) {
   const image = entry.visualMode === "image" && entry.visualImageUrl;
 
   if (image) {
-    return <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#1b1c1d]/10 bg-white/70 p-2.5 sm:h-14 sm:w-14"><img src={entry.visualImageUrl} alt={entry.imageAlt} className="h-full w-full object-contain" /></div>;
+    return <div className="flex h-7 w-7 shrink-0 items-center justify-center sm:h-8 sm:w-8"><img src={entry.visualImageUrl} alt={entry.imageAlt} className="h-full w-full object-contain" /></div>;
   }
 
-  return <div role="img" aria-label={entry.imageAlt} title={entry.visualLabel} className={`relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#1b1c1d]/10 sm:h-14 sm:w-14 ${placeholderTone}`}><div className="absolute inset-0 opacity-45 dot-field" /><Award className="relative h-5 w-5" aria-hidden="true" /></div>;
+  return <div role="img" aria-label={entry.imageAlt} title={entry.visualLabel} className="flex h-7 w-7 shrink-0 items-center justify-center text-[#456fe8] sm:h-8 sm:w-8"><Award className="h-4 w-4" aria-hidden="true" /></div>;
 }
 
 export default function Home() {
@@ -511,15 +510,14 @@ export default function Home() {
               <div><p className="eyebrow">{content.achievements.eyebrow}</p><h2 className="mt-4 font-serif text-5xl leading-[0.94] tracking-[-0.06em] sm:text-6xl">{content.achievements.heading}</h2></div>
               <p className="max-w-2xl self-end text-lg leading-8 tracking-[-0.025em] text-[#575653]">{content.achievements.introduction}</p>
             </div>
-            <div className="mt-10 border-t border-[#1b1c1d]/10">
+            <div className="mt-5">
               {content.achievements.entries.map((entry, index) => (
-                <article key={`${entry.title}-${entry.organization}`} className="group flex items-center gap-4 border-b border-[#1b1c1d]/10 py-4 transition-colors duration-200 hover:bg-white/35 sm:gap-5 sm:px-2 sm:py-5">
-                  <AchievementMark entry={entry} index={index} />
+                <article key={`${entry.title}-${entry.organization}`} className="flex items-center gap-3 border-b border-[#1b1c1d]/10 py-3.5 sm:gap-4 sm:py-4">
+                  <AchievementMark entry={entry} />
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-base font-semibold tracking-[-0.035em] text-[#292a2a] sm:text-lg">{entry.title}</h3>
-                    <p className="mt-1 truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-[#777571] sm:text-[11px]">{entry.organization} <span className="px-1.5 text-[#aaa8a3]">·</span> {entry.date}</p>
+                    <h3 className="text-sm font-semibold tracking-[-0.03em] text-[#292a2a] sm:text-base">{entry.title}</h3>
+                    <p className="mt-0.5 truncate text-[9px] font-semibold uppercase tracking-[0.11em] text-[#777571] sm:text-[10px]">{entry.organization} <span className="px-1 text-[#aaa8a3]">·</span> {entry.date}</p>
                   </div>
-                  <span className="hidden text-[10px] font-semibold tabular-nums text-[#aaa8a3] sm:block">0{index + 1}</span>
                 </article>
               ))}
             </div>

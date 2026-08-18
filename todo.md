@@ -357,3 +357,5 @@
 - [x] Add an editable Achievements and Participation section with per-entry visual placeholders and an official GDSC mark where suitable.
 
 - [x] Refine Achievements and Participation into a compact list with a small logo or placeholder at left and achievement information at right.
+
+- [x] Restyle achievements to use the Skills section’s lighter separator rhythm, smaller transparent logos, and minimal fallback icons.

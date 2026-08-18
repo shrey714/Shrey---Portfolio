@@ -71,6 +71,9 @@ describe("Lighthouse regressions", () => {
     ]);
 
     expect(styles).toContain("color: #5f5d59;");
+    expect(styles).toContain(".theme-footer p:last-child {\n  color: #565450;");
+    expect(styles).toContain("background: rgba(27, 28, 29, 0.72);");
+    expect(styles).toContain(".hero-detail .hero-visual-topline { color: #565450; }");
     expect(styles).toContain("--primary: #3455b8;");
     expect(home).toContain('text-[#5f5d59]');
     expect(home).toContain('text-[#3455b8]');

@@ -649,7 +649,7 @@ export default function Home() {
         <div className="theme-footer px-5 py-7 sm:px-8 lg:px-12 xl:px-16">
           <div className="mx-auto flex max-w-7xl flex-col justify-between gap-3 text-[11px] sm:flex-row sm:items-center">
             <p>© {new Date().getFullYear()} {content.identity.name}. {content.footer.left}</p>
-            <p className="uppercase tracking-[0.12em] text-[#5f5d59]">{content.footer.right}</p>
+            <p className="uppercase tracking-[0.12em] text-[#565450]">{content.footer.right}</p>
           </div>
         </div>
       </footer>

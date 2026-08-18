@@ -26,7 +26,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { portfolioContent as content } from "@/content/portfolioContent";
 import { getAppearanceToggleState } from "@/lib/appearanceToggle";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
-import { getSkillVisual, getTechnologyMark, splitSkillTools } from "@/lib/skillPresentation";
+import { getSkillVisual } from "@/lib/skillPresentation";
 import { trpc } from "@/lib/trpc";
 
 const hero = content.hero;
@@ -472,7 +472,6 @@ export default function Home() {
             <div className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
               {content.practice.skills.map((skill, index) => {
                 const visual = getSkillVisual(skill.name);
-                const technologies = splitSkillTools(skill.tools);
                 const Icon = visual.Icon;
 
                 return (
@@ -484,9 +483,6 @@ export default function Home() {
                         <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#9b9994]">0{index + 1}</span>
                       </div>
                       <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#686662]">{skill.name}</p>
-                      <div className="mt-4 flex flex-wrap gap-1.5" aria-label={`${skill.name}: ${skill.tools}`}>
-                        {technologies.map((technology) => <span key={technology} title={technology} className="inline-flex h-8 min-w-8 items-center justify-center rounded-lg border border-[#1b1c1d]/10 bg-white/70 px-1.5 text-[9px] font-bold tracking-[-0.03em] text-[#494744] transition-colors duration-200 group-hover:border-[#456fe8]/25 group-hover:bg-[#456fe8]/[0.06]" aria-label={technology}>{getTechnologyMark(technology)}</span>)}
-                      </div>
                       <p className="mt-auto pt-5 text-xs leading-5 text-[#777571]">{skill.tools}</p>
                     </div>
                   </article>

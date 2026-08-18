@@ -349,3 +349,5 @@
 - [x] Replace the editable Skills groups with the supplied Android, backend, frontend, programming-language, and other-stack categories.
 
 - [x] Redesign the Skills component with technology-specific icons, stronger visual hierarchy, and minimal accessible motion.
+
+- [x] Remove the small two-letter technology token boxes from Skills cards while retaining the approved icon-led design.

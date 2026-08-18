@@ -347,3 +347,5 @@
 - [x] Rebalance project card text and visual proportions and make the Layout 3 project visual more compact.
 
 - [x] Replace the editable Skills groups with the supplied Android, backend, frontend, programming-language, and other-stack categories.
+
+- [x] Redesign the Skills component with technology-specific icons, stronger visual hierarchy, and minimal accessible motion.

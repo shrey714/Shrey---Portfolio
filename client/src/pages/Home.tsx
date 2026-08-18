@@ -26,6 +26,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { portfolioContent as content } from "@/content/portfolioContent";
 import { getAppearanceToggleState } from "@/lib/appearanceToggle";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
+import { getSkillVisual, getTechnologyMark, splitSkillTools } from "@/lib/skillPresentation";
 import { trpc } from "@/lib/trpc";
 
 const hero = content.hero;
@@ -468,13 +469,29 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="mt-16 grid gap-px overflow-hidden rounded-[1.25rem] border border-[#1b1c1d]/10 bg-[#1b1c1d]/10 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
-              {content.practice.skills.map((skill) => (
-                <div key={skill.name} className="min-h-28 bg-[#f6f4ef] p-5 transition-colors duration-200 hover:bg-white">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#777571]">{skill.name}</p>
-                  <p className="mt-4 text-sm font-medium tracking-[-0.02em] text-[#343434]">{skill.tools}</p>
-                </div>
-              ))}
+            <div className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
+              {content.practice.skills.map((skill, index) => {
+                const visual = getSkillVisual(skill.name);
+                const technologies = splitSkillTools(skill.tools);
+                const Icon = visual.Icon;
+
+                return (
+                  <article key={skill.name} style={{ transitionDelay: `${index * 35}ms` }} className="group relative min-h-52 overflow-hidden rounded-[1.2rem] border border-[#1b1c1d]/10 bg-[#f6f4ef] p-5 shadow-[0_16px_35px_-32px_rgba(27,28,29,0.65)] transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[0_22px_42px_-28px_rgba(27,28,29,0.35)] motion-reduce:transform-none motion-reduce:transition-none">
+                    <div className={`pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full border ${visual.ringColor} opacity-45 transition-transform duration-500 group-hover:scale-125 motion-reduce:transform-none`} />
+                    <div className="relative flex h-full flex-col">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${visual.iconSurface} ${visual.iconColor} transition-transform duration-300 group-hover:rotate-3 group-hover:scale-105 motion-reduce:transform-none`}><Icon className="h-5 w-5" aria-hidden="true" /></div>
+                        <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#9b9994]">0{index + 1}</span>
+                      </div>
+                      <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#686662]">{skill.name}</p>
+                      <div className="mt-4 flex flex-wrap gap-1.5" aria-label={`${skill.name}: ${skill.tools}`}>
+                        {technologies.map((technology) => <span key={technology} title={technology} className="inline-flex h-8 min-w-8 items-center justify-center rounded-lg border border-[#1b1c1d]/10 bg-white/70 px-1.5 text-[9px] font-bold tracking-[-0.03em] text-[#494744] transition-colors duration-200 group-hover:border-[#456fe8]/25 group-hover:bg-[#456fe8]/[0.06]" aria-label={technology}>{getTechnologyMark(technology)}</span>)}
+                      </div>
+                      <p className="mt-auto pt-5 text-xs leading-5 text-[#777571]">{skill.tools}</p>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>

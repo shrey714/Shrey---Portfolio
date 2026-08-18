@@ -371,3 +371,5 @@
 - [x] Remove sidebar hover color changes and restore neutral inactive sidebar colors in dark mode while retaining the hover shift.
 
 - [x] Apply and validate low-risk Lighthouse-guided performance improvements without changing current portfolio functionality or design.
+
+- [x] Replace oversized hero and achievement image sources with optimized modern variants while preserving current display and Decap editability.

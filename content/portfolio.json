@@ -38,7 +38,7 @@
         "imageAlt": "Google Developer Student Clubs program mark",
         "date": "2022 — 2023",
         "organization": "Google Developer Student Club",
-        "visualImageUrl": "/api/media/portfolio/1787045241017-de684009-gdsc-program-mark-alpha_8739607f.png",
+        "visualImageUrl": "/api/media/portfolio/uploads/gdsc-program-mark-160.webp",
         "visualLabel": "Google Developer Student Clubs",
         "title": "GDSC Lead",
         "description": "Led the Google Developer Student Club for the 2022–23 academic year, helping create a student community around developer learning and collaboration."
@@ -49,7 +49,7 @@
         "imageAlt": "Editorial placeholder for INAE–SERB Youth Conclave",
         "date": "2022",
         "organization": "IIT Jodhpur",
-        "visualImageUrl": "/api/media/portfolio/1787045407894-b8106a28-67_human_logo.jpg",
+        "visualImageUrl": "/api/media/portfolio/uploads/inae-serb-youth-conclave-160.webp",
         "visualLabel": "INAE · SERB",
         "title": "INAE–SERB Youth Conclave",
         "description": "Participated in the INAE–SERB Youth Conclave conducted at IIT Jodhpur."
@@ -60,7 +60,7 @@
         "imageAlt": "Editorial placeholder for DotSlash 5.0",
         "date": "Participation",
         "organization": "SVNIT Surat",
-        "visualImageUrl": "/api/media/portfolio/1787045600305-11d4b407-new_logo.png",
+        "visualImageUrl": "/api/media/portfolio/uploads/dotslash-5-160.webp",
         "visualLabel": "DotSlash 5.0",
         "title": "DotSlash 5.0",
         "description": "Participated in DotSlash 5.0 conducted at SVNIT Surat."
@@ -71,7 +71,7 @@
         "imageAlt": "Editorial placeholder for Learn to Earn Cloud Challenge",
         "date": "2021",
         "organization": "Google Cloud",
-        "visualImageUrl": "/api/media/portfolio/1787045662716-8170e0a8-google-cloud.png",
+        "visualImageUrl": "/api/media/portfolio/uploads/learn-to-earn-cloud-challenge-160.webp",
         "visualLabel": "Cloud Challenge",
         "title": "Learn to Earn Cloud Challenge",
         "description": "Participated in the Learn to Earn Cloud Challenge 2021."
@@ -417,7 +417,7 @@
       "User research"
     ],
     "contactCta": "Start a conversation",
-    "imageUrl": "/api/media/portfolio/hero/shrey-hero-editorial.webp",
+    "imageUrl": "/api/media/portfolio/hero/shrey-hero-editorial-1280.webp",
     "carouselSelectorLabel": "Hero visual selector",
     "introduction": "I’m Shrey, a product-minded software engineer and UX researcher who enjoys turning complex problems into simple, polished experiences—from the first interface to the systems underneath.",
     "roleSnapshot": "Software Engineer @ Wells Fargo",

@@ -319,3 +319,5 @@
 - [x] Refine the footer’s light and dark theme treatment so its contrast and visual tone feel intentional with the surrounding page.
 
 - [x] Match the light-mode footer background exactly to the porcelain surface used by the main page and sidebar.
+
+- [x] Match the dark-mode footer background exactly to the dark sidebar surface.

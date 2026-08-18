@@ -361,3 +361,5 @@
 - [x] Restyle achievements to use the Skills section’s lighter separator rhythm, smaller transparent logos, and minimal fallback icons.
 
 - [x] Fix uploaded achievement images not rendering when entries remain set to the placeholder visual mode in Decap CMS.
+
+- [x] Refine the desktop sidebar active link with a cobalt title and a single animated rounded selection indicator.

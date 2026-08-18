@@ -290,6 +290,10 @@
   background: radial-gradient(circle at 72% 28%, rgba(120, 148, 255, 0.16), transparent 22rem), radial-gradient(circle at 8% 92%, rgba(255, 255, 255, 0.035), transparent 18rem);
 }
 
+.sidebar-nav-active-indicator {
+  transform: translateY(calc(var(--active-nav-index, 0) * 2.75rem));
+}
+
 /* Philosophy entries are a single-divider editorial list, never card surfaces. */
 .philosophy-entry {
   border-bottom: 1px solid rgba(27, 28, 29, 0.1);

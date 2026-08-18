@@ -3,7 +3,7 @@
  * Warm porcelain, ink typography, Cobalt Mist accents, off-center content rail,
  * and restrained motion communicate a product-minded engineering practice.
  */
-import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, type FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   Award,
   ArrowDown,
@@ -29,6 +29,7 @@ import { getAppearanceToggleState } from "@/lib/appearanceToggle";
 import { getAchievementVisualKind } from "@/lib/achievementPresentation";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
 import { getSkillVisual } from "@/lib/skillPresentation";
+import { getActiveNavigationIndex } from "@/lib/sidebarNavigation";
 import { trpc } from "@/lib/trpc";
 
 const hero = content.hero;
@@ -211,6 +212,7 @@ export default function Home() {
     },
   });
   const observedIds = useMemo(() => navItems.map((item) => item.id), []);
+  const activeNavIndex = getActiveNavigationIndex(observedIds, active);
   const openMenu = () => {
     if (menuCloseTimer.current) window.clearTimeout(menuCloseTimer.current);
     setMenuMounted(true);
@@ -332,13 +334,14 @@ export default function Home() {
         <span aria-hidden="true" className="absolute bottom-0 left-0 top-0 w-1 bg-[#456fe8]" />
         <a href="#top" aria-label={content.ui.homeAriaLabel}><p className="text-sm font-semibold tracking-[-0.04em]">{content.identity.name}</p><p className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.15em] text-[#676766]">{content.identity.pageDescriptor}</p></a>
 
-        <nav className="mt-20 space-y-1" aria-label={content.ui.sectionNavigationLabel}>
+        <nav className="relative mt-20 flex flex-col gap-1" aria-label={content.ui.sectionNavigationLabel} style={{ "--active-nav-index": activeNavIndex } as CSSProperties}>
+          <span aria-hidden="true" className="sidebar-nav-active-indicator pointer-events-none absolute inset-x-0 top-0 h-10 rounded-lg bg-white/75 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none" />
           {navItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
-              className={`group flex items-center gap-3 rounded-lg px-2 py-2.5 text-[13px] transition-all duration-200 ${
-                active === item.id ? "bg-white/75 text-[#1b1c1d]" : "text-[#777673] hover:bg-white/55 hover:text-[#1b1c1d]"
+              className={`group relative z-10 flex h-10 items-center gap-3 rounded-lg px-2 text-[13px] transition-colors duration-200 ${
+                active === item.id ? "text-[#456fe8]" : "text-[#777673] hover:text-[#1b1c1d]"
               }`}
             >
               <span className={`text-[10px] tabular-nums ${active === item.id ? "text-[#456fe8]" : "text-[#aaa8a3]"}`}>{item.number}</span>

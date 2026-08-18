@@ -448,7 +448,7 @@
 
 .dark .theme-footer {
   border-top-color: rgba(255, 255, 255, 0.12);
-  background: var(--sidebar);
+  background: var(--background);
   color: #c8c6c1;
 }
 

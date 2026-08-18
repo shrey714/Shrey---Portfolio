@@ -153,7 +153,6 @@ function vitePluginManusDebugCollector(): Plugin {
 const plugins = [
   react(),
   tailwindcss(),
-  jsxLocPlugin(),
   ...(process.env.NODE_ENV === "production" ? [] : [vitePluginManusRuntime(), vitePluginManusDebugCollector()]),
 ];
 
@@ -161,6 +160,12 @@ export default defineConfig({
   plugins,
   resolve: {
     alias: {
+      "react": "preact/compat",
+      "react-dom": "preact/compat",
+      "react-dom/client": "preact/compat",
+      "react-dom/server": "preact-render-to-string",
+      "react/jsx-runtime": "preact/jsx-runtime",
+      "react/jsx-dev-runtime": "preact/jsx-dev-runtime",
       "@": path.resolve(import.meta.dirname, "client", "src"),
       "@shared": path.resolve(import.meta.dirname, "shared"),
       "@assets": path.resolve(import.meta.dirname, "attached_assets"),
@@ -172,6 +177,9 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+  },
+  ssr: {
+    noExternal: ["lucide-react"],
   },
   server: {
     host: true,

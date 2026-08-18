@@ -153,4 +153,18 @@ describe("Lighthouse regressions", () => {
     expect(ssrEntry).not.toContain("wouter");
     expect(boundary).not.toContain("@/lib/utils");
   });
+
+  it("uses the lightweight compatibility runtime for client hydration and SSR", async () => {
+    const [clientEntry, serverEntry, clientConfig, ssrConfig] = await Promise.all([
+      readFile(projectFile("client/src/entry-client.tsx"), "utf8"),
+      readFile(projectFile("client/src/entry-server.tsx"), "utf8"),
+      readFile(projectFile("vite.config.ts"), "utf8"),
+      readFile(projectFile("vite.config.ssr.ts"), "utf8"),
+    ]);
+
+    expect(clientEntry).toContain('import { hydrate } from "preact";');
+    expect(serverEntry).toContain('import renderToString from "preact-render-to-string";');
+    expect(clientConfig).toContain('"react": "preact/compat"');
+    expect(ssrConfig).toContain('"react": "preact/compat"');
+  });
 });

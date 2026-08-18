@@ -1,8 +1,5 @@
-import { hydrateRoot } from "react-dom/client";
+import { hydrate } from "preact";
 import App from "./App";
 import "./index.css";
 
-hydrateRoot(
-  document.getElementById("root")!,
-  <App />
-);
+hydrate(<App />, document.getElementById("root")!);

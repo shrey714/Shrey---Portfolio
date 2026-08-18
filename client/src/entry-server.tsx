@@ -1,4 +1,4 @@
-import { renderToString } from "react-dom/server";
+import renderToString from "preact-render-to-string";
 import App from "./App";
 import { prefetchForPath, type HeadMeta } from "./ssr/prefetch";
 

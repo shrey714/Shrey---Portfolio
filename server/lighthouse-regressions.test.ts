@@ -98,6 +98,20 @@ describe("Lighthouse regressions", () => {
     expect(styles).toContain(".hero-carousel-dot::before");
   });
 
+  it("keeps the scroll-to-top control icon-only and completely circular", async () => {
+    const [home, styles] = await Promise.all([
+      readFile(projectFile("client/src/pages/Home.tsx"), "utf8"),
+      readFile(projectFile("client/src/index.css"), "utf8"),
+    ]);
+
+    expect(home).toContain('<ArrowUp className="h-4 w-4" aria-hidden="true" />');
+    expect(home).not.toContain('<span className="hidden sm:inline">Top</span>');
+    expect(styles).toContain("width: 2.8rem;");
+    expect(styles).toContain("height: 2.8rem;");
+    expect(styles).toContain("border-radius: 50%;");
+    expect(styles).toContain("padding: 0;");
+  });
+
   it("preserves the cobalt hero accent against broad dark-surface text overrides", async () => {
     const [home, styles] = await Promise.all([
       readFile(projectFile("client/src/pages/Home.tsx"), "utf8"),

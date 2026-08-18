@@ -722,7 +722,6 @@ export default function Home() {
         title={content.ui.scrollToTopLabel}
       >
         <ArrowUp className="h-4 w-4" aria-hidden="true" />
-        <span className="hidden sm:inline">Top</span>
       </button>
     </div>
   );

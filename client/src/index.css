@@ -814,14 +814,14 @@
   bottom: 1rem;
   z-index: 35;
   display: inline-flex;
+  width: 2.8rem;
   height: 2.8rem;
   align-items: center;
   justify-content: center;
-  gap: 0.45rem;
   border: 1px solid rgba(27, 28, 29, 0.14);
-  border-radius: 999px;
+  border-radius: 50%;
   background: rgba(246, 244, 239, 0.94);
-  padding: 0 0.9rem;
+  padding: 0;
   color: #3455b8;
   box-shadow: 0 14px 32px -18px rgba(27, 28, 29, 0.5);
   backdrop-filter: blur(12px);

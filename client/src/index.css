@@ -10,7 +10,7 @@
   font-style: normal;
   font-weight: 400 800;
   font-display: swap;
-  src: url("/manus-storage/manrope-latin-variable_8e611b5b.woff2") format("woff2");
+  src: url("/fonts/manrope-latin-variable.woff2") format("woff2");
 }
 
 @font-face {
@@ -18,7 +18,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("/manus-storage/dm-serif-display-regular-latin_cd147219.woff2") format("woff2");
+  src: url("/fonts/dm-serif-display-regular-latin.woff2") format("woff2");
 }
 
 @font-face {
@@ -26,7 +26,7 @@
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url("/manus-storage/dm-serif-display-italic-latin_c231cf40.woff2") format("woff2");
+  src: url("/fonts/dm-serif-display-italic-latin.woff2") format("woff2");
 }
 
 @custom-variant dark (&:is(.dark *));

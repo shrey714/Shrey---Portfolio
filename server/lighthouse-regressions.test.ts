@@ -63,15 +63,15 @@ describe("Lighthouse regressions", () => {
       readFile(projectFile("client/src/index.css"), "utf8"),
     ]);
 
-    expect(document).toContain('rel="preload" as="font" href="/manus-storage/manrope-latin-variable_8e611b5b.woff2"');
-    expect(document).toContain('rel="preload" as="font" href="/manus-storage/dm-serif-display-regular-latin_cd147219.woff2"');
+    expect(document).toContain('rel="preload" as="font" href="/fonts/manrope-latin-variable.woff2"');
+    expect(document).toContain('rel="preload" as="font" href="/fonts/dm-serif-display-regular-latin.woff2"');
     expect(document).not.toContain("fonts.googleapis.com");
     expect(document).not.toContain("fonts.gstatic.com");
     expect(styles).toContain('font-family: "Manrope";');
     expect(styles).toContain("font-weight: 400 800;");
-    expect(styles).toContain('url("/manus-storage/manrope-latin-variable_8e611b5b.woff2")');
-    expect(styles).toContain('url("/manus-storage/dm-serif-display-regular-latin_cd147219.woff2")');
-    expect(styles).toContain('url("/manus-storage/dm-serif-display-italic-latin_c231cf40.woff2")');
+    expect(styles).toContain('url("/fonts/manrope-latin-variable.woff2")');
+    expect(styles).toContain('url("/fonts/dm-serif-display-regular-latin.woff2")');
+    expect(styles).toContain('url("/fonts/dm-serif-display-italic-latin.woff2")');
   });
 
   it("prioritizes the hero while deferring below-fold visual media", async () => {

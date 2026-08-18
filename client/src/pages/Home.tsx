@@ -340,12 +340,12 @@ export default function Home() {
             <a
               key={item.id}
               href={`#${item.id}`}
-              className={`group relative z-10 flex h-10 items-center gap-3 rounded-lg px-2 text-[13px] transition-colors duration-200 ${
-                active === item.id ? "text-[#456fe8]" : "text-[#777673] hover:text-[#1b1c1d]"
+              className={`group relative z-10 flex h-10 items-center gap-3 rounded-lg px-2 text-[13px] transition-[color,transform] duration-200 ${
+                active === item.id ? "text-[#456fe8]" : "sidebar-nav-inactive text-[#777673] hover:text-[#456fe8]"
               }`}
             >
-              <span className={`text-[10px] tabular-nums ${active === item.id ? "text-[#456fe8]" : "text-[#aaa8a3]"}`}>{item.number}</span>
-              <span className={`font-medium tracking-[-0.01em] ${active === item.id ? "text-[#456fe8]" : ""}`}>{item.label}</span>
+              <span className={`text-[10px] tabular-nums ${active === item.id ? "text-[#456fe8]" : "text-[#aaa8a3] group-hover:text-[#456fe8]"}`}>{item.number}</span>
+              <span className={`font-medium tracking-[-0.01em] ${active === item.id ? "text-[#456fe8]" : "group-hover:text-[#456fe8]"}`}>{item.label}</span>
             </a>
           ))}
         </nav>

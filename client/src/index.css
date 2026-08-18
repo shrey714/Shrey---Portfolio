@@ -294,6 +294,22 @@
   transform: translateY(calc(var(--active-nav-index, 0) * 2.75rem));
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .sidebar-nav-inactive:hover {
+    transform: translateX(0.125rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-nav-inactive {
+    transition-property: color !important;
+  }
+
+  .sidebar-nav-inactive:hover {
+    transform: none;
+  }
+}
+
 /* Philosophy entries are a single-divider editorial list, never card surfaces. */
 .philosophy-entry {
   border-bottom: 1px solid rgba(27, 28, 29, 0.1);

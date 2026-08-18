@@ -436,6 +436,26 @@
 
 .hero-carousel-dot.is-active { width: 1.25rem; background: #456fe8; }
 
+.theme-footer {
+  border-top: 1px solid rgba(27, 28, 29, 0.1);
+  background: #e9e6df;
+  color: #555451;
+}
+
+.theme-footer p:last-child {
+  color: #777570;
+}
+
+.dark .theme-footer {
+  border-top-color: rgba(255, 255, 255, 0.12);
+  background: #17181a;
+  color: #c8c6c1;
+}
+
+.dark .theme-footer p:last-child {
+  color: #9e9c97;
+}
+
 .hero-carousel-footer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

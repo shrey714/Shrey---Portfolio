@@ -315,3 +315,5 @@
 - [x] Adjust the desktop hero composition so its role metadata and Wells Fargo line fit completely inside the initial viewport at the reported 2048×1396 aspect ratio.
 
 - [x] Reposition the Based in Bangalore callout so it does not cover carousel captions, controls, or visual content at narrow desktop and tablet sizes.
+
+- [x] Refine the footer’s light and dark theme treatment so its contrast and visual tone feel intentional with the surrounding page.

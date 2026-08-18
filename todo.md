@@ -306,3 +306,6 @@
 - [x] Research and apply safe performance optimizations for loading, runtime delivery, media, and metadata.
 - [x] Complete comprehensive regression, build, crawler, visual, and deployment-readiness validation.
 - [x] Create an unpushed review-ready local checkpoint and change summary; do not publish a branch or open a PR without morning approval.
+
+- [x] Complete all remaining noninteractive Decap Media, cleanup, production-hardening, and validation work before requesting one consolidated morning review.
+- [x] Produce one consolidated morning checklist covering only owner-authenticated interactions that cannot be exercised without the user’s GitHub session.

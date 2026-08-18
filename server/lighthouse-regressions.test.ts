@@ -4,16 +4,41 @@ import { describe, expect, it } from "vitest";
 
 const projectFile = (relativePath: string) => resolve(process.cwd(), relativePath);
 
-function relativeLuminance(hex: string) {
-  const channels = hex.slice(1).match(/.{2}/g)?.map((value) => Number.parseInt(value, 16) / 255);
-  if (!channels || channels.length !== 3) throw new Error(`Expected a six-digit hex color, received ${hex}`);
+type Rgb = { red: number; green: number; blue: number };
 
-  const [red, green, blue] = channels.map((channel) => (channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4));
-  return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+function hexToRgb(hex: string): Rgb {
+  const channels = hex.slice(1).match(/.{2}/g)?.map((value) => Number.parseInt(value, 16));
+  if (!channels || channels.length !== 3) throw new Error(`Expected a six-digit hex color, received ${hex}`);
+  return { red: channels[0], green: channels[1], blue: channels[2] };
+}
+
+function composite(foreground: Rgb, background: Rgb, alpha: number): Rgb {
+  return {
+    red: foreground.red * alpha + background.red * (1 - alpha),
+    green: foreground.green * alpha + background.green * (1 - alpha),
+    blue: foreground.blue * alpha + background.blue * (1 - alpha),
+  };
+}
+
+function relativeLuminanceFromRgb({ red, green, blue }: Rgb) {
+  const [linearRed, linearGreen, linearBlue] = [red, green, blue].map((channel) => {
+    const value = channel / 255;
+    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * linearRed + 0.7152 * linearGreen + 0.0722 * linearBlue;
+}
+
+function relativeLuminance(hex: string) {
+  return relativeLuminanceFromRgb(hexToRgb(hex));
 }
 
 function contrastRatio(foreground: string, background: string) {
   const [lighter, darker] = [relativeLuminance(foreground), relativeLuminance(background)].sort((first, second) => second - first);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function renderedContrast(foreground: Rgb, background: Rgb) {
+  const [lighter, darker] = [relativeLuminanceFromRgb(foreground), relativeLuminanceFromRgb(background)].sort((first, second) => second - first);
   return (lighter + 0.05) / (darker + 0.05);
 }
 
@@ -88,5 +113,20 @@ describe("Lighthouse regressions", () => {
     expect(contrastRatio("#5f5d59", "#eeece6")).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio("#3455b8", "#f6f4ef")).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio("#3455b8", "#eeece6")).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it("preserves AA contrast after footer and hero overlay color compositing", async () => {
+    const styles = await readFile(projectFile("client/src/index.css"), "utf8");
+    const porcelain = hexToRgb("#f6f4ef");
+    const footerForeground = hexToRgb("#565450");
+    const heroBase = hexToRgb("#f1efe9");
+    const annotationBackground = composite(hexToRgb("#1b1c1d"), heroBase, 0.72);
+
+    expect(styles).toContain(".theme-footer p:last-child {\n  color: #565450;");
+    expect(styles).toContain("background: rgba(27, 28, 29, 0.72);");
+    expect(styles).toContain(".hero-detail .hero-visual-topline { color: #565450; }");
+    expect(renderedContrast(footerForeground, porcelain)).toBeGreaterThanOrEqual(4.5);
+    expect(renderedContrast(hexToRgb("#ffffff"), annotationBackground)).toBeGreaterThanOrEqual(4.5);
+    expect(renderedContrast(footerForeground, heroBase)).toBeGreaterThanOrEqual(4.5);
   });
 });

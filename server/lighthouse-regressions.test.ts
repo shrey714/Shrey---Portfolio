@@ -129,4 +129,28 @@ describe("Lighthouse regressions", () => {
     expect(renderedContrast(hexToRgb("#ffffff"), annotationBackground)).toBeGreaterThanOrEqual(4.5);
     expect(renderedContrast(footerForeground, heroBase)).toBeGreaterThanOrEqual(4.5);
   });
+
+  it("keeps unused data-client providers out of the public bootstrap bundle", async () => {
+    const entry = await readFile(projectFile("client/src/main.tsx"), "utf8");
+
+    expect(entry).not.toContain("@tanstack/react-query");
+    expect(entry).not.toContain("@trpc/client");
+    expect(entry).not.toContain("superjson");
+    expect(entry).not.toContain("trpc.Provider");
+    expect(entry).toContain('createRoot(document.getElementById("root")!).render(<App />);');
+  });
+
+  it("keeps unused routing and UI utility modules out of the public shell", async () => {
+    const [app, ssrEntry, boundary] = await Promise.all([
+      readFile(projectFile("client/src/App.tsx"), "utf8"),
+      readFile(projectFile("client/src/entry-server.tsx"), "utf8"),
+      readFile(projectFile("client/src/components/ErrorBoundary.tsx"), "utf8"),
+    ]);
+
+    expect(app).not.toContain("wouter");
+    expect(app).not.toContain("NotFound");
+    expect(app).toContain("<Home />");
+    expect(ssrEntry).not.toContain("wouter");
+    expect(boundary).not.toContain("@/lib/utils");
+  });
 });

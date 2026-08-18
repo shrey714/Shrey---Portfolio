@@ -27,6 +27,67 @@
     "introduction": "Have an interesting idea, a technical problem to explore, or simply want to compare notes?",
     "email": "pshrey0000@gmail.com"
   },
+  "achievements": {
+    "eyebrow": "Achievements and participation",
+    "heading": "Learning in public.",
+    "introduction": "Community leadership, technical gatherings, and challenges that expanded how I build, collaborate, and keep learning.",
+    "entries": [
+      {
+        "visualMode": "image",
+        "meta": "01 — Community leadership",
+        "imageAlt": "Google Developer Student Clubs program mark",
+        "date": "2022 — 2023",
+        "organization": "Google Developer Student Club",
+        "visualImageUrl": "/api/media/portfolio/1787045241017-de684009-gdsc-program-mark-alpha_8739607f.png",
+        "visualLabel": "Google Developer Student Clubs",
+        "title": "GDSC Lead",
+        "description": "Led the Google Developer Student Club for the 2022–23 academic year, helping create a student community around developer learning and collaboration."
+      },
+      {
+        "visualMode": "placeholder",
+        "meta": "02 — Youth conclave",
+        "imageAlt": "Editorial placeholder for INAE–SERB Youth Conclave",
+        "date": "2022",
+        "organization": "IIT Jodhpur",
+        "visualImageUrl": "/api/media/portfolio/1787045407894-b8106a28-67_human_logo.jpg",
+        "visualLabel": "INAE · SERB",
+        "title": "INAE–SERB Youth Conclave",
+        "description": "Participated in the INAE–SERB Youth Conclave conducted at IIT Jodhpur."
+      },
+      {
+        "visualMode": "placeholder",
+        "meta": "03 — Hackathon",
+        "imageAlt": "Editorial placeholder for DotSlash 5.0",
+        "date": "Participation",
+        "organization": "SVNIT Surat",
+        "visualImageUrl": "/api/media/portfolio/1787045600305-11d4b407-new_logo.png",
+        "visualLabel": "DotSlash 5.0",
+        "title": "DotSlash 5.0",
+        "description": "Participated in DotSlash 5.0 conducted at SVNIT Surat."
+      },
+      {
+        "visualMode": "placeholder",
+        "meta": "04 — Cloud challenge",
+        "imageAlt": "Editorial placeholder for Learn to Earn Cloud Challenge",
+        "date": "2021",
+        "organization": "Google Cloud",
+        "visualImageUrl": "/api/media/portfolio/1787045662716-8170e0a8-google-cloud.png",
+        "visualLabel": "Cloud Challenge",
+        "title": "Learn to Earn Cloud Challenge",
+        "description": "Participated in the Learn to Earn Cloud Challenge 2021."
+      },
+      {
+        "meta": "05 — Codathon",
+        "title": "ISTE SC MANIT’s Codathon",
+        "organization": "ISTE Student Chapter, MANIT",
+        "date": "Participation",
+        "description": "Participated in ISTE SC MANIT’s Codathon.",
+        "visualMode": "placeholder",
+        "visualLabel": "Codathon",
+        "imageAlt": "Editorial placeholder for ISTE SC MANIT’s Codathon"
+      }
+    ]
+  },
   "experience": {
     "eyebrow": "Experience",
     "introduction": "A factual, understated snapshot of the work I do and the systems I want to keep learning from.",
@@ -110,8 +171,11 @@
     "introduction": "A small selection of systems where interface thinking and engineering have to work together.",
     "projects": [
       {
+        "liveUrl": "https://dashboard.dardibook.in/",
         "visualMeta": "DardiBook / workflow",
+        "repositoryUrl": "https://github.com/shrey714/dardibook-dashboard",
         "meta": "01 — Product system",
+        "visualLayout": "layout-1",
         "technologies": [
           "Next.js",
           "Firebase",
@@ -122,9 +186,6 @@
         "ariaLabel": "Open the DardiBook dashboard",
         "date": "2025",
         "cta": "Open live dashboard",
-        "repositoryUrl": "https://github.com/shrey714/dardibook-dashboard",
-        "liveUrl": "https://dashboard.dardibook.in/",
-        "visualLayout": "layout-1",
         "visualTitle": "Operational care, in view",
         "visualRows": [
           "Patient flow",
@@ -136,7 +197,9 @@
       },
       {
         "visualMeta": "Shopkeeper AI / operations",
+        "repositoryUrl": "https://github.com/shrey714/Voice-AI",
         "meta": "02 — Commerce system",
+        "visualLayout": "layout-2",
         "technologies": [
           "Expo",
           "React",
@@ -147,8 +210,6 @@
         "ariaLabel": "Open the Shopkeeper AI source repository",
         "date": "In progress",
         "cta": "Open project",
-        "repositoryUrl": "https://github.com/shrey714/Voice-AI",
-        "visualLayout": "layout-2",
         "visualTitle": "Inventory, from shelf to storefront",
         "visualRows": [
           "Catalog signal",
@@ -160,7 +221,9 @@
       },
       {
         "visualMeta": "Istine / package discovery",
+        "repositoryUrl": "https://github.com/shrey714/Istine-Package-manager",
         "meta": "03 — Developer tool",
+        "visualLayout": "layout-5",
         "technologies": [
           "React Native",
           "NPM Registry API",
@@ -170,8 +233,6 @@
         "ariaLabel": "Open the Istine Package Manager source repository",
         "date": "Portfolio project",
         "cta": "Open project",
-        "repositoryUrl": "https://github.com/shrey714/Istine-Package-manager",
-        "visualLayout": "layout-5",
         "visualTitle": "Package discovery, in context",
         "visualRows": [
           "Registry search",
@@ -182,8 +243,11 @@
         "description": "A React Native package-management application built with the NPM Registry API and Firebase. It includes package-specific communication groups, favourites, dynamic theming, notifications, advertising, and quizzes covering NPM, React, and Angular."
       },
       {
+        "liveUrl": "https://fliplookai-frontend.netlify.app/",
         "visualMeta": "FliplookAI / fashion assistant",
+        "repositoryUrl": "https://github.com/shrey714/flipkartGrid5.0_palakPaneer",
         "meta": "04 — GenAI experience",
+        "visualLayout": "layout-4",
         "technologies": [
           "React",
           "Node.js",
@@ -194,9 +258,6 @@
         "ariaLabel": "Open the FliplookAI live project",
         "date": "Portfolio project",
         "cta": "Open live project",
-        "repositoryUrl": "https://github.com/shrey714/flipkartGrid5.0_palakPaneer",
-        "liveUrl": "https://fliplookai-frontend.netlify.app/",
-        "visualLayout": "layout-4",
         "visualTitle": "Style signals, made personal",
         "visualRows": [
           "Preference history",
@@ -207,8 +268,11 @@
         "description": "A GenAI-powered fashion assistant built with React, Node.js, and Python deep learning. It analyzes user history and preferences to deliver personalized outfit suggestions and customized fashion recommendations."
       },
       {
+        "liveUrl": "https://bill-splitter-shrey.netlify.app/",
         "visualMeta": "Bill Splitter / shared expenses",
+        "repositoryUrl": "https://github.com/shrey714/Bill-Splitter",
         "meta": "05 — Personal finance tool",
+        "visualLayout": "layout-3",
         "technologies": [
           "React Native",
           "Firebase"
@@ -217,9 +281,6 @@
         "ariaLabel": "Open the Bill Splitter live project",
         "date": "Portfolio project",
         "cta": "Open live project",
-        "repositoryUrl": "https://github.com/shrey714/Bill-Splitter",
-        "liveUrl": "https://bill-splitter-shrey.netlify.app/",
-        "visualLayout": "layout-3",
         "visualTitle": "Shared costs, clearly tracked",
         "visualRows": [
           "Expense groups",
@@ -412,64 +473,6 @@
     "visualCallout": "Detail is part of the system.",
     "introduction": "I work best in the space between a messy problem and a usable system. That means thinking through flows, asking sharper questions, shaping the interface, and staying close enough to implementation that the details hold up.",
     "visualTag": "System note 01"
-  },
-  "achievements": {
-    "eyebrow": "Achievements and participation",
-    "heading": "Learning in public.",
-    "introduction": "Community leadership, technical gatherings, and challenges that expanded how I build, collaborate, and keep learning.",
-    "entries": [
-      {
-        "meta": "01 — Community leadership",
-        "title": "GDSC Lead",
-        "organization": "Google Developer Student Club",
-        "date": "2022 — 2023",
-        "description": "Led the Google Developer Student Club for the 2022–23 academic year, helping create a student community around developer learning and collaboration.",
-        "visualMode": "image",
-        "visualImageUrl": "/manus-storage/gdsc-program-mark-alpha_8739607f.png",
-        "visualLabel": "Google Developer Student Clubs",
-        "imageAlt": "Google Developer Student Clubs program mark"
-      },
-      {
-        "meta": "02 — Youth conclave",
-        "title": "INAE–SERB Youth Conclave",
-        "organization": "IIT Jodhpur",
-        "date": "2022",
-        "description": "Participated in the INAE–SERB Youth Conclave conducted at IIT Jodhpur.",
-        "visualMode": "placeholder",
-        "visualLabel": "INAE · SERB",
-        "imageAlt": "Editorial placeholder for INAE–SERB Youth Conclave"
-      },
-      {
-        "meta": "03 — Hackathon",
-        "title": "DotSlash 5.0",
-        "organization": "SVNIT Surat",
-        "date": "Participation",
-        "description": "Participated in DotSlash 5.0 conducted at SVNIT Surat.",
-        "visualMode": "placeholder",
-        "visualLabel": "DotSlash 5.0",
-        "imageAlt": "Editorial placeholder for DotSlash 5.0"
-      },
-      {
-        "meta": "04 — Cloud challenge",
-        "title": "Learn to Earn Cloud Challenge",
-        "organization": "Google Cloud",
-        "date": "2021",
-        "description": "Participated in the Learn to Earn Cloud Challenge 2021.",
-        "visualMode": "placeholder",
-        "visualLabel": "Cloud Challenge",
-        "imageAlt": "Editorial placeholder for Learn to Earn Cloud Challenge"
-      },
-      {
-        "meta": "05 — Codathon",
-        "title": "ISTE SC MANIT’s Codathon",
-        "organization": "ISTE Student Chapter, MANIT",
-        "date": "Participation",
-        "description": "Participated in ISTE SC MANIT’s Codathon.",
-        "visualMode": "placeholder",
-        "visualLabel": "Codathon",
-        "imageAlt": "Editorial placeholder for ISTE SC MANIT’s Codathon"
-      }
-    ]
   },
   "footer": {
     "left": "Built with clarity & care.",

@@ -74,6 +74,18 @@ function portfolioFields(): DecapField[] {
       listOfObjects("disciplines", "Disciplines", [stringField("title", "Title"), textField("text", "Description")]),
       listOfObjects("skills", "Skill groups", [stringField("name", "Name"), stringField("tools", "Tools")]),
     ]),
+    objectField("achievements", "Achievements and participation", [
+      stringField("eyebrow", "Eyebrow"), stringField("heading", "Heading"), textField("introduction", "Introduction"),
+      listOfObjects("entries", "Achievement entries", [
+        stringField("meta", "Meta"), stringField("title", "Title"), stringField("organization", "Organization or host"), stringField("date", "Date"), textField("description", "Description"),
+        { name: "visualMode", label: "Achievement visual", widget: "select", options: [
+          { label: "Image — Upload or choose an image below", value: "image" },
+          { label: "Placeholder — Use the editorial visual below", value: "placeholder" },
+        ] } as DecapField,
+        mediaField("visualImageUrl", "Achievement image", "image", false, "Required only when Achievement visual is set to Image."),
+        stringField("visualLabel", "Placeholder label"), stringField("imageAlt", "Image alternative text"),
+      ]),
+    ]),
     objectField("about", "About", [
       stringField("eyebrow", "Eyebrow"), stringField("heading", "Heading"), stringField("experienceLabel", "Experience label"),
       textField("statement", "Statement"), textField("description", "Description"),

@@ -36,4 +36,10 @@ describe("portfolio content validation", () => {
     invalid.experience.entries = [];
     expect(() => validatePortfolioContent(invalid)).toThrow(/entries/);
   });
+
+  it("requires an image when an achievement uses the image visual mode", () => {
+    const invalid = structuredClone(portfolioContent) as typeof portfolioContent;
+    invalid.achievements.entries[0].visualImageUrl = "";
+    expect(() => validatePortfolioContent(invalid)).toThrow(/visualImageUrl/);
+  });
 });

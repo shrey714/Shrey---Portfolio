@@ -276,14 +276,19 @@
       "number": "02"
     },
     {
+      "id": "achievements",
+      "label": "Achievements",
+      "number": "03"
+    },
+    {
       "id": "about",
       "label": "About",
-      "number": "03"
+      "number": "04"
     },
     {
       "id": "contact",
       "label": "Contact",
-      "number": "04"
+      "number": "05"
     }
   ],
   "ui": {
@@ -407,6 +412,64 @@
     "visualCallout": "Detail is part of the system.",
     "introduction": "I work best in the space between a messy problem and a usable system. That means thinking through flows, asking sharper questions, shaping the interface, and staying close enough to implementation that the details hold up.",
     "visualTag": "System note 01"
+  },
+  "achievements": {
+    "eyebrow": "Achievements and participation",
+    "heading": "Learning in public.",
+    "introduction": "Community leadership, technical gatherings, and challenges that expanded how I build, collaborate, and keep learning.",
+    "entries": [
+      {
+        "meta": "01 — Community leadership",
+        "title": "GDSC Lead",
+        "organization": "Google Developer Student Club",
+        "date": "2022 — 2023",
+        "description": "Led the Google Developer Student Club for the 2022–23 academic year, helping create a student community around developer learning and collaboration.",
+        "visualMode": "image",
+        "visualImageUrl": "/manus-storage/gdsc-program-mark_8e365f3a.jpg",
+        "visualLabel": "Google Developer Student Clubs",
+        "imageAlt": "Google Developer Student Clubs program mark"
+      },
+      {
+        "meta": "02 — Youth conclave",
+        "title": "INAE–SERB Youth Conclave",
+        "organization": "IIT Jodhpur",
+        "date": "2022",
+        "description": "Participated in the INAE–SERB Youth Conclave conducted at IIT Jodhpur.",
+        "visualMode": "placeholder",
+        "visualLabel": "INAE · SERB",
+        "imageAlt": "Editorial placeholder for INAE–SERB Youth Conclave"
+      },
+      {
+        "meta": "03 — Hackathon",
+        "title": "DotSlash 5.0",
+        "organization": "SVNIT Surat",
+        "date": "Participation",
+        "description": "Participated in DotSlash 5.0 conducted at SVNIT Surat.",
+        "visualMode": "placeholder",
+        "visualLabel": "DotSlash 5.0",
+        "imageAlt": "Editorial placeholder for DotSlash 5.0"
+      },
+      {
+        "meta": "04 — Cloud challenge",
+        "title": "Learn to Earn Cloud Challenge",
+        "organization": "Google Cloud",
+        "date": "2021",
+        "description": "Participated in the Learn to Earn Cloud Challenge 2021.",
+        "visualMode": "placeholder",
+        "visualLabel": "Cloud Challenge",
+        "imageAlt": "Editorial placeholder for Learn to Earn Cloud Challenge"
+      },
+      {
+        "meta": "05 — Codathon",
+        "title": "ISTE SC MANIT’s Codathon",
+        "organization": "ISTE Student Chapter, MANIT",
+        "date": "Participation",
+        "description": "Participated in ISTE SC MANIT’s Codathon.",
+        "visualMode": "placeholder",
+        "visualLabel": "Codathon",
+        "imageAlt": "Editorial placeholder for ISTE SC MANIT’s Codathon"
+      }
+    ]
   },
   "footer": {
     "left": "Built with clarity & care.",

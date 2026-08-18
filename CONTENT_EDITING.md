@@ -10,6 +10,7 @@ Portfolio copy is edited through the private **Decap CMS** at `/admin` after the
 | Hero heading, introductory copy, resume URL, and carousel content | **Hero** |
 | Projects, technologies, source or live-project URLs, calls to action, and evidence-frame labels | **Selected work** |
 | Practice, disciplines, and skill groups | **Practice** |
+| Achievement entries, participation details, and per-entry visuals | **Achievements and participation** |
 | Biography, experience history, and fact cards | **About** and **Experience** |
 | Principles | **Philosophy** |
 | Email, social URLs, and contact-form copy | **Contact** |
@@ -35,6 +36,10 @@ Each project in **Selected work** can use one of five presentation presets: **La
 ### Adding an experience
 
 Open **Experience** in **Portfolio content**, then use **Add Experience entries** to create another role. Each entry includes its company, role, date range, description, responsibility label, and responsibility list. Decap lets you reorder the entries; the public portfolio presents them in that same order, so place your most recent role first.
+
+### Adding an achievement
+
+Open **Achievements and participation** in **Portfolio content**, then use **Add Achievement entries** to create a record. Choose **Image** to upload or select an image from the native Media panel; an image is required only for that visual mode. Choose **Placeholder** when an event has no suitable mark yet, then edit the **Placeholder label** to control the calm editorial visual shown on the site. The supplied Google Developer Student Clubs entry begins with a program-mark visual; you can replace it with your own chapter or event asset at any time.
 
 ## Rollback
 

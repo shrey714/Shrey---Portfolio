@@ -5,6 +5,21 @@ const text = z.string().trim().min(1);
 const link = z.string().trim().refine(value => value.startsWith("/") || /^https?:\/\//.test(value), "Expected an absolute URL or site-relative path");
 const listOfText = z.array(text).min(1);
 const labelledText = z.object({ title: text, text }).strict();
+const achievementEntrySchema = z.object({
+  meta: text,
+  title: text,
+  organization: text,
+  date: text,
+  description: text,
+  visualMode: z.enum(["image", "placeholder"]),
+  visualImageUrl: link.optional(),
+  visualLabel: text,
+  imageAlt: text,
+}).strict().superRefine((achievement, context) => {
+  if (achievement.visualMode === "image" && !achievement.visualImageUrl) {
+    context.addIssue({ code: "custom", path: ["visualImageUrl"], message: "Choose an achievement image when Image visual is selected." });
+  }
+});
 const projectSchema = z.object({
   visualLayout: z.enum(["layout-1", "layout-2", "layout-3", "layout-4", "layout-5", "custom-image"]),
   visualImageUrl: link.optional(),
@@ -72,6 +87,12 @@ export const portfolioContentSchema = z.object({
     visualCallout: text,
     disciplines: z.array(labelledText).min(1),
     skills: z.array(z.object({ name: text, tools: text }).strict()).min(1),
+  }).strict(),
+  achievements: z.object({
+    eyebrow: text,
+    heading: text,
+    introduction: text,
+    entries: z.array(achievementEntrySchema).min(1),
   }).strict(),
   about: z.object({
     eyebrow: text,

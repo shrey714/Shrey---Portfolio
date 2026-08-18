@@ -5,6 +5,7 @@
  */
 import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
+  Award,
   ArrowDown,
   ArrowUpRight,
   Check,
@@ -32,6 +33,7 @@ import { trpc } from "@/lib/trpc";
 const hero = content.hero;
 const navItems = content.navigation;
 type WorkProject = (typeof content.work.projects)[number] & { visualImageUrl?: string };
+type AchievementEntry = (typeof content.achievements.entries)[number] & { visualImageUrl?: string };
 
 function AnchorArrow() {
   return <ArrowUpRight aria-hidden="true" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />;
@@ -173,6 +175,17 @@ function SystemsEvidence() {
       <div className="relative mt-6 flex flex-wrap items-baseline justify-between gap-x-5 gap-y-2 border-t border-[#1b1c1d]/10 pt-4 text-[9px] font-semibold uppercase tracking-[0.13em] text-[#777571]"><span className="whitespace-nowrap">{content.practice.visualSystemNote}</span><span className="whitespace-nowrap text-[#456fe8]">{content.practice.visualTag}</span></div>
     </div>
   );
+}
+
+function AchievementVisual({ entry, index }: { entry: AchievementEntry; index: number }) {
+  const placeholderTone = ["bg-[#456fe8]/10 text-[#456fe8]", "bg-[#1b1c1d]/[0.06] text-[#343434]", "bg-[#c27f48]/10 text-[#9a6032]"][index % 3];
+  const image = entry.visualMode === "image" && entry.visualImageUrl;
+
+  if (image) {
+    return <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden rounded-[1rem] border border-[#1b1c1d]/10 bg-white/65 p-6"><img src={entry.visualImageUrl} alt={entry.imageAlt} className="h-full w-full object-contain" /><span className="absolute bottom-3 left-3 rounded-full border border-[#1b1c1d]/10 bg-[#f6f4ef]/90 px-3 py-1.5 text-[8px] font-semibold uppercase tracking-[0.13em] text-[#63615e] backdrop-blur-sm">{entry.visualLabel}</span></div>;
+  }
+
+  return <div role="img" aria-label={entry.imageAlt} className={`relative flex aspect-[16/10] overflow-hidden rounded-[1rem] border border-[#1b1c1d]/10 p-5 ${placeholderTone}`}><div className="absolute inset-0 opacity-45 dot-field" /><div className="relative flex h-full w-full flex-col justify-between"><div className="flex items-start justify-between"><Award className="h-5 w-5" aria-hidden="true" /><span className="text-[9px] font-semibold uppercase tracking-[0.14em]">0{index + 1}</span></div><div><span className="block h-px w-12 bg-current/40" /><p className="mt-4 max-w-[12rem] text-lg font-semibold leading-[1.05] tracking-[-0.04em]">{entry.visualLabel}</p></div></div></div>;
 }
 
 export default function Home() {
@@ -488,6 +501,28 @@ export default function Home() {
                   </article>
                 );
               })}
+            </div>
+          </div>
+        </section>
+
+        <section id="achievements" className="theme-soft-surface border-t border-[#1b1c1d]/10 bg-[#eeece6] px-5 py-20 sm:px-8 sm:py-28 lg:px-12 xl:px-16">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-10 border-b border-[#1b1c1d]/10 pb-12 lg:grid-cols-[0.66fr_1.34fr] lg:gap-20">
+              <div><p className="eyebrow">{content.achievements.eyebrow}</p><h2 className="mt-4 font-serif text-5xl leading-[0.94] tracking-[-0.06em] sm:text-6xl">{content.achievements.heading}</h2></div>
+              <p className="max-w-2xl self-end text-lg leading-8 tracking-[-0.025em] text-[#575653]">{content.achievements.introduction}</p>
+            </div>
+            <div className="mt-12 grid gap-4 md:grid-cols-2">
+              {content.achievements.entries.map((entry, index) => (
+                <article key={`${entry.title}-${entry.organization}`} className={`group overflow-hidden rounded-[1.35rem] border border-[#1b1c1d]/10 bg-[#f6f4ef] p-4 shadow-[0_20px_45px_-38px_rgba(27,28,29,0.55)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_-32px_rgba(27,28,29,0.35)] motion-reduce:transform-none motion-reduce:transition-none ${index === 0 ? "md:col-span-2 md:grid md:grid-cols-[0.9fr_1.1fr] md:gap-8 md:p-6" : ""}`}>
+                  <AchievementVisual entry={entry} index={index} />
+                  <div className={index === 0 ? "mt-6 md:mt-0 md:flex md:flex-col md:justify-center" : "mt-5"}>
+                    <div className="flex items-center justify-between gap-4 text-[9px] font-semibold uppercase tracking-[0.13em] text-[#777571]"><span>{entry.meta}</span><span>{entry.date}</span></div>
+                    <h3 className="mt-4 text-2xl font-semibold tracking-[-0.05em] text-[#292a2a]">{entry.title}</h3>
+                    <p className="mt-1 text-sm text-[#696763]">{entry.organization}</p>
+                    <p className="mt-4 text-sm leading-6 text-[#5f5d59]">{entry.description}</p>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>

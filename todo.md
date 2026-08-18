@@ -353,3 +353,5 @@
 - [x] Remove the small two-letter technology token boxes from Skills cards while retaining the approved icon-led design.
 
 - [x] Remove the leftover empty vertical space in Skills cards after the technology token boxes were removed.
+
+- [x] Add an editable Achievements and Participation section with per-entry visual placeholders and an official GDSC mark where suitable.

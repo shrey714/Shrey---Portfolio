@@ -12,6 +12,18 @@
   <body>
     <div id="root"><!--app-html--></div>
     <script type="module" src="/src/entry-client.tsx"></script>
-    <script defer src="%VITE_ANALYTICS_ENDPOINT%/umami" data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+    <script>
+      (() => {
+        const endpoint = "%VITE_ANALYTICS_ENDPOINT%";
+        const websiteId = "%VITE_ANALYTICS_WEBSITE_ID%";
+        if (!endpoint || endpoint.startsWith("%") || !websiteId || websiteId.startsWith("%")) return;
+
+        const analytics = document.createElement("script");
+        analytics.defer = true;
+        analytics.src = `${endpoint.replace(/\/+$/, "")}/umami`;
+        analytics.dataset.websiteId = websiteId;
+        document.head.append(analytics);
+      })();
+    </script>
   </body>
 </html>

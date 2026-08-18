@@ -373,3 +373,7 @@
 - [x] Apply and validate low-risk Lighthouse-guided performance improvements without changing current portfolio functionality or design.
 
 - [x] Replace oversized hero and achievement image sources with optimized modern variants while preserving current display and Decap editability.
+
+- [x] Review the updated Lighthouse report, quantify improvements, and identify any remaining approval-required optimizations.
+
+- [x] Resolve the remaining safe Lighthouse findings: contact-panel text contrast, hero-carousel dot hit areas, and the analytics placeholder request.

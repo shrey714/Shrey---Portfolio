@@ -599,12 +599,12 @@ export default function Home() {
       </main>
 
       <footer className="lg:ml-72">
-        <section id="contact" className="footer-contact-panel bg-[#456fe8] px-5 py-20 text-white sm:px-8 sm:py-28 lg:mx-8 lg:my-8 lg:overflow-hidden lg:rounded-[2rem] lg:border lg:border-white/15 lg:px-12 lg:shadow-[0_28px_65px_-42px_rgba(27,28,29,0.58)] xl:mx-12 xl:px-16">
+        <section id="contact" className="footer-contact-panel bg-[#436ee4] px-5 py-20 text-white sm:px-8 sm:py-28 lg:mx-8 lg:my-8 lg:overflow-hidden lg:rounded-[2rem] lg:border lg:border-white/15 lg:px-12 lg:shadow-[0_28px_65px_-42px_rgba(27,28,29,0.58)] xl:mx-12 xl:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-10 lg:grid-cols-[0.68fr_1.32fr] lg:gap-20">
               <div>
                 <p className="eyebrow contact-eyebrow">{content.contact.eyebrow}</p>
-                <p className="mt-5 max-w-xs text-sm leading-6 text-white/75">{content.contact.introduction}</p>
+                <p className="mt-5 max-w-xs text-sm leading-6 text-white">{content.contact.introduction}</p>
               </div>
               <div>
                 <h2 className="max-w-3xl font-serif text-[clamp(3.3rem,7vw,7rem)] leading-[0.85] tracking-[-0.075em]">{content.contact.headingLineOne}<br />{content.contact.headingLineTwo}</h2>
@@ -615,14 +615,14 @@ export default function Home() {
                   </div>
                   <label className="contact-form-field mt-4"><span>{content.contact.form.messageLabel}</span><textarea required minLength={12} maxLength={1500} rows={5} value={contactForm.message} onChange={event => setContactForm(current => ({ ...current, message: event.target.value }))} placeholder={content.contact.form.messagePlaceholder} /></label>
                   <label className="contact-form-honeypot" aria-hidden="true"><span>Website</span><input tabIndex={-1} autoComplete="off" value={contactForm.website} onChange={event => setContactForm(current => ({ ...current, website: event.target.value }))} /></label>
-                  <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><button type="submit" disabled={contactMutation.isPending} className="contact-form-submit">{contactMutation.isPending ? <><Loader2 className="h-4 w-4 animate-spin" />{content.contact.form.submittingLabel}</> : <>{content.contact.form.submitLabel}<ArrowUpRight className="h-4 w-4" /></>}</button><p className="max-w-sm text-xs leading-5 text-white/65">{content.contact.form.privacyNote}</p></div>
+                  <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><button type="submit" disabled={contactMutation.isPending} className="contact-form-submit">{contactMutation.isPending ? <><Loader2 className="h-4 w-4 animate-spin" />{content.contact.form.submittingLabel}</> : <>{content.contact.form.submitLabel}<ArrowUpRight className="h-4 w-4" /></>}</button><p className="max-w-sm text-xs leading-5 text-white">{content.contact.form.privacyNote}</p></div>
                   <div className="mt-4 min-h-6 text-sm" aria-live="polite">{contactStatus === "sending" && <p className="font-medium text-white/85">{content.contact.form.sendingMessage}</p>}{contactStatus === "success" && <p className="font-semibold text-white">{content.contact.form.successMessage}</p>}{contactStatus === "error" && <p className="font-medium text-white">{contactError}</p>}</div>
                 </form>
-                <p className="mt-5 text-sm text-white/75">{content.contact.form.fallbackMessage} <a href={`mailto:${content.contact.email}`} className="font-semibold underline underline-offset-4 transition-opacity hover:opacity-75">{content.contact.email}</a></p>
+                <p className="mt-5 text-sm text-white">{content.contact.form.fallbackMessage} <a href={`mailto:${content.contact.email}`} className="font-semibold underline underline-offset-4 transition-opacity hover:opacity-75">{content.contact.email}</a></p>
                 <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 text-sm font-semibold">
-                  <a href={content.contact.githubUrl} target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"><Github className="h-4 w-4" /> {content.contact.githubLabel} <AnchorArrow /></a>
-                  <a href={content.contact.linkedinUrl} target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"><Linkedin className="h-4 w-4" /> {content.contact.linkedinLabel} <AnchorArrow /></a>
-                  <a href={`mailto:${content.contact.email}`} className="group inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"><Mail className="h-4 w-4" /> {content.contact.emailLabel} <AnchorArrow /></a>
+                  <a href={content.contact.githubUrl} target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 text-white transition-colors hover:text-white"><Github className="h-4 w-4" /> {content.contact.githubLabel} <AnchorArrow /></a>
+                  <a href={content.contact.linkedinUrl} target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 text-white transition-colors hover:text-white"><Linkedin className="h-4 w-4" /> {content.contact.linkedinLabel} <AnchorArrow /></a>
+                  <a href={`mailto:${content.contact.email}`} className="group inline-flex items-center gap-2 text-white transition-colors hover:text-white"><Mail className="h-4 w-4" /> {content.contact.emailLabel} <AnchorArrow /></a>
                 </div>
               </div>
             </div>

@@ -10,7 +10,7 @@ Portfolio copy is edited through the private **Decap CMS** at `/admin` after the
 | Hero heading, introductory copy, resume URL, and carousel content | **Hero** |
 | Projects, technologies, calls to action, and evidence-frame labels | **Selected work** |
 | Practice, disciplines, and skill groups | **Practice** |
-| Biography, experience, and fact cards | **About** and **Experience** |
+| Biography, experience history, and fact cards | **About** and **Experience** |
 | Principles | **Philosophy** |
 | Email, social URLs, and contact-form copy | **Contact** |
 | Footer language and accessibility labels | **Footer** and **Interface labels** |
@@ -27,6 +27,10 @@ The GitHub commit starts the linked Vercel deployment. After its build succeeds,
 Keep every required field populated. The deployment build validates the content structure before it emits the site, so an incomplete field or unsupported project visual kind fails early instead of quietly breaking the public page. Use complete absolute URLs for external links and use either a complete absolute URL or a leading-slash site path for the resume and image URLs.
 
 Use the native **Media** panel in `/admin` to upload, select, and delete images and PDF files. The Decap panel is backed by private Vercel Blob storage rather than the GitHub `content/media` directory, so media binaries are not committed to the repository. Select an asset to insert its cacheable site-owned URL into **Hero image URL**, **Social share image URL**, or **Resume → PDF URL**. The normal Decap media folder stays empty; it exists only to satisfy the CMS configuration contract.
+
+### Adding an experience
+
+Open **Experience** in **Portfolio content**, then use **Add Experience entries** to create another role. Each entry includes its company, role, date range, description, responsibility label, and responsibility list. Decap lets you reorder the entries; the public portfolio presents them in that same order, so place your most recent role first.
 
 ## Rollback
 

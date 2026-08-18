@@ -76,12 +76,14 @@ export const portfolioContentSchema = z.object({
   experience: z.object({
     eyebrow: text,
     introduction: text,
-    company: text,
-    role: text,
-    date: text,
-    description: text,
-    responsibilityLabel: text,
-    responsibilities: listOfText,
+    entries: z.array(z.object({
+      company: text,
+      role: text,
+      date: text,
+      description: text,
+      responsibilityLabel: text,
+      responsibilities: listOfText,
+    }).strict()).min(1),
   }).strict(),
   philosophy: z.object({
     eyebrow: text,

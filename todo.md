@@ -335,3 +335,5 @@
 - [x] Correct Decap’s resume-media insertion so it cannot publish an invalid legacy `/media/...` route and instead returns the canonical private Blob delivery URL.
 
 - [x] Verify the merged canonical resume-media correction on GitHub main and the deployed portfolio before closing the production checklist.
+
+- [x] Convert the Experience editor and public portfolio section to support adding, editing, reordering, and rendering multiple roles.

@@ -71,9 +71,11 @@ function portfolioFields(): DecapField[] {
       listOfObjects("facts", "Facts", [stringField("label", "Label"), stringField("primary", "Primary"), stringField("secondary", "Secondary")]),
     ]),
     objectField("experience", "Experience", [
-      stringField("eyebrow", "Eyebrow"), textField("introduction", "Introduction"), stringField("company", "Company"), stringField("role", "Role"),
-      stringField("date", "Date"), textField("description", "Description"), stringField("responsibilityLabel", "Responsibilities label"),
-      listOfStrings("responsibilities", "Responsibilities"),
+      stringField("eyebrow", "Eyebrow"), textField("introduction", "Introduction"),
+      listOfObjects("entries", "Experience entries", [
+        stringField("company", "Company"), stringField("role", "Role"), stringField("date", "Date"), textField("description", "Description"),
+        stringField("responsibilityLabel", "Responsibilities label"), listOfStrings("responsibilities", "Responsibilities"),
+      ]),
     ]),
     objectField("philosophy", "Philosophy", [
       stringField("eyebrow", "Eyebrow"), stringField("headingLineOne", "Heading line one"), stringField("headingLineTwo", "Heading line two"),

@@ -30,15 +30,19 @@
   "experience": {
     "eyebrow": "Experience",
     "introduction": "A factual, understated snapshot of the work I do and the systems I want to keep learning from.",
-    "company": "Wells Fargo",
-    "role": "Software Developer · Market Risk",
-    "date": "2024 — Present",
-    "description": "Contributing to applications and services that support quantitative risk-management and risk-adjustment workflows. The work stretches across frontend, backend, data, and the technical decisions that connect them.",
-    "responsibilityLabel": "Current engineering responsibilities",
-    "responsibilities": [
-      "Crafting interface architecture with React and TypeScript.",
-      "Designing Java and Spring services around real operational constraints.",
-      "Working across SQL data flows, business logic, and user-facing product details."
+    "entries": [
+      {
+        "company": "Wells Fargo",
+        "role": "Software Developer · Market Risk",
+        "date": "2024 — Present",
+        "description": "Contributing to applications and services that support quantitative risk-management and risk-adjustment workflows. The work stretches across frontend, backend, data, and the technical decisions that connect them.",
+        "responsibilityLabel": "Current engineering responsibilities",
+        "responsibilities": [
+          "Crafting interface architecture with React and TypeScript.",
+          "Designing Java and Spring services around real operational constraints.",
+          "Working across SQL data flows, business logic, and user-facing product details."
+        ]
+      }
     ]
   },
   "about": {

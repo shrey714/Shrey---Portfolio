@@ -533,14 +533,20 @@ export default function Home() {
                 <p className="mt-4 text-sm leading-6 text-[#6a6865]">{content.experience.introduction}</p>
               </div>
               <div>
-                <div className="flex flex-col gap-4 border-b border-[#1b1c1d]/10 pb-6 sm:flex-row sm:items-start sm:justify-between">
-                  <div><h3 className="text-2xl font-semibold tracking-[-0.05em]">{content.experience.company}</h3><p className="mt-1 text-sm text-[#676561]">{content.experience.role}</p></div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">{content.experience.date}</p>
+                <div className="space-y-10">
+                  {content.experience.entries.map((entry) => (
+                    <article key={`${entry.company}-${entry.role}-${entry.date}`} className="border-b border-[#1b1c1d]/10 pb-10 last:border-b-0 last:pb-0">
+                      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                        <div><h3 className="text-2xl font-semibold tracking-[-0.05em]">{entry.company}</h3><p className="mt-1 text-sm text-[#676561]">{entry.role}</p></div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777571]">{entry.date}</p>
+                      </div>
+                      <p className="mt-6 max-w-2xl text-base leading-7 text-[#5d5b58]">{entry.description}</p>
+                      <ul className="mt-7 grid gap-3 sm:grid-cols-2" aria-label={entry.responsibilityLabel}>
+                        {entry.responsibilities.map((item) => <li key={item} className="flex gap-3 text-sm leading-6 text-[#595754]"><Check className="mt-1 h-3.5 w-3.5 shrink-0 text-[#456fe8]" />{item}</li>)}
+                      </ul>
+                    </article>
+                  ))}
                 </div>
-                <p className="mt-6 max-w-2xl text-base leading-7 text-[#5d5b58]">{content.experience.description}</p>
-                <ul className="mt-7 grid gap-3 sm:grid-cols-2" aria-label={content.experience.responsibilityLabel}>
-                  {content.experience.responsibilities.map((item) => <li key={item} className="flex gap-3 text-sm leading-6 text-[#595754]"><Check className="mt-1 h-3.5 w-3.5 shrink-0 text-[#456fe8]" />{item}</li>)}
-                </ul>
               </div>
             </div>
           </div>

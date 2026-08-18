@@ -18,4 +18,10 @@ describe("portfolio content validation", () => {
     invalid.work.projects[0].kind = "unknown";
     expect(() => validatePortfolioContent(invalid)).toThrow(/kind/);
   });
+
+  it("requires at least one structured experience entry", () => {
+    const invalid = structuredClone(portfolioContent) as typeof portfolioContent;
+    invalid.experience.entries = [];
+    expect(() => validatePortfolioContent(invalid)).toThrow(/entries/);
+  });
 });

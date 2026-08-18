@@ -359,3 +359,5 @@
 - [x] Refine Achievements and Participation into a compact list with a small logo or placeholder at left and achievement information at right.
 
 - [x] Restyle achievements to use the Skills section’s lighter separator rhythm, smaller transparent logos, and minimal fallback icons.
+
+- [x] Fix uploaded achievement images not rendering when entries remain set to the placeholder visual mode in Decap CMS.

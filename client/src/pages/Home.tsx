@@ -26,6 +26,7 @@ import {
 import { useTheme } from "@/contexts/ThemeContext";
 import { portfolioContent as content } from "@/content/portfolioContent";
 import { getAppearanceToggleState } from "@/lib/appearanceToggle";
+import { getAchievementVisualKind } from "@/lib/achievementPresentation";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
 import { getSkillVisual } from "@/lib/skillPresentation";
 import { trpc } from "@/lib/trpc";
@@ -178,7 +179,7 @@ function SystemsEvidence() {
 }
 
 function AchievementMark({ entry }: { entry: AchievementEntry }) {
-  const image = entry.visualMode === "image" && entry.visualImageUrl;
+  const image = getAchievementVisualKind(entry) === "image";
 
   if (image) {
     return <div className="flex h-7 w-7 shrink-0 items-center justify-center sm:h-8 sm:w-8"><img src={entry.visualImageUrl} alt={entry.imageAlt} className="h-full w-full object-contain" /></div>;

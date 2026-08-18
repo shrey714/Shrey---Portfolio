@@ -57,12 +57,21 @@ describe("Lighthouse regressions", () => {
     expect(document).not.toContain('<script defer src="%VITE_ANALYTICS_ENDPOINT%/umami"');
   });
 
-  it("loads the unchanged Google font families without blocking the initial render", async () => {
-    const document = await readFile(projectFile("client/index.html"), "utf8");
+  it("self-hosts the display fonts without Google Font network requests", async () => {
+    const [document, styles] = await Promise.all([
+      readFile(projectFile("client/index.html"), "utf8"),
+      readFile(projectFile("client/src/index.css"), "utf8"),
+    ]);
 
-    expect(document).toContain('rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display');
-    expect(document).toContain('rel="stylesheet" media="print" onload="this.media=\'all\'"');
-    expect(document).toContain("<noscript><link");
+    expect(document).toContain('rel="preload" as="font" href="/manus-storage/manrope-latin-variable_8e611b5b.woff2"');
+    expect(document).toContain('rel="preload" as="font" href="/manus-storage/dm-serif-display-regular-latin_cd147219.woff2"');
+    expect(document).not.toContain("fonts.googleapis.com");
+    expect(document).not.toContain("fonts.gstatic.com");
+    expect(styles).toContain('font-family: "Manrope";');
+    expect(styles).toContain("font-weight: 400 800;");
+    expect(styles).toContain('url("/manus-storage/manrope-latin-variable_8e611b5b.woff2")');
+    expect(styles).toContain('url("/manus-storage/dm-serif-display-regular-latin_cd147219.woff2")');
+    expect(styles).toContain('url("/manus-storage/dm-serif-display-italic-latin_c231cf40.woff2")');
   });
 
   it("prioritizes the hero while deferring below-fold visual media", async () => {

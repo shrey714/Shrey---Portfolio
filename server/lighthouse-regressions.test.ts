@@ -50,4 +50,18 @@ describe("Lighthouse regressions", () => {
     expect(styles).toContain("width: 1.5rem;");
     expect(styles).toContain(".hero-carousel-dot::before");
   });
+
+  it("keeps desktop microcopy and the Selected Work eyebrow above PageSpeed contrast thresholds", async () => {
+    const [home, styles] = await Promise.all([
+      readFile(projectFile("client/src/pages/Home.tsx"), "utf8"),
+      readFile(projectFile("client/src/index.css"), "utf8"),
+    ]);
+
+    expect(home).toContain("text-[#696765]");
+    expect(home).toContain("text-[#71706c]");
+    expect(home).toContain("text-[#6d6b67]");
+    expect(styles).toContain(".theme-work-surface .eyebrow");
+    expect(styles).toContain("color: #aebff6;");
+    expect(styles).toContain("#achievements .eyebrow");
+  });
 });

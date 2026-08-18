@@ -413,7 +413,7 @@ export default function Home() {
                   <div className="relative aspect-[16/11] overflow-hidden rounded-[1.15rem]">
                     <div key={activeHeroSlide} className="hero-slide h-full w-full"><HeroVisual index={activeHeroSlide} /></div>
                   </div>
-                  <div className="hero-carousel-footer"><div key={activeHeroSlide} className="hero-carousel-copy" aria-live="polite"><p className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#456fe8]">{hero.slides[activeHeroSlide].label}</p><p className="mt-1 max-w-[15rem] text-[10px] leading-4 text-[#66645f]">{hero.slides[activeHeroSlide].caption}</p></div><div className="hero-carousel-actions"><span className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#6c6a67]">0{activeHeroSlide + 1} / 0{hero.slides.length}</span><div className="flex gap-1.5"><button type="button" onClick={() => showHeroSlide(activeHeroSlide - 1)} className="hero-carousel-control" aria-label={hero.previousVisualLabel}><ChevronLeft className="h-3.5 w-3.5" /></button><button type="button" onClick={() => showHeroSlide(activeHeroSlide + 1)} className="hero-carousel-control" aria-label={hero.nextVisualLabel}><ChevronRight className="h-3.5 w-3.5" /></button></div></div><div className="hero-carousel-indicators" role="tablist" aria-label={hero.carouselSelectorLabel}>{hero.slides.map((slide, index) => <button key={slide.label} type="button" role="tab" aria-selected={activeHeroSlide === index} aria-label={`Show ${slide.label}`} onClick={() => showHeroSlide(index)} className={`hero-carousel-dot ${activeHeroSlide === index ? "is-active" : ""}`} />)}</div></div>
+                  <div className="hero-carousel-footer"><div key={activeHeroSlide} className="hero-carousel-copy" aria-live="polite"><p className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#456fe8]">{hero.slides[activeHeroSlide].label}</p><p className="mt-1 max-w-[15rem] text-[10px] leading-4 text-[#66645f]">{hero.slides[activeHeroSlide].caption}</p></div><div className="hero-carousel-actions"><span className="text-[9px] font-semibold uppercase tracking-[0.13em] text-[#696765]">0{activeHeroSlide + 1} / 0{hero.slides.length}</span><div className="flex gap-1.5"><button type="button" onClick={() => showHeroSlide(activeHeroSlide - 1)} className="hero-carousel-control" aria-label={hero.previousVisualLabel}><ChevronLeft className="h-3.5 w-3.5" /></button><button type="button" onClick={() => showHeroSlide(activeHeroSlide + 1)} className="hero-carousel-control" aria-label={hero.nextVisualLabel}><ChevronRight className="h-3.5 w-3.5" /></button></div></div><div className="hero-carousel-indicators" role="tablist" aria-label={hero.carouselSelectorLabel}>{hero.slides.map((slide, index) => <button key={slide.label} type="button" role="tab" aria-selected={activeHeroSlide === index} aria-label={`Show ${slide.label}`} onClick={() => showHeroSlide(index)} className={`hero-carousel-dot ${activeHeroSlide === index ? "is-active" : ""}`} />)}</div></div>
                 </div>
                 <div className="ml-0 mt-4 hidden w-44 rounded-2xl border border-[#1b1c1d]/10 bg-[#f6f4ef]/90 p-4 shadow-[0_18px_45px_-30px_rgba(27,28,29,0.45)] backdrop-blur sm:block lg:ml-4">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#767570]">{hero.basedInLabel}</p>
@@ -515,7 +515,7 @@ export default function Home() {
                         <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#9b9994]">0{index + 1}</span>
                       </div>
                       <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#686662]">{skill.name}</p>
-                      <p className="mt-4 text-xs leading-5 text-[#777571]">{skill.tools}</p>
+                      <p className="mt-4 text-xs leading-5 text-[#71706c]">{skill.tools}</p>
                     </div>
                   </article>
                 );
@@ -536,7 +536,7 @@ export default function Home() {
                   <AchievementMark entry={entry} />
                   <div className="min-w-0 flex-1">
                     <h3 className="text-sm font-semibold tracking-[-0.03em] text-[#292a2a] sm:text-base">{entry.title}</h3>
-                    <p className="mt-0.5 truncate text-[9px] font-semibold uppercase tracking-[0.11em] text-[#777571] sm:text-[10px]">{entry.organization} <span className="px-1 text-[#aaa8a3]">·</span> {entry.date}</p>
+                    <p className="mt-0.5 truncate text-[9px] font-semibold uppercase tracking-[0.11em] text-[#6d6b67] sm:text-[10px]">{entry.organization} <span className="px-1 text-[#aaa8a3]">·</span> {entry.date}</p>
                   </div>
                 </article>
               ))}

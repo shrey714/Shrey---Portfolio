@@ -383,3 +383,5 @@
 - [x] Align contact honeypot validation with the intended silent-success behavior while preserving Telegram and cooldown protections.
 
 - [x] Investigate and improve the supplied mobile PageSpeed performance report before addressing the desktop accessibility report.
+
+- [x] Resolve the supplied desktop PageSpeed background-and-foreground color contrast failures without changing portfolio hierarchy or layout.

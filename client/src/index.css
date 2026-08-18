@@ -191,6 +191,16 @@
     color: #777571;
   }
 
+  /* Scoped PageSpeed contrast corrections retain the established editorial
+     hierarchy without changing component geometry or the global gray scale. */
+  .theme-work-surface .eyebrow {
+    color: #aebff6;
+  }
+
+  #achievements .eyebrow {
+    color: #6d6b67;
+  }
+
   .dot-field {
     background-image: radial-gradient(circle, rgba(27, 28, 29, 0.11) 0.65px, transparent 0.8px);
     background-size: 13px 13px;

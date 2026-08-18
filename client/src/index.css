@@ -276,7 +276,9 @@
 }
 
 .dark .portfolio .theme-light-surface [class*="text-[#456fe8]"],
-.dark .portfolio .theme-soft-surface [class*="text-[#456fe8]"] {
+.dark .portfolio .theme-soft-surface [class*="text-[#456fe8]"],
+.dark .portfolio .theme-light-surface [class*="text-[#3455b8]"],
+.dark .portfolio .theme-soft-surface [class*="text-[#3455b8]"] {
   color: #96aaff !important;
 }
 

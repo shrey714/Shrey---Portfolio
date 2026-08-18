@@ -98,6 +98,21 @@ describe("Lighthouse regressions", () => {
     expect(styles).toContain(".hero-carousel-dot::before");
   });
 
+  it("preserves the cobalt hero accent against broad dark-surface text overrides", async () => {
+    const [home, styles] = await Promise.all([
+      readFile(projectFile("client/src/pages/Home.tsx"), "utf8"),
+      readFile(projectFile("client/src/index.css"), "utf8"),
+    ]);
+    const darkAccentBlock = styles.slice(
+      styles.indexOf('[class*="text-[#456fe8]"]'),
+      styles.indexOf('[class*="text-[#1b1c1d]"]'),
+    );
+
+    expect(home).toContain('text-[#3455b8]');
+    expect(darkAccentBlock).toContain('[class*="text-[#3455b8]"]');
+    expect(darkAccentBlock).toContain("color: #96aaff !important;");
+  });
+
   it("uses Axe AA-safe colors for the PageSpeed-flagged desktop text", async () => {
     const [home, styles] = await Promise.all([
       readFile(projectFile("client/src/pages/Home.tsx"), "utf8"),

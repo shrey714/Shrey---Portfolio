@@ -3,9 +3,7 @@
  * Warm porcelain, ink typography, Cobalt Mist accents, off-center content rail,
  * and restrained motion communicate a product-minded engineering practice.
  */
-import { type CSSProperties, type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
+import { type ComponentType, type CSSProperties, type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Award,
   ArrowDown,
@@ -28,7 +26,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { portfolioContent as content } from "@/content/portfolioContent";
-import { ProjectImageDots } from "@/components/ProjectImageDots";
+import { StaticProjectImageCarousel } from "@/components/StaticProjectImageCarousel";
 import { getAppearanceToggleState } from "@/lib/appearanceToggle";
 import { getAchievementVisualKind } from "@/lib/achievementPresentation";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
@@ -43,39 +41,24 @@ type WorkProject = (typeof content.work.projects)[number] & { visualImageUrls?: 
 type AchievementEntry = (typeof content.achievements.entries)[number] & { visualImageUrl?: string };
 
 function CustomProjectImageCarousel({ project, imageUrls }: { project: WorkProject; imageUrls: string[] }) {
-  const [activeIndex, setActiveIndex] = useState(0);
   const imageCount = imageUrls.length;
-  const autoplay = useRef(Autoplay({ delay: 4200, stopOnInteraction: false, stopOnMouseEnter: true }));
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: imageCount > 1 }, [autoplay.current]);
+  const [ClientCarousel, setClientCarousel] = useState<ComponentType<{ projectName: string; imageUrls: string[] }> | null>(null);
 
   useEffect(() => {
-    if (!emblaApi) return;
-
-    const updateSelectedIndex = () => setActiveIndex(emblaApi.selectedScrollSnap());
-    updateSelectedIndex();
-    emblaApi.on("select", updateSelectedIndex).on("reInit", updateSelectedIndex);
+    let mounted = true;
+    void import("@/components/EmblaProjectImageCarousel").then(({ EmblaProjectImageCarousel }) => {
+      if (mounted) setClientCarousel(() => EmblaProjectImageCarousel);
+    });
     return () => {
-      emblaApi.off("select", updateSelectedIndex).off("reInit", updateSelectedIndex);
+      mounted = false;
     };
-  }, [emblaApi]);
+  }, []);
 
   if (imageCount === 0) return null;
 
-  return (
-    <div className="relative aspect-[16/10] overflow-hidden rounded-[1rem] border border-white/10 bg-[#202124]" data-project-image-count={imageCount}>
-      <div className="project-image-viewport h-full w-full" ref={emblaRef}>
-        <div className="project-image-track h-full">
-          {imageUrls.map((imageUrl, index) => (
-            <div key={`${imageUrl}-${index}`} className="project-image-slide h-full">
-              <img src={imageUrl} alt={`Project visual ${index + 1} of ${imageCount} for ${project.name}`} loading="lazy" decoding="async" className="h-full w-full object-cover" />
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" aria-hidden="true" />
-      <ProjectImageDots projectName={project.name} imageUrls={imageUrls} activeIndex={activeIndex} onSelect={(index) => emblaApi?.scrollTo(index)} />
-    </div>
-  );
+  if (ClientCarousel) return <ClientCarousel projectName={project.name} imageUrls={imageUrls} />;
+
+  return <StaticProjectImageCarousel projectName={project.name} imageUrls={imageUrls} />;
 }
 
 function AnchorArrow() {

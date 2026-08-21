@@ -107,13 +107,16 @@ describe("Lighthouse regressions", () => {
   });
 
   it("prioritizes the hero while deferring below-fold visual media", async () => {
-    const home = await readFile(projectFile("client/src/pages/Home.tsx"), "utf8");
+    const [home, staticCarousel] = await Promise.all([
+      readFile(projectFile("client/src/pages/Home.tsx"), "utf8"),
+      readFile(projectFile("client/src/components/StaticProjectImageCarousel.tsx"), "utf8"),
+    ]);
 
     expect(home).toContain('fetchPriority="high"');
     expect(home).toContain('media="(max-width: 767px)"');
     expect(home).toContain('shrey-hero-editorial-768.webp');
     expect(home).toContain('loading="lazy" decoding="async" width={32} height={32}');
-    expect(home).toContain('loading="lazy" decoding="async" className="h-full w-full object-cover"');
+    expect(staticCarousel).toContain('loading="lazy" decoding="async" className="h-full w-full object-cover"');
   });
 
   it("lets the visible desktop identity provide its own accessible link name", async () => {
@@ -159,7 +162,7 @@ describe("Lighthouse regressions", () => {
     expect(darkAccentBlock).toContain("color: #96aaff !important;");
   });
 
-  it("uses Axe AA-safe colors for the PageSpeed-flagged desktop text", async () => {
+  it("uses WCAG AA-safe text colors for every PageSpeed-flagged light-surface treatment", async () => {
     const [home, styles] = await Promise.all([
       readFile(projectFile("client/src/pages/Home.tsx"), "utf8"),
       readFile(projectFile("client/src/index.css"), "utf8"),
@@ -175,11 +178,7 @@ describe("Lighthouse regressions", () => {
     expect(home).not.toContain('text-[#777571]');
     expect(home).not.toContain('text-[#706e6a]');
     expect(home).not.toContain('text-[#456fe8]">{principle.number}');
-    expect(home).not.toContain('text-[#767570]');
-    expect(home).not.toContain('text-[#73716e]');
-    expect(home).not.toContain('text-[#9b9994]');
-    expect(home).not.toContain('<span className="px-1 text-[#aaa8a3]">·</span>');
-    expect(home).not.toContain('text-[#8e8c87]');
+    expect(home).toContain('text-[#565450]');
     expect(contrastRatio("#5f5d59", "#eeece6")).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio("#3455b8", "#f6f4ef")).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio("#3455b8", "#eeece6")).toBeGreaterThanOrEqual(4.5);

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { applyThemeColor } from "@/lib/themeColor";
 
 type Theme = "light" | "dark";
 
@@ -45,6 +46,7 @@ export function ThemeProvider({
     }
 
     localStorage.setItem("theme", theme);
+    applyThemeColor(theme);
   }, [theme, switchable]);
 
   const toggleTheme = () => {

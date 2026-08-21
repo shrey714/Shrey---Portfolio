@@ -40,7 +40,6 @@ function buildHeadTags(result: RenderResult) {
     `<meta name="author" content="${escapeHtml(portfolioContent.identity.name)}" />`,
     `<meta name="keywords" content="${escapeHtml(portfolioContent.seo.keywords.join(", "))}" />`,
     `<meta name="robots" content="${robots}" />`,
-    `<meta name="theme-color" content="#456FE8" />`,
     `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />`,
     `<meta property="og:type" content="website" />`,
     `<meta property="og:site_name" content="${escapeHtml(ENV.siteName)}" />`,

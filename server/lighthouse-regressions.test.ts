@@ -46,8 +46,21 @@ describe("Lighthouse regressions", () => {
   it("keeps viewport zoom available for low-vision users", async () => {
     const document = await readFile(projectFile("client/index.html"), "utf8");
 
-    expect(document).toContain('name="viewport" content="width=device-width, initial-scale=1.0"');
+    expect(document).toContain('name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"');
     expect(document).not.toContain("maximum-scale");
+  });
+
+  it("keeps Safari browser chrome aligned with the initial portfolio surfaces", async () => {
+    const [document, ssr] = await Promise.all([
+      readFile(projectFile("client/index.html"), "utf8"),
+      readFile(projectFile("server/_core/ssr.ts"), "utf8"),
+    ]);
+
+    expect(document).toContain('<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />');
+    expect(document).toContain('<meta name="theme-color" content="#f6f4ef" />');
+    expect(document).toContain('<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101113" />');
+    expect(ssr).not.toContain('name="theme-color"');
+    expect(ssr).not.toContain("#456FE8");
   });
 
   it("does not request analytics when its optional deployment values are unavailable", async () => {

@@ -370,7 +370,6 @@
     "scrollToTopLabel": "Scroll to top"
   },
   "hero": {
-    "nextVisualLabel": "Show next visual",
     "slides": [
       {
         "label": "Systems × experience",
@@ -431,7 +430,6 @@
     "introduction": "I’m Shrey, a product-minded software engineer and UX researcher who enjoys turning complex problems into simple, polished experiences—from the first interface to the systems underneath.",
     "roleSnapshot": "Software Engineer @ Wells Fargo",
     "basedInLabel": "Based in",
-    "previousVisualLabel": "Show previous visual",
     "workCta": "See selected work"
   },
   "practice": {

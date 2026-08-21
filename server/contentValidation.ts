@@ -54,8 +54,6 @@ export const portfolioContentSchema = z.object({
     resume: z.object({ label: text, url: link, filename: text }).strict(),
     carouselAriaLabel: text,
     carouselSelectorLabel: text,
-    previousVisualLabel: text,
-    nextVisualLabel: text,
     basedInLabel: text,
     basedInDescription: text,
     roleSnapshot: text,

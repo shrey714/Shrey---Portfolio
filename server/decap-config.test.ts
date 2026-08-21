@@ -26,6 +26,8 @@ describe("Decap CMS configuration", () => {
     const seo = portfolio.fields.find(field => field.name === "seo") as { fields: Array<{ name: string; widget: string }> };
     expect(resume.fields.find(field => field.name === "url")?.widget).toBe("file");
     expect(hero.fields.find(field => field.name === "imageUrl")?.widget).toBe("image");
+    expect(hero.fields.find(field => field.name === "previousVisualLabel")).toBeUndefined();
+    expect(hero.fields.find(field => field.name === "nextVisualLabel")).toBeUndefined();
     expect(seo.fields.find(field => field.name === "shareImage")?.widget).toBe("image");
 
     const work = portfolio.fields.find(field => field.name === "work") as { fields: Array<{ name: string; fields: Array<{ name: string; fields: Array<{ name: string; widget?: string; required?: boolean; options?: unknown[] }> }> }> };

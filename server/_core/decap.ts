@@ -42,7 +42,6 @@ function portfolioFields(): DecapField[] {
       stringField("workCta", "Work button"), stringField("contactCta", "Contact button"),
       objectField("resume", "Resume", [stringField("label", "Button label"), mediaField("url", "PDF URL", "file"), stringField("filename", "Download filename")]),
       stringField("carouselAriaLabel", "Carousel accessibility label"), stringField("carouselSelectorLabel", "Carousel selector accessibility label"),
-      stringField("previousVisualLabel", "Previous visual label"), stringField("nextVisualLabel", "Next visual label"),
       stringField("basedInLabel", "Based-in label"), stringField("basedInDescription", "Based-in description"), stringField("roleSnapshot", "Role snapshot"),
       listOfStrings("focusAreas", "Focus areas"), mediaField("imageUrl", "Hero image", "image"),
       listOfObjects("slides", "Hero slides", [

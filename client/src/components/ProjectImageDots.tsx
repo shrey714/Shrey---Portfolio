@@ -1,3 +1,5 @@
+import * as React from "react";
+
 type ProjectImageDotsProps = {
   projectName: string;
   imageUrls: string[];

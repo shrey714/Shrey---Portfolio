@@ -1,10 +1,14 @@
+import { h } from "preact";
 import render from "preact-render-to-string";
 import { describe, expect, it, vi } from "vitest";
+
+vi.mock("react", async () => import("preact/compat"));
+
 import { ProjectImageDots } from "./ProjectImageDots";
 
 describe("ProjectImageDots", () => {
   it("renders accessible dot pagination with the selected image announced", () => {
-    const html = render(<ProjectImageDots projectName="DardiBook" imageUrls={["/one.webp", "/two.webp"]} activeIndex={1} onSelect={vi.fn()} />);
+    const html = render(h(ProjectImageDots, { projectName: "DardiBook", imageUrls: ["/one.webp", "/two.webp"], activeIndex: 1, onSelect: vi.fn() }));
 
     expect(html).toContain('aria-label="Project images for DardiBook"');
     expect(html).toContain('aria-label="Show image 1 of 2 for DardiBook"');
@@ -14,6 +18,6 @@ describe("ProjectImageDots", () => {
   });
 
   it("does not render pagination for a single image", () => {
-    expect(render(<ProjectImageDots projectName="DardiBook" imageUrls={["/one.webp"]} activeIndex={0} onSelect={vi.fn()} />)).toBe("");
+    expect(render(h(ProjectImageDots, { projectName: "DardiBook", imageUrls: ["/one.webp"], activeIndex: 0, onSelect: vi.fn() }))).toBe("");
   });
 });

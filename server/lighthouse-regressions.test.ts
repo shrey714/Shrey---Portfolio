@@ -50,6 +50,13 @@ describe("Lighthouse regressions", () => {
     expect(document).not.toContain("maximum-scale");
   });
 
+  it("keeps fixed mobile navigation surfaces explicit for Safari tinting", async () => {
+    const styles = await readFile(projectFile("client/src/index.css"), "utf8");
+
+    expect(styles).toContain(".mobile-menu-layer {\n  position: fixed;\n  inset: 64px 0 0;\n  background: #f6f4ef;");
+    expect(styles).toContain(".dark .mobile-menu-layer { background: #101113; }");
+  });
+
   it("keeps Safari browser chrome aligned with the initial portfolio surfaces", async () => {
     const [document, ssr] = await Promise.all([
       readFile(projectFile("client/index.html"), "utf8"),

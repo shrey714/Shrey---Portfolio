@@ -698,6 +698,7 @@
 .mobile-menu-layer {
   position: fixed;
   inset: 64px 0 0;
+  background: #f6f4ef;
   z-index: 45;
   visibility: hidden;
   pointer-events: none;
@@ -746,6 +747,8 @@
   transform: translateY(-10px) scale(0.985);
   transition: opacity 220ms cubic-bezier(0.23, 1, 0.32, 1), transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
 }
+
+.dark .mobile-menu-layer { background: #101113; }
 
 .mobile-menu-layer.is-open .mobile-menu-backdrop {
   background: rgba(16, 17, 19, 0.42);

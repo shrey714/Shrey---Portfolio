@@ -7,10 +7,10 @@ describe("themeColor", () => {
     expect(getThemeColor("dark")).toBe("#101113");
   });
 
-  it("parses both initial Safari theme-color metadata declarations", () => {
-    const markup = '<meta name="theme-color" content="#f6f4ef" /> <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101113" />';
+  it("parses the single initial theme-color declaration used by the runtime initializer", () => {
+    const markup = '<meta name="theme-color" content="#f6f4ef" />';
 
     expect(getThemeColorMetaContent(markup)).toBe("#f6f4ef");
-    expect(getDarkThemeColorMetaContent(markup)).toBe("#101113");
+    expect(getDarkThemeColorMetaContent(markup)).toBeNull();
   });
 });

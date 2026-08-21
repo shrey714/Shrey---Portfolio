@@ -65,7 +65,9 @@ describe("Lighthouse regressions", () => {
 
     expect(document).toContain('<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />');
     expect(document).toContain('<meta name="theme-color" content="#f6f4ef" />');
-    expect(document).toContain('<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101113" />');
+    expect(document).not.toContain('media="(prefers-color-scheme: dark)"');
+    expect(document).toContain('document.documentElement.classList.toggle("dark", theme === "dark")');
+    expect(document).toContain('document.documentElement.style.colorScheme = theme');
     expect(ssr).not.toContain('name="theme-color"');
     expect(ssr).not.toContain("#456FE8");
   });

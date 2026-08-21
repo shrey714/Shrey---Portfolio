@@ -223,7 +223,7 @@
         "visualMeta": "Istine / package discovery",
         "repositoryUrl": "https://github.com/shrey714/Istine-Package-manager",
         "meta": "03 — Developer tool",
-        "visualLayout": "layout-5",
+        "visualLayout": "custom-image",
         "technologies": [
           "React Native",
           "NPM Registry API",
@@ -233,6 +233,7 @@
         "ariaLabel": "Open the Istine Package Manager source repository",
         "date": "Portfolio project",
         "cta": "Open project",
+        "visualImageUrl": "https://user-images.githubusercontent.com/76216765/183025641-f43b011c-5f8c-407a-860c-75b9c8e0a0ff.png",
         "visualTitle": "Package discovery, in context",
         "visualRows": [
           "Registry search",
@@ -240,7 +241,14 @@
           "Saved favourites"
         ],
         "type": "React Native package manager",
-        "description": "A React Native package-management application built with the NPM Registry API and Firebase. It includes package-specific communication groups, favourites, dynamic theming, notifications, advertising, and quizzes covering NPM, React, and Angular."
+        "description": "A React Native package-management application built with the NPM Registry API and Firebase. It includes package-specific communication groups, favourites, dynamic theming, notifications, advertising, and quizzes covering NPM, React, and Angular.",
+        "visualImageUrls": [
+          "https://user-images.githubusercontent.com/76216765/183025649-22f95c23-00bd-4c81-b993-46ca8f7fdb64.png",
+          "https://user-images.githubusercontent.com/76216765/183025664-ae1ca0fb-05bd-4a60-a6de-d4701d1670e1.png",
+          "https://user-images.githubusercontent.com/76216765/183025658-296c42ad-0f60-465b-b99c-b49d2e7f399d.png",
+          "https://user-images.githubusercontent.com/76216765/183025666-e38bbbc3-419c-4b37-b9f6-aef28bfab6aa.png",
+          "https://user-images.githubusercontent.com/76216765/183025671-17ac72b0-4a15-47e4-93bc-d35b447a0de6.png"
+        ]
       },
       {
         "liveUrl": "https://fliplookai-frontend.netlify.app/",

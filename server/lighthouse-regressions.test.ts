@@ -57,6 +57,16 @@ describe("Lighthouse regressions", () => {
     expect(styles).toContain(".dark .mobile-menu-layer { background: #101113; }");
   });
 
+  it("keeps theme toggles on the single runtime environment path", async () => {
+    const provider = await readFile(projectFile("client/src/contexts/ThemeContext.tsx"), "utf8");
+    const helper = await readFile(projectFile("client/src/lib/themeColor.ts"), "utf8");
+
+    expect(provider).toContain("applyThemeEnvironment(theme)");
+    expect(helper).toContain("root.style.colorScheme = mode");
+    expect(helper).toContain("meta[name=\"theme-color\"]");
+    expect(helper).not.toContain("getDarkThemeColorMetaContent");
+  });
+
   it("keeps Safari browser chrome aligned with the initial portfolio surfaces", async () => {
     const [document, ssr] = await Promise.all([
       readFile(projectFile("client/index.html"), "utf8"),

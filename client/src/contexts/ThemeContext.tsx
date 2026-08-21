@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { applyThemeColor } from "@/lib/themeColor";
+import { applyThemeEnvironment } from "@/lib/themeColor";
 
 type Theme = "light" | "dark";
 
@@ -38,15 +38,8 @@ export function ThemeProvider({
 
   useEffect(() => {
     if (!switchable) return;
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-
+    applyThemeEnvironment(theme);
     localStorage.setItem("theme", theme);
-    applyThemeColor(theme);
   }, [theme, switchable]);
 
   const toggleTheme = () => {

@@ -144,6 +144,12 @@
 
   html {
     scroll-behavior: smooth;
+    background-color: var(--background);
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
   }
 
   body {

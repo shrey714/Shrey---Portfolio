@@ -9,18 +9,11 @@ export function getThemeColor(mode: ThemeColorMode) {
   return THEME_COLORS[mode];
 }
 
-export function applyThemeColor(mode: ThemeColorMode) {
+export function applyThemeEnvironment(mode: ThemeColorMode) {
   if (typeof document === "undefined") return;
 
-  const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-  meta?.setAttribute("content", getThemeColor(mode));
-  document.documentElement.style.colorScheme = mode;
-}
-
-export function getThemeColorMetaContent(documentMarkup: string) {
-  return documentMarkup.match(/<meta name="theme-color" content="([^"]+)"\s*\/>/)?.[1] ?? null;
-}
-
-export function getDarkThemeColorMetaContent(documentMarkup: string) {
-  return documentMarkup.match(/<meta name="theme-color" media="\(prefers-color-scheme: dark\)" content="([^"]+)"\s*\/>/)?.[1] ?? null;
+  const root = document.documentElement;
+  root.classList.toggle("dark", mode === "dark");
+  root.style.colorScheme = mode;
+  document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute("content", getThemeColor(mode));
 }

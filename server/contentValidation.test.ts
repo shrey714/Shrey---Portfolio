@@ -25,6 +25,20 @@ describe("portfolio content validation", () => {
     expect(() => validatePortfolioContent(invalid)).toThrow(/visualImageUrl/);
   });
 
+  it("accepts multiple custom project images", () => {
+    const valid = structuredClone(portfolioContent) as typeof portfolioContent;
+    valid.work.projects[0].visualLayout = "custom-image";
+    valid.work.projects[0].visualImageUrls = ["/api/media/portfolio/project/one.webp", "https://example.com/two.webp"];
+    expect(validatePortfolioContent(valid).work.projects[0].visualImageUrls).toHaveLength(2);
+  });
+
+  it("rejects an empty custom project image list", () => {
+    const invalid = structuredClone(portfolioContent) as typeof portfolioContent;
+    invalid.work.projects[0].visualLayout = "custom-image";
+    invalid.work.projects[0].visualImageUrls = [];
+    expect(() => validatePortfolioContent(invalid)).toThrow(/visualImageUrls/);
+  });
+
   it("rejects a project without a source destination", () => {
     const invalid = structuredClone(portfolioContent) as typeof portfolioContent;
     delete (invalid.work.projects[0] as Partial<(typeof portfolioContent.work.projects)[number]>).repositoryUrl;

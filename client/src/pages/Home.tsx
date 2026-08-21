@@ -32,11 +32,54 @@ import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
 import { getSkillVisual } from "@/lib/skillPresentation";
 import { getActiveNavigationIndex } from "@/lib/sidebarNavigation";
 import { getScrollToTopBehavior, shouldShowScrollToTop } from "@/lib/scrollToTop";
+import { getNextProjectImageIndex, getProjectImageUrls } from "@/lib/projectImages";
 
 const hero = content.hero;
 const navItems = content.navigation;
-type WorkProject = (typeof content.work.projects)[number] & { visualImageUrl?: string };
+type WorkProject = (typeof content.work.projects)[number] & { visualImageUrl?: string; visualImageUrls?: string[] };
 type AchievementEntry = (typeof content.achievements.entries)[number] & { visualImageUrl?: string };
+
+function CustomProjectImageCarousel({ project, imageUrls }: { project: WorkProject; imageUrls: string[] }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const imageCount = imageUrls.length;
+
+  useEffect(() => {
+    setActiveIndex((index) => Math.min(index, Math.max(0, imageCount - 1)));
+  }, [imageCount]);
+
+  const move = (direction: -1 | 1) => {
+    setActiveIndex((index) => getNextProjectImageIndex(index, direction, imageCount));
+  };
+
+  if (imageCount === 0) return null;
+
+  return (
+    <div className="relative aspect-[16/10] overflow-hidden rounded-[1rem] border border-white/10 bg-[#202124]" data-project-image-count={imageCount}>
+      <div className="project-image-viewport h-full w-full">
+        <div className="project-image-track h-full" style={{ width: `${imageCount * 100}%`, transform: `translate3d(-${activeIndex * (100 / imageCount)}%, 0, 0)` }}>
+          {imageUrls.map((imageUrl, index) => (
+            <div key={`${imageUrl}-${index}`} className="project-image-slide h-full" style={{ width: `${100 / imageCount}%` }}>
+              <img src={imageUrl} alt={`Project visual ${index + 1} of ${imageCount} for ${project.name}`} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-4 pt-12">
+        <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/70">Custom project image</p>
+      </div>
+      {imageCount > 1 && (
+        <div className="absolute right-3 top-3 flex gap-1.5">
+          <button type="button" className="project-image-control" onClick={() => move(-1)} aria-label={`Previous project image for ${project.name}`}>
+            <ChevronLeft aria-hidden="true" className="h-3.5 w-3.5" />
+          </button>
+          <button type="button" className="project-image-control" onClick={() => move(1)} aria-label={`Next project image for ${project.name}`}>
+            <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function AnchorArrow() {
   return <ArrowUpRight aria-hidden="true" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />;
@@ -201,12 +244,13 @@ function ProductEvidence({ project, registerEvidence }: { project: WorkProject; 
     };
   }, [registerEvidence]);
 
-  const header = <div className="flex items-center justify-between border-b border-white/10 pb-3 text-[8px] font-semibold uppercase tracking-[0.14em] text-white/45"><span>{project.visualMeta}</span><span className="flex gap-1.5"><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-[#456fe8]" /></span></div>;
-  const rows = project.visualRows.map((row, index) => <div key={row} className="flex items-center gap-3"><span className={`h-1.5 w-1.5 shrink-0 rounded-full ${index === 1 ? "bg-[#456fe8]" : "bg-white/25"}`} /><span className="h-1.5 flex-1 rounded-full bg-white/20" /><span className="h-1.5 w-9 rounded-full bg-white/10" /></div>);
-  const customImage = project.visualLayout === "custom-image" && project.visualImageUrl;
+  const header = <div className="flex items-center justify-between border-b border-white/10 pb-3 text-[8px] font-semibold uppercase tracking-[0.14em] text-white/60"><span>{project.visualMeta}</span><span className="flex gap-1.5"><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-[#3455b8]" /></span></div>;
+  const rows = project.visualRows.map((row, index) => <div key={row} className="flex items-center gap-3"><span className={`h-1.5 w-1.5 shrink-0 rounded-full ${index === 1 ? "bg-[#3455b8]" : "bg-white/25"}`} /><span className="h-1.5 flex-1 rounded-full bg-white/20" /><span className="h-1.5 w-9 rounded-full bg-white/10" /></div>);
+  const imageUrls = project.visualLayout === "custom-image" ? getProjectImageUrls(project) : [];
+  const customImage = imageUrls.length > 0;
 
   const layout = (() => {
-    if (customImage) return <div className="relative aspect-[16/10] overflow-hidden rounded-[1rem] border border-white/10 bg-[#202124]"><img src={project.visualImageUrl} alt={`Project visual for ${project.name}`} loading="lazy" decoding="async" className="h-full w-full object-cover" /><div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-4 pt-12"><p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/70">Custom project image</p></div></div>;
+    if (customImage) return <CustomProjectImageCarousel project={project} imageUrls={imageUrls} />;
 
     if (project.visualLayout === "layout-1") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.34fr_0.66fr] gap-3"><div className="rounded-lg border border-white/9 bg-white/[0.035] p-2.5"><div className="h-1.5 w-12 rounded-full bg-white/35" /><div className="mt-4 space-y-2">{[0, 1, 2, 3].map(item => <div key={item} className={`h-5 rounded-md border border-white/[0.06] ${item === 1 ? "bg-[#456fe8]/80" : "bg-white/[0.045]"}`} />)}</div><div className="mt-4 rounded-md border border-[#456fe8]/40 bg-[#456fe8]/15 p-2"><div className="h-1.5 w-8 rounded-full bg-[#9fb2ff]" /><div className="mt-2 h-1 w-full rounded-full bg-white/15" /></div></div><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex items-start justify-between"><div><div className="h-1.5 w-20 rounded-full bg-white/65" /><div className="mt-2 h-1.5 w-14 rounded-full bg-white/20" /></div><div className="h-6 w-10 rounded-md bg-[#456fe8]" /></div><div className="mt-5 grid grid-cols-3 gap-2">{[0, 1, 2].map(item => <div key={item} className="rounded-md border border-white/[0.08] bg-white/[0.035] p-2"><div className="h-1 w-5 rounded-full bg-white/25" /><div className={`mt-3 h-8 rounded ${item === 1 ? "bg-[#456fe8]/60" : "bg-white/[0.09]"}`} /></div>)}</div><div className="mt-4 space-y-2.5">{rows}</div></div></div></div>;
 
@@ -214,9 +258,9 @@ function ProductEvidence({ project, registerEvidence }: { project: WorkProject; 
 
     if (project.visualLayout === "layout-3") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="relative mt-4 flex aspect-[16/7] items-center justify-center overflow-hidden rounded-lg border border-white/8 bg-[radial-gradient(circle_at_center,rgba(69,111,232,0.34),transparent_38%)]"><span className="absolute h-24 w-24 rounded-full border border-[#456fe8]/70" /><span className="absolute h-44 w-44 rounded-full border border-dashed border-white/15" /><div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-white/25 bg-[#456fe8] text-[8px] font-semibold uppercase tracking-[0.13em] text-white">Flow</div><div className="absolute left-[12%] top-[20%] h-9 w-14 rounded-md border border-white/15 bg-white/[0.07]" /><div className="absolute bottom-[17%] right-[12%] h-9 w-14 rounded-md border border-white/15 bg-white/[0.07]" /><span className="absolute left-[28%] top-[38%] h-px w-[23%] rotate-[18deg] bg-[#456fe8]/80" /><span className="absolute bottom-[35%] right-[28%] h-px w-[23%] -rotate-[20deg] bg-[#456fe8]/80" /></div></div>;
 
-    if (project.visualLayout === "layout-4") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.62fr_0.38fr] gap-3"><div className="relative min-h-40 overflow-hidden rounded-lg bg-[#456fe8]"><span className="absolute left-4 top-4 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/70">Editorial</span><div className="absolute -bottom-7 -right-6 h-32 w-32 rounded-full border-[18px] border-white/20" /><div className="absolute bottom-4 left-4 h-3 w-24 rounded-full bg-white/80" /><div className="absolute bottom-10 left-4 h-2 w-16 rounded-full bg-white/35" /></div><div className="space-y-3"><div className="h-20 rounded-lg border border-white/10 bg-white/[0.055]" /><div className="h-16 rounded-lg border border-white/10 bg-[#456fe8]/30" /><div className="h-8 rounded-lg border border-white/10 bg-white/[0.055]" /></div></div></div>;
+    if (project.visualLayout === "layout-4") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.62fr_0.38fr] gap-3"><div className="relative min-h-40 overflow-hidden rounded-lg bg-[#3455b8]"><span className="absolute left-4 top-4 text-[9px] font-semibold uppercase tracking-[0.16em] text-white">Editorial</span><div className="absolute -bottom-7 -right-6 h-32 w-32 rounded-full border-[18px] border-white/20" /><div className="absolute bottom-4 left-4 h-3 w-24 rounded-full bg-white/80" /><div className="absolute bottom-10 left-4 h-2 w-16 rounded-full bg-white/35" /></div><div className="space-y-3"><div className="h-20 rounded-lg border border-white/10 bg-white/[0.055]" /><div className="h-16 rounded-lg border border-white/10 bg-[#3455b8]/30" /><div className="h-8 rounded-lg border border-white/10 bg-white/[0.055]" /></div></div></div>;
 
-    return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.37fr_0.63fr] gap-3"><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border-[10px] border-[#456fe8]/70 border-r-white/10 text-[9px] font-semibold text-white/70">72%</div><div className="mt-4 space-y-2">{["Signal", "Reach", "Trend"].map((label, index) => <div key={label} className="flex items-center justify-between text-[8px] text-white/45"><span>{label}</span><span className={index === 1 ? "text-[#9fb2ff]" : ""}>+{index + 2}%</span></div>)}</div></div><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex h-24 items-end gap-2">{[35, 58, 44, 76, 62, 90, 70].map((height, index) => <span key={index} style={{ height: `${height}%` }} className={`flex-1 rounded-t-sm ${index === 5 ? "bg-[#456fe8]" : "bg-white/15"}`} />)}</div><div className="mt-4 space-y-2.5">{rows}</div></div></div></div>;
+    return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.37fr_0.63fr] gap-3"><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border-[10px] border-[#3455b8]/70 border-r-white/10 text-[9px] font-semibold text-white/70">72%</div><div className="mt-4 space-y-2">{["Signal", "Reach", "Trend"].map((label, index) => <div key={label} className="flex items-center justify-between text-[8px] text-white/60"><span>{label}</span><span className={index === 1 ? "text-[#9fb2ff]" : ""}>+{index + 2}%</span></div>)}</div></div><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex h-24 items-end gap-2">{[35, 58, 44, 76, 62, 90, 70].map((height, index) => <span key={index} style={{ height: `${height}%` }} className={`flex-1 rounded-t-sm ${index === 5 ? "bg-[#3455b8]" : "bg-white/15"}`} />)}</div><div className="mt-4 space-y-2.5">{rows}</div></div></div></div>;
   })();
 
   return <div ref={evidenceRef} className={`project-evidence relative overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#26272a] p-3 shadow-[0_24px_55px_-40px_rgba(0,0,0,0.8)] ${isVisible ? "is-visible" : ""}`}><div className="project-evidence-glow absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(69,111,232,0.22),transparent_35%)]" /><div className="relative">{layout}</div><div className="relative flex items-end justify-between px-1 pb-1 pt-4 text-white"><p className="max-w-[12rem] text-xs font-medium tracking-[-0.02em] text-white/80 sm:text-sm">{project.visualTitle}</p><span className="rounded-full border border-white/14 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.13em] text-white/60">{customImage ? "Custom image" : project.visualLayout.replace("layout-", "Layout ")}</span></div></div>;
@@ -227,8 +271,8 @@ function SystemsEvidence() {
     <div className="relative overflow-hidden rounded-[1.5rem] border border-[#1b1c1d]/10 bg-[#f5f3ed] p-5 shadow-[0_25px_55px_-42px_rgba(27,28,29,0.42)] sm:p-7">
       <div className="absolute inset-0 opacity-50 dot-field" />
       <div className="relative grid grid-cols-[0.24fr_0.52fr_0.24fr] items-center gap-2 sm:gap-4">
-        <div className="space-y-3"><div className="h-10 rounded-lg border border-[#1b1c1d]/10 bg-white/70" /><div className="h-6 rounded-lg border border-[#1b1c1d]/10 bg-white/55" /><div className="h-14 rounded-lg border border-[#1b1c1d]/10 bg-[#456fe8]/12" /></div>
-        <div className="relative flex aspect-square items-center justify-center rounded-full border border-[#456fe8]/30 bg-[#456fe8]/8"><div className="absolute h-[70%] w-[70%] rounded-full border border-dashed border-[#456fe8]/45" /><div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-[#1b1c1d]/15 bg-[#1b1c1d] text-[9px] font-semibold uppercase tracking-[0.14em] text-white">{content.practice.visualFlow}</div><div className="absolute right-1 top-5 h-3 w-3 rounded-full border-2 border-[#f5f3ed] bg-[#456fe8]" /></div>
+        <div className="space-y-3"><div className="h-10 rounded-lg border border-[#1b1c1d]/10 bg-white/70" /><div className="h-6 rounded-lg border border-[#1b1c1d]/10 bg-white/55" /><div className="h-14 rounded-lg border border-[#1b1c1d]/10 bg-[#3455b8]/12" /></div>
+        <div className="relative flex aspect-square items-center justify-center rounded-full border border-[#3455b8]/30 bg-[#3455b8]/8"><div className="absolute h-[70%] w-[70%] rounded-full border border-dashed border-[#3455b8]/45" /><div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-[#1b1c1d]/15 bg-[#1b1c1d] text-[9px] font-semibold uppercase tracking-[0.14em] text-white">{content.practice.visualFlow}</div><div className="absolute right-1 top-5 h-3 w-3 rounded-full border-2 border-[#f5f3ed] bg-[#3455b8]" /></div>
         <div className="space-y-3"><div className="ml-auto h-14 w-full rounded-lg border border-[#1b1c1d]/10 bg-white/70" /><div className="ml-auto h-6 w-3/4 rounded-lg border border-[#1b1c1d]/10 bg-white/55" /><div className="ml-auto h-10 w-full rounded-lg border border-[#1b1c1d]/10 bg-[#1b1c1d]/[0.06]" /></div>
       </div>
       <div className="relative mt-6 flex flex-wrap items-baseline justify-between gap-x-5 gap-y-2 border-t border-[#1b1c1d]/10 pt-4 text-[9px] font-semibold uppercase tracking-[0.13em] text-[#5f5d59]"><span className="whitespace-nowrap">{content.practice.visualSystemNote}</span><span className="whitespace-nowrap text-[#3455b8]">{content.practice.visualTag}</span></div>
@@ -367,7 +411,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="portfolio min-h-screen overflow-x-clip bg-[#f6f4ef] text-[#1b1c1d] selection:bg-[#456fe8] selection:text-white">
+    <div className="portfolio min-h-screen overflow-x-clip bg-[#f6f4ef] text-[#1b1c1d] selection:bg-[#3455b8] selection:text-white">
       <header className="theme-light-surface fixed inset-x-0 top-0 z-50 border-b border-[#1b1c1d]/8 bg-[#f6f4ef]/85 px-5 py-3 backdrop-blur-xl lg:hidden">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <a href="#top" tabIndex={showMobileIdentity ? 0 : -1} aria-hidden={!showMobileIdentity} className={`mobile-header-identity text-sm font-semibold tracking-[-0.03em] ${showMobileIdentity ? "is-visible" : ""}`} aria-label={content.ui.homeAriaLabel}>{content.identity.name}</a>
@@ -406,11 +450,11 @@ export default function Home() {
       </div>
 
       <aside className="theme-light-surface fixed inset-y-0 left-0 z-40 hidden w-72 flex-col border-r border-[#1b1c1d]/10 bg-[#f6f4ef] px-7 py-8 lg:flex">
-        <span aria-hidden="true" className="absolute bottom-0 left-0 top-0 w-1 bg-[#456fe8]" />
-        <a href="#top"><p className="text-sm font-semibold tracking-[-0.04em]">{content.identity.name}</p><p className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.15em] text-[#676766]">{content.identity.pageDescriptor}</p></a>
+        <span aria-hidden="true" className="absolute bottom-0 left-0 top-0 w-1 bg-[#3455b8]" />
+        <a href="#top"><p className="text-sm font-semibold tracking-[-0.04em]">{content.identity.name}</p><p className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.15em] text-[#5f5d59]">{content.identity.pageDescriptor}</p></a>
 
         <nav className="relative mt-20 flex flex-col gap-1" aria-label={content.ui.sectionNavigationLabel} style={{ "--active-nav-index": activeNavIndex } as CSSProperties}>
-          <span aria-hidden="true" className="sidebar-nav-active-indicator pointer-events-none absolute inset-x-0 top-0 h-10 rounded-lg bg-white/75 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"><span className="absolute right-2 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#456fe8]" /></span>
+          <span aria-hidden="true" className="sidebar-nav-active-indicator pointer-events-none absolute inset-x-0 top-0 h-10 rounded-lg bg-white/75 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"><span className="absolute right-2 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#3455b8]" /></span>
           {navItems.map((item) => (
             <a
               key={item.id}
@@ -436,13 +480,13 @@ export default function Home() {
       <main className="pt-[64px] lg:ml-72 lg:pt-0">
         <section id="top" className="theme-light-surface relative isolate min-h-[calc(100svh-64px)] overflow-hidden px-5 pb-12 pt-16 sm:px-8 sm:pt-24 lg:min-h-screen lg:px-12 lg:pt-12 xl:px-16">
           <div className="pointer-events-none absolute inset-0 dot-field opacity-60" />
-          <div className="pointer-events-none absolute -right-20 top-4 h-[27rem] w-[27rem] rounded-full bg-[#456fe8]/7 blur-3xl sm:h-[36rem] sm:w-[36rem]" />
+          <div className="pointer-events-none absolute -right-20 top-4 h-[27rem] w-[27rem] rounded-full bg-[#3455b8]/7 blur-3xl sm:h-[36rem] sm:w-[36rem]" />
           <div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-12 lg:min-h-[calc(100svh-6rem)]">
             <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(340px,0.72fr)] lg:gap-16">
               <div className="max-w-3xl pt-2 lg:pt-20">
                 <div className="reveal-in mb-8 [animation-delay:20ms]"><p className="text-sm font-semibold tracking-[-0.04em]">{content.identity.name}</p><p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#5f5d59]">{content.identity.roleDescriptor}</p></div>
                 <div className="reveal-in flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#62615e] [animation-delay:40ms]">
-                  <span className="h-px w-7 bg-[#456fe8]" />
+                  <span className="h-px w-7 bg-[#3455b8]" />
                   {hero.roleLine}
                 </div>
                 <h1 className="reveal-in mt-7 font-serif text-[clamp(3.35rem,8vw,7.3rem)] leading-[0.88] tracking-[-0.07em] text-[#1b1c1d] [animation-delay:120ms]">
@@ -454,13 +498,13 @@ export default function Home() {
                   {hero.introduction}
                 </p>
                 <div className="reveal-in mt-9 flex flex-wrap items-center gap-3 [animation-delay:280ms]">
-                  <a href="#work" className="group inline-flex items-center gap-2 rounded-full bg-[#1b1c1d] px-5 py-3 text-sm font-semibold text-[#f6f4ef] transition-all duration-200 hover:bg-[#456fe8] active:scale-[0.97]">
+                  <a href="#work" className="group inline-flex items-center gap-2 rounded-full bg-[#1b1c1d] px-5 py-3 text-sm font-semibold text-[#f6f4ef] transition-all duration-200 hover:bg-[#3455b8] active:scale-[0.97]">
                     {hero.workCta} <ArrowDown className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
                   </a>
-                  <a href="#contact" className="group inline-flex items-center gap-2 rounded-full border border-[#1b1c1d]/14 bg-white/50 px-5 py-3 text-sm font-semibold text-[#1b1c1d] transition-colors duration-200 hover:border-[#456fe8]/40 hover:bg-white active:scale-[0.97]">
+                  <a href="#contact" className="group inline-flex items-center gap-2 rounded-full border border-[#1b1c1d]/14 bg-white/50 px-5 py-3 text-sm font-semibold text-[#1b1c1d] transition-colors duration-200 hover:border-[#3455b8]/40 hover:bg-white active:scale-[0.97]">
                     {hero.contactCta} <AnchorArrow />
                   </a>
-                  <a href={hero.resume.url} download={hero.resume.filename} className="group inline-flex items-center gap-2 rounded-full border border-[#1b1c1d]/14 bg-transparent px-5 py-3 text-sm font-semibold text-[#1b1c1d] transition-colors duration-200 hover:border-[#456fe8]/45 hover:bg-white/55 active:scale-[0.97]">
+                  <a href={hero.resume.url} download={hero.resume.filename} className="group inline-flex items-center gap-2 rounded-full border border-[#1b1c1d]/14 bg-transparent px-5 py-3 text-sm font-semibold text-[#1b1c1d] transition-colors duration-200 hover:border-[#3455b8]/45 hover:bg-white/55 active:scale-[0.97]">
                     {hero.resume.label} <Download className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
                   </a>
                 </div>
@@ -519,8 +563,15 @@ export default function Home() {
                     </div>
                   </div>
                 );
-                const visual = (
-                  <a href={primaryUrl} target="_blank" rel="noreferrer" className={`relative block transition-transform duration-300 hover:-translate-y-1 ${project.visualLayout === "layout-3" ? "lg:max-w-[31rem]" : ""}`} aria-label={project.ariaLabel}>
+                const visualClassName = `relative block transition-transform duration-300 hover:-translate-y-1 ${project.visualLayout === "layout-3" ? "lg:max-w-[31rem]" : ""}`;
+                const hasMultipleProjectImages = project.visualLayout === "custom-image" && getProjectImageUrls(project as WorkProject).length > 1;
+                const visual = hasMultipleProjectImages ? (
+                  <div className={visualClassName} aria-label={project.ariaLabel}>
+                    <ProductEvidence project={project} registerEvidence={registerEvidence} />
+                    <a href={primaryUrl} target="_blank" rel="noreferrer" aria-label={project.ariaLabel} className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></a>
+                  </div>
+                ) : (
+                  <a href={primaryUrl} target="_blank" rel="noreferrer" className={visualClassName} aria-label={project.ariaLabel}>
                     <ProductEvidence project={project} registerEvidence={registerEvidence} />
                     <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
                   </a>

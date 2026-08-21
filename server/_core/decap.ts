@@ -25,6 +25,7 @@ const stringField = (name: string, label: string, required = true): DecapField =
 const textField = (name: string, label: string, required = true): DecapField => ({ name, label, widget: "text", required });
 const mediaField = (name: string, label: string, widget: "file" | "image", required = true, hint?: string): DecapField => ({ name, label, widget, required, hint });
 const listOfStrings = (name: string, label: string): DecapField => ({ name, label, widget: "list", field: stringField("value", "Value") });
+const listOfMedia = (name: string, label: string, hint?: string): DecapField => ({ name, label, widget: "list", hint, field: mediaField("image", "Image", "image") });
 const objectField = (name: string, label: string, fields: DecapField[]): DecapField => ({ name, label, widget: "object", fields });
 const listOfObjects = (name: string, label: string, fields: DecapField[]): DecapField => ({ name, label, widget: "list", fields });
 
@@ -61,7 +62,8 @@ function portfolioFields(): DecapField[] {
           { label: "Layout 5 — Analytics panel", value: "layout-5" },
           { label: "Custom image — Upload or choose an image below", value: "custom-image" },
         ] } as DecapField,
-        mediaField("visualImageUrl", "Custom project image", "image", false, "Use this only when Project visual is set to Custom image."),
+        mediaField("visualImageUrl", "Custom project image", "image", false, "Backward-compatible single image field; use the image list below for multiple images."),
+        listOfMedia("visualImageUrls", "Additional custom project images", "Add as many images as needed. Use these when Project visual is set to Custom image."),
         stringField("meta", "Meta"), stringField("date", "Date"), stringField("name", "Project name"), stringField("type", "Project type"),
         textField("description", "Description"), listOfStrings("technologies", "Technologies"), stringField("cta", "Button label"),
         stringField("ariaLabel", "Button accessibility label"), stringField("repositoryUrl", "GitHub or source URL"), stringField("liveUrl", "Live project URL", false), stringField("visualMeta", "Visual meta"), stringField("visualTitle", "Visual title"),

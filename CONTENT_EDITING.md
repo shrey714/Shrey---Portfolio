@@ -31,7 +31,7 @@ Use the native **Media** panel in `/admin` to upload, select, and delete images 
 
 ### Project visuals
 
-Each project in **Selected work** can use one of five presentation presets: **Layout 1 — Workflow dashboard**, **Layout 2 — Commerce board**, **Layout 3 — System map**, **Layout 4 — Editorial showcase**, or **Layout 5 — Analytics panel**. They change only the decorative visual frame, not the project copy or links. Select **Custom image** when you want to use your own project image instead, then choose an image from the native Media panel in **Custom project image**.
+Each project in **Selected work** can use one of five presentation presets: **Layout 1 — Workflow dashboard**, **Layout 2 — Commerce board**, **Layout 3 — System map**, **Layout 4 — Editorial showcase**, or **Layout 5 — Analytics panel**. They change only the decorative visual frame, not the project copy or links. Select **Project images** when you want to use your own visuals, then add one or more assets in the single **Project images** field. Multiple images autoplay and can also be selected with the pagination dots on the public portfolio.
 
 ### Adding an experience
 

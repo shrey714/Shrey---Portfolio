@@ -178,7 +178,7 @@ export default defineConfig({
     emptyOutDir: true,
   },
   ssr: {
-    noExternal: ["lucide-react"],
+    noExternal: ["lucide-react", "embla-carousel-react", "embla-carousel-autoplay", "embla-carousel"],
   },
   server: {
     host: true,

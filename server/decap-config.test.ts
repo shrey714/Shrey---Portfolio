@@ -31,11 +31,11 @@ describe("Decap CMS configuration", () => {
     const work = portfolio.fields.find(field => field.name === "work") as { fields: Array<{ name: string; fields: Array<{ name: string; fields: Array<{ name: string; widget?: string; required?: boolean; options?: unknown[] }> }> }> };
     const projectFields = work.fields.find(field => field.name === "projects")?.fields ?? [];
     const visualLayout = projectFields.find(field => field.name === "visualLayout");
-    const customImage = projectFields.find(field => field.name === "visualImageUrl");
     const customImages = projectFields.find(field => field.name === "visualImageUrls") as { widget?: string; field?: { widget?: string; name?: string } } | undefined;
     expect(visualLayout?.options).toHaveLength(6);
-    expect(customImage).toMatchObject({ widget: "image", required: false });
     expect(customImages).toMatchObject({ widget: "list", field: { widget: "image", name: "image" } });
+    expect(customImages).toMatchObject({ label: "Project images" });
+    expect(projectFields.find(field => field.name === "visualImageUrl")).toBeUndefined();
 
     const achievements = portfolio.fields.find(field => field.name === "achievements") as { fields: Array<{ name: string; fields: Array<{ name: string; widget?: string; required?: boolean; options?: unknown[] }> }> };
     const achievementFields = achievements.fields.find(field => field.name === "entries")?.fields ?? [];

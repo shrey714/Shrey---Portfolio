@@ -32,6 +32,12 @@ describe("portfolio content validation", () => {
     expect(validatePortfolioContent(valid).work.projects[0].visualImageUrls).toHaveLength(2);
   });
 
+  it("rejects the retired singular project-image field", () => {
+    const invalid = structuredClone(portfolioContent) as typeof portfolioContent & { work: { projects: Array<Record<string, unknown>> } };
+    invalid.work.projects[0].visualImageUrl = "/api/media/portfolio/project/legacy.webp";
+    expect(() => validatePortfolioContent(invalid)).toThrow(/visualImageUrl/);
+  });
+
   it("rejects an empty custom project image list", () => {
     const invalid = structuredClone(portfolioContent) as typeof portfolioContent;
     invalid.work.projects[0].visualLayout = "custom-image";

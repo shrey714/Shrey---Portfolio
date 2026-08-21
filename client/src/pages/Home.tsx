@@ -4,6 +4,8 @@
  * and restrained motion communicate a product-minded engineering practice.
  */
 import { type CSSProperties, type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Award,
   ArrowDown,
@@ -26,57 +28,52 @@ import {
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { portfolioContent as content } from "@/content/portfolioContent";
+import { ProjectImageDots } from "@/components/ProjectImageDots";
 import { getAppearanceToggleState } from "@/lib/appearanceToggle";
 import { getAchievementVisualKind } from "@/lib/achievementPresentation";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
 import { getSkillVisual } from "@/lib/skillPresentation";
 import { getActiveNavigationIndex } from "@/lib/sidebarNavigation";
 import { getScrollToTopBehavior, shouldShowScrollToTop } from "@/lib/scrollToTop";
-import { getNextProjectImageIndex, getProjectImageUrls } from "@/lib/projectImages";
+import { getProjectImageUrls } from "@/lib/projectImages";
 
 const hero = content.hero;
 const navItems = content.navigation;
-type WorkProject = (typeof content.work.projects)[number] & { visualImageUrl?: string; visualImageUrls?: string[] };
+type WorkProject = (typeof content.work.projects)[number] & { visualImageUrls?: string[] };
 type AchievementEntry = (typeof content.achievements.entries)[number] & { visualImageUrl?: string };
 
 function CustomProjectImageCarousel({ project, imageUrls }: { project: WorkProject; imageUrls: string[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const imageCount = imageUrls.length;
+  const autoplay = useRef(Autoplay({ delay: 4200, stopOnInteraction: false, stopOnMouseEnter: true }));
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: imageCount > 1 }, [autoplay.current]);
 
   useEffect(() => {
-    setActiveIndex((index) => Math.min(index, Math.max(0, imageCount - 1)));
-  }, [imageCount]);
+    if (!emblaApi) return;
 
-  const move = (direction: -1 | 1) => {
-    setActiveIndex((index) => getNextProjectImageIndex(index, direction, imageCount));
-  };
+    const updateSelectedIndex = () => setActiveIndex(emblaApi.selectedScrollSnap());
+    updateSelectedIndex();
+    emblaApi.on("select", updateSelectedIndex).on("reInit", updateSelectedIndex);
+    return () => {
+      emblaApi.off("select", updateSelectedIndex).off("reInit", updateSelectedIndex);
+    };
+  }, [emblaApi]);
 
   if (imageCount === 0) return null;
 
   return (
     <div className="relative aspect-[16/10] overflow-hidden rounded-[1rem] border border-white/10 bg-[#202124]" data-project-image-count={imageCount}>
-      <div className="project-image-viewport h-full w-full">
-        <div className="project-image-track h-full" style={{ width: `${imageCount * 100}%`, transform: `translate3d(-${activeIndex * (100 / imageCount)}%, 0, 0)` }}>
+      <div className="project-image-viewport h-full w-full" ref={emblaRef}>
+        <div className="project-image-track h-full">
           {imageUrls.map((imageUrl, index) => (
-            <div key={`${imageUrl}-${index}`} className="project-image-slide h-full" style={{ width: `${100 / imageCount}%` }}>
+            <div key={`${imageUrl}-${index}`} className="project-image-slide h-full">
               <img src={imageUrl} alt={`Project visual ${index + 1} of ${imageCount} for ${project.name}`} loading="lazy" decoding="async" className="h-full w-full object-cover" />
             </div>
           ))}
         </div>
       </div>
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-4 pt-12">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/70">Custom project image</p>
-      </div>
-      {imageCount > 1 && (
-        <div className="absolute right-3 top-3 flex gap-1.5">
-          <button type="button" className="project-image-control" onClick={() => move(-1)} aria-label={`Previous project image for ${project.name}`}>
-            <ChevronLeft aria-hidden="true" className="h-3.5 w-3.5" />
-          </button>
-          <button type="button" className="project-image-control" onClick={() => move(1)} aria-label={`Next project image for ${project.name}`}>
-            <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
-          </button>
-        </div>
-      )}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" aria-hidden="true" />
+      <ProjectImageDots projectName={project.name} imageUrls={imageUrls} activeIndex={activeIndex} onSelect={(index) => emblaApi?.scrollTo(index)} />
     </div>
   );
 }
@@ -263,7 +260,7 @@ function ProductEvidence({ project, registerEvidence }: { project: WorkProject; 
     return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.37fr_0.63fr] gap-3"><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border-[10px] border-[#3455b8]/70 border-r-white/10 text-[9px] font-semibold text-white/70">72%</div><div className="mt-4 space-y-2">{["Signal", "Reach", "Trend"].map((label, index) => <div key={label} className="flex items-center justify-between text-[8px] text-white/60"><span>{label}</span><span className={index === 1 ? "text-[#9fb2ff]" : ""}>+{index + 2}%</span></div>)}</div></div><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex h-24 items-end gap-2">{[35, 58, 44, 76, 62, 90, 70].map((height, index) => <span key={index} style={{ height: `${height}%` }} className={`flex-1 rounded-t-sm ${index === 5 ? "bg-[#3455b8]" : "bg-white/15"}`} />)}</div><div className="mt-4 space-y-2.5">{rows}</div></div></div></div>;
   })();
 
-  return <div ref={evidenceRef} className={`project-evidence relative overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#26272a] p-3 shadow-[0_24px_55px_-40px_rgba(0,0,0,0.8)] ${isVisible ? "is-visible" : ""}`}><div className="project-evidence-glow absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(69,111,232,0.22),transparent_35%)]" /><div className="relative">{layout}</div><div className="relative flex items-end justify-between px-1 pb-1 pt-4 text-white"><p className="max-w-[12rem] text-xs font-medium tracking-[-0.02em] text-white/80 sm:text-sm">{project.visualTitle}</p><span className="rounded-full border border-white/14 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.13em] text-white/60">{customImage ? "Custom image" : project.visualLayout.replace("layout-", "Layout ")}</span></div></div>;
+  return <div ref={evidenceRef} className={`project-evidence relative overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#26272a] p-3 shadow-[0_24px_55px_-40px_rgba(0,0,0,0.8)] ${isVisible ? "is-visible" : ""}`}><div className="project-evidence-glow absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(69,111,232,0.22),transparent_35%)]" /><div className="relative">{layout}</div><div className="relative flex items-end justify-between px-1 pb-1 pt-4 text-white"><p className="max-w-[12rem] text-xs font-medium tracking-[-0.02em] text-white/80 sm:text-sm">{project.visualTitle}</p>{!customImage && <span className="rounded-full border border-white/14 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.13em] text-white/60">{project.visualLayout.replace("layout-", "Layout ")}</span>}</div></div>;
 }
 
 function SystemsEvidence() {

@@ -22,7 +22,6 @@ const achievementEntrySchema = z.object({
 });
 const projectSchema = z.object({
   visualLayout: z.enum(["layout-1", "layout-2", "layout-3", "layout-4", "layout-5", "custom-image"]),
-  visualImageUrl: link.optional(),
   visualImageUrls: z.array(link).min(1).optional(),
   meta: text,
   date: text,
@@ -38,7 +37,7 @@ const projectSchema = z.object({
   visualTitle: text,
   visualRows: listOfText,
 }).strict().superRefine((project, context) => {
-  if (project.visualLayout === "custom-image" && !project.visualImageUrl && !project.visualImageUrls?.length) {
+  if (project.visualLayout === "custom-image" && !project.visualImageUrls?.length) {
     context.addIssue({ code: "custom", path: ["visualImageUrls"], message: "Choose at least one custom project image when using the Custom image visual." });
   }
 });

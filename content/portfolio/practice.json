@@ -1,0 +1,22 @@
+{
+  "visualSystemNote": "Signal / decision / response",
+  "skills": [
+    { "name": "Android technologies", "tools": "React Native · Expo" },
+    { "name": "Backend technologies", "tools": "Node.js · Express.js · MongoDB · Django" },
+    { "name": "Frontend technologies", "tools": "HTML · CSS · React.js" },
+    { "name": "Programming languages", "tools": "C · C++ · JavaScript · Python" },
+    { "name": "Other stacks", "tools": "Git & GitHub · Bootstrap · Figma · Canva · Tailwind" }
+  ],
+  "heading": "The work behind the work.",
+  "disciplines": [
+    { "title": "Interface design", "text": "Making complex workflows clear, calm, and easy to navigate." },
+    { "title": "UX architecture", "text": "Mapping decisions, edge cases, and information before they become interface debt." },
+    { "title": "Frontend craft", "text": "Translating systems into responsive, resilient interfaces with considered detail." },
+    { "title": "Research mindset", "text": "Watching for assumptions, asking why, and letting real constraints shape the answer." }
+  ],
+  "eyebrow": "Practice",
+  "visualFlow": "Flow",
+  "visualCallout": "Detail is part of the system.",
+  "introduction": "I work best in the space between a messy problem and a usable system. That means thinking through flows, asking sharper questions, shaping the interface, and staying close enough to implementation that the details hold up.",
+  "visualTag": "System note 01"
+}

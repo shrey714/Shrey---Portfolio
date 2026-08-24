@@ -1,0 +1,51 @@
+{
+  "slides": [
+    {
+      "label": "Systems × experience",
+      "caption": "A visual language where interface and engineering connect.",
+      "alt": "Abstract cobalt architectural forms on a warm porcelain studio surface"
+    },
+    {
+      "label": "Interface architecture",
+      "caption": "Turning dense workflows into deliberate, readable product surfaces.",
+      "alt": "Abstract interface architecture composition",
+      "metaLeft": "Interface / 02",
+      "metaRight": "Flow state",
+      "annotation": "Readable flows / intentional states"
+    },
+    {
+      "label": "System thinking",
+      "caption": "Following the path from signal to decision to response.",
+      "alt": "Abstract system flow composition",
+      "metaLeft": "Systems / 03",
+      "metaRight": "Signal map",
+      "annotation": "From signal to response",
+      "nodes": ["Signal", "Decision", "Response"]
+    },
+    {
+      "label": "Detail as a feature",
+      "caption": "The small decisions that make a product feel complete.",
+      "alt": "Abstract editorial detail composition",
+      "metaLeft": "Details / 04",
+      "metaRight": "Field note",
+      "annotation": "Small choices, considered"
+    }
+  ],
+  "heading": ["I make digital", "systems feel", "considered."],
+  "basedInDescription": "Designing across interaction, interface, and implementation.",
+  "roleLine": "UI Designer · Frontend Developer · UX Architect",
+  "carouselAriaLabel": "Selected design perspectives",
+  "resume": {
+    "label": "Download Resume",
+    "url": "/api/media/portfolio/1786995073404-7608fdc2-Shrey-Patel.pdf",
+    "filename": "Shrey-Patel-Resume.pdf"
+  },
+  "focusAreas": ["Frontend interfaces", "Product systems", "User research"],
+  "contactCta": "Start a conversation",
+  "imageUrl": "/api/media/portfolio/hero/shrey-hero-editorial-1024.webp",
+  "carouselSelectorLabel": "Hero visual selector",
+  "introduction": "I’m Shrey, a product-minded software engineer and UX researcher who enjoys turning complex problems into simple, polished experiences—from the first interface to the systems underneath.",
+  "roleSnapshot": "Software Engineer @ Wells Fargo",
+  "basedInLabel": "Based in",
+  "workCta": "See selected work"
+}

@@ -1,0 +1,61 @@
+{
+  "eyebrow": "Achievements and participation",
+  "heading": "Learning in public.",
+  "introduction": "Community leadership, technical gatherings, and challenges that expanded how I build, collaborate, and keep learning.",
+  "entries": [
+    {
+      "visualMode": "image",
+      "meta": "01 — Community leadership",
+      "imageAlt": "Google Developer Student Clubs program mark",
+      "date": "2022 — 2023",
+      "organization": "Google Developer Student Club",
+      "visualImageUrl": "/api/media/portfolio/uploads/gdsc-program-mark-160.webp",
+      "visualLabel": "Google Developer Student Clubs",
+      "title": "GDSC Lead",
+      "description": "Led the Google Developer Student Club for the 2022–23 academic year, helping create a student community around developer learning and collaboration."
+    },
+    {
+      "visualMode": "placeholder",
+      "meta": "02 — Youth conclave",
+      "imageAlt": "Editorial placeholder for INAE–SERB Youth Conclave",
+      "date": "2022",
+      "organization": "IIT Jodhpur",
+      "visualImageUrl": "/api/media/portfolio/uploads/inae-serb-youth-conclave-160.webp",
+      "visualLabel": "INAE · SERB",
+      "title": "INAE–SERB Youth Conclave",
+      "description": "Participated in the INAE–SERB Youth Conclave conducted at IIT Jodhpur."
+    },
+    {
+      "visualMode": "placeholder",
+      "meta": "03 — Hackathon",
+      "imageAlt": "Editorial placeholder for DotSlash 5.0",
+      "date": "Participation",
+      "organization": "SVNIT Surat",
+      "visualImageUrl": "/api/media/portfolio/uploads/dotslash-5-160.webp",
+      "visualLabel": "DotSlash 5.0",
+      "title": "DotSlash 5.0",
+      "description": "Participated in DotSlash 5.0 conducted at SVNIT Surat."
+    },
+    {
+      "visualMode": "placeholder",
+      "meta": "04 — Cloud challenge",
+      "imageAlt": "Editorial placeholder for Learn to Earn Cloud Challenge",
+      "date": "2021",
+      "organization": "Google Cloud",
+      "visualImageUrl": "/api/media/portfolio/uploads/learn-to-earn-cloud-challenge-160.webp",
+      "visualLabel": "Cloud Challenge",
+      "title": "Learn to Earn Cloud Challenge",
+      "description": "Participated in the Learn to Earn Cloud Challenge 2021."
+    },
+    {
+      "meta": "05 — Codathon",
+      "title": "ISTE SC MANIT’s Codathon",
+      "organization": "ISTE Student Chapter, MANIT",
+      "date": "Participation",
+      "description": "Participated in ISTE SC MANIT’s Codathon.",
+      "visualMode": "placeholder",
+      "visualLabel": "Codathon",
+      "imageAlt": "Editorial placeholder for ISTE SC MANIT’s Codathon"
+    }
+  ]
+}

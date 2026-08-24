@@ -1,5 +1,5 @@
 import superjson from "superjson";
-import portfolioContent from "../../content/portfolio.json" with { type: "json" };
+import { portfolioContent } from "../../content/portfolioContent";
 import type { RenderResult } from "../../client/src/entry-server.js";
 import { ENV } from "./env.js";
 

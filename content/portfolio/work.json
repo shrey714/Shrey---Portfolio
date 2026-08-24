@@ -1,0 +1,93 @@
+{
+  "eyebrow": "Selected work",
+  "heading": "Products with a clear point of view.",
+  "introduction": "A small selection of systems where interface thinking and engineering have to work together.",
+  "projects": [
+    {
+      "liveUrl": "https://dashboard.dardibook.in/",
+      "visualMeta": "DardiBook / workflow",
+      "repositoryUrl": "https://github.com/shrey714/dardibook-dashboard",
+      "meta": "01 — Product system",
+      "visualLayout": "layout-1",
+      "technologies": ["Next.js", "Firebase", "Liveblocks", "Razorpay"],
+      "name": "DardiBook",
+      "ariaLabel": "Open the DardiBook dashboard",
+      "date": "2025",
+      "cta": "Open live dashboard",
+      "visualTitle": "Operational care, in view",
+      "visualRows": ["Patient flow", "Team handoff", "Billing state"],
+      "type": "Clinic management platform",
+      "description": "A digital workspace that brings authentication, real-time collaboration, operational state, and subscription experiences into one calmer clinical workflow."
+    },
+    {
+      "visualMeta": "Shopkeeper AI / operations",
+      "repositoryUrl": "https://github.com/shrey714/Voice-AI",
+      "meta": "02 — Commerce system",
+      "visualLayout": "layout-2",
+      "technologies": ["Expo", "React", "TypeScript", "Supabase"],
+      "name": "Shopkeeper AI",
+      "ariaLabel": "Open the Shopkeeper AI source repository",
+      "date": "In progress",
+      "cta": "Open project",
+      "visualTitle": "Inventory, from shelf to storefront",
+      "visualRows": ["Catalog signal", "Stock health", "Store orders"],
+      "type": "Inventory & online store management",
+      "description": "One ecosystem for shopkeepers: a native mobile experience for day-to-day inventory and a customer-facing storefront for turning stock into commerce."
+    },
+    {
+      "visualMeta": "Istine / package discovery",
+      "repositoryUrl": "https://github.com/shrey714/Istine-Package-manager",
+      "meta": "03 — Developer tool",
+      "visualLayout": "custom-image",
+      "technologies": ["React Native", "NPM Registry API", "Firebase"],
+      "name": "Istine Package Manager",
+      "ariaLabel": "Open the Istine Package Manager source repository",
+      "date": "Portfolio project",
+      "cta": "Open project",
+      "visualTitle": "Package discovery, in context",
+      "visualRows": ["Registry search", "Package community", "Saved favourites"],
+      "type": "React Native package manager",
+      "description": "A React Native package-management application built with the NPM Registry API and Firebase. It includes package-specific communication groups, favourites, dynamic theming, notifications, advertising, and quizzes covering NPM, React, and Angular.",
+      "visualImageUrls": [
+        "https://user-images.githubusercontent.com/76216765/183025641-f43b011c-5f8c-407a-860c-75b9c8e0a0ff.png",
+        "https://user-images.githubusercontent.com/76216765/183025649-22f95c23-00bd-4c81-b993-46ca8f7fdb64.png",
+        "https://user-images.githubusercontent.com/76216765/183025664-ae1ca0fb-05bd-4a60-a6de-d4701d1670e1.png",
+        "https://user-images.githubusercontent.com/76216765/183025658-296c42ad-0f60-465b-b99c-b49d2e7f399d.png",
+        "https://user-images.githubusercontent.com/76216765/183025666-e38bbbc3-419c-4b37-b9f6-aef28bfab6aa.png",
+        "https://user-images.githubusercontent.com/76216765/183025671-17ac72b0-4a15-47e4-93bc-d35b447a0de6.png"
+      ]
+    },
+    {
+      "liveUrl": "https://fliplookai-frontend.netlify.app/",
+      "visualMeta": "FliplookAI / fashion assistant",
+      "repositoryUrl": "https://github.com/shrey714/flipkartGrid5.0_palakPaneer",
+      "meta": "04 — GenAI experience",
+      "visualLayout": "layout-4",
+      "technologies": ["React", "Node.js", "Python", "Deep learning"],
+      "name": "FliplookAI",
+      "ariaLabel": "Open the FliplookAI live project",
+      "date": "Portfolio project",
+      "cta": "Open live project",
+      "visualTitle": "Style signals, made personal",
+      "visualRows": ["Preference history", "Outfit suggestions", "Fashion recommendations"],
+      "type": "GenAI fashion assistant",
+      "description": "A GenAI-powered fashion assistant built with React, Node.js, and Python deep learning. It analyzes user history and preferences to deliver personalized outfit suggestions and customized fashion recommendations."
+    },
+    {
+      "liveUrl": "https://bill-splitter-shrey.netlify.app/",
+      "visualMeta": "Bill Splitter / shared expenses",
+      "repositoryUrl": "https://github.com/shrey714/Bill-Splitter",
+      "meta": "05 — Personal finance tool",
+      "visualLayout": "layout-3",
+      "technologies": ["React Native", "Firebase"],
+      "name": "Bill Splitter",
+      "ariaLabel": "Open the Bill Splitter live project",
+      "date": "Portfolio project",
+      "cta": "Open live project",
+      "visualTitle": "Shared costs, clearly tracked",
+      "visualRows": ["Expense groups", "Settlement tracking", "Trip totals"],
+      "type": "Shared expense tracker",
+      "description": "A React Native and Firebase application for tracking group expenses. It records who owes whom, keeps trip-level totals, and includes an in-app payment feature to make settlement more convenient."
+    }
+  ]
+}

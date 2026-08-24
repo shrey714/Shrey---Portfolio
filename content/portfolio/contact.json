@@ -1,0 +1,28 @@
+{
+  "form": {
+    "heading": "Tell me what you’re building.",
+    "successMessage": "Message sent. I’ll get back to you soon.",
+    "fallbackMessage": "For longer context, you can also email directly.",
+    "namePlaceholder": "Your name",
+    "nameLabel": "Name",
+    "eyebrow": "Send a note",
+    "messagePlaceholder": "A little context about your idea, team, or technical challenge…",
+    "messageLabel": "Message",
+    "sendingMessage": "Connecting to Telegram securely…",
+    "submittingLabel": "Sending…",
+    "emailPlaceholder": "you@example.com",
+    "emailLabel": "Email",
+    "privacyNote": "Your message is delivered privately and is not stored on this website.",
+    "submitLabel": "Send securely"
+  },
+  "eyebrow": "Contact",
+  "githubUrl": "https://github.com/shrey714",
+  "headingLineOne": "Let’s build",
+  "githubLabel": "GitHub",
+  "linkedinUrl": "https://www.linkedin.com/in/shrey714/",
+  "linkedinLabel": "LinkedIn",
+  "headingLineTwo": "something clear.",
+  "emailLabel": "Email",
+  "introduction": "Have an interesting idea, a technical problem to explore, or simply want to compare notes?",
+  "email": "pshrey0000@gmail.com"
+}

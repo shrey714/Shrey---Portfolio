@@ -1,0 +1,15 @@
+{
+  "title": "Shrey Patel — UI Designer & Frontend Developer",
+  "description": "Shrey Patel is a UI designer, frontend developer, UX architect, and software engineer based in Bangalore, building thoughtful software experiences across interface and systems.",
+  "ogDescription": "I make digital systems feel considered—from interface design to the engineering beneath it.",
+  "keywords": ["Shrey Patel", "UI Designer", "Frontend Developer", "UX Architect", "UX Researcher", "Software Engineer", "React Developer", "Bangalore"],
+  "shareImage": "/api/media/portfolio/hero/shrey-hero-editorial.webp",
+  "person": {
+    "jobTitles": ["UI Designer", "Frontend Developer", "UX Architect", "Software Engineer"],
+    "locality": "Bangalore",
+    "countryCode": "IN",
+    "education": "Sardar Vallabhbhai National Institute of Technology, Surat",
+    "employer": "Wells Fargo",
+    "knowsAbout": ["User Interface Design", "Frontend Development", "UX Architecture", "UX Research", "React", "Java", "System Design", "SQL"]
+  }
+}

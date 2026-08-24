@@ -1,0 +1,10 @@
+{
+  "items": [
+    { "id": "top", "label": "Index", "number": "00" },
+    { "id": "work", "label": "Selected work", "number": "01" },
+    { "id": "practice", "label": "Practice", "number": "02" },
+    { "id": "achievements", "label": "Achievements", "number": "03" },
+    { "id": "about", "label": "About", "number": "04" },
+    { "id": "contact", "label": "Contact", "number": "05" }
+  ]
+}

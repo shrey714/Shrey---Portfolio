@@ -1,0 +1,12 @@
+{
+  "eyebrow": "Engineering philosophy",
+  "headingLineOne": "How I think",
+  "headingLineTwo": "about software.",
+  "introduction": "A few principles I return to when systems, screens, or product decisions get more complex.",
+  "principles": [
+    { "number": "01", "title": "Keep it simple.", "text": "Complexity should solve a real problem. If it does not, it is probably just complexity." },
+    { "number": "02", "title": "Build for the person using it.", "text": "Technical decisions matter, but software ultimately exists to make someone’s work or life better." },
+    { "number": "03", "title": "Understand before optimizing.", "text": "Measure, find the bottleneck, then make it faster—with a reason for every change." },
+    { "number": "04", "title": "Make it maintainable.", "text": "The best decision survives the next six months, including the person who has to maintain it." }
+  ]
+}

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import portfolioContent from "../content/portfolio.json";
+import { portfolioContent } from "../content/portfolioContent";
 
 const text = z.string().trim().min(1);
 const link = z.string().trim().refine(value => value.startsWith("/") || /^https?:\/\//.test(value), "Expected an absolute URL or site-relative path");

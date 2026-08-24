@@ -1,8 +1,5 @@
-import content from "../../../content/portfolio.json";
-
 /**
- * The app-facing import boundary for the editable Git-backed content source.
- * Content editors update content/portfolio.json through /admin; the UI remains
- * intentionally unaware of the delivery mechanism.
+ * The UI consumes one stable content object while the CMS edits each portfolio
+ * area from its own focused entry on the `/admin` landing page.
  */
-export const portfolioContent = content;
+export { portfolioContent } from "../../../content/portfolioContent";

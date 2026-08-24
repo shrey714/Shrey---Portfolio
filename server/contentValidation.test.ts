@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import portfolioContent from "../content/portfolio.json";
+import { portfolioContent } from "../content/portfolioContent";
 import { validatePortfolioContent } from "./contentValidation";
 
 describe("portfolio content validation", () => {

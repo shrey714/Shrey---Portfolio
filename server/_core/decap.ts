@@ -123,7 +123,7 @@ function portfolioFields(): DecapField[] {
     objectField("ui", "12. Interface labels & accessibility", [
       stringField("homeAriaLabel", "Home label"), stringField("mobileNavigationLabel", "Mobile navigation label"),
       stringField("sectionNavigationLabel", "Section navigation label"), stringField("navigateLabel", "Navigate label"),
-      stringField("themeLightLabel", "Light mode label"), stringField("themeDarkLabel", "Dark mode label"),
+      stringField("themeLightLabel", "Light mode label"), stringField("themeDarkLabel", "Dark mode label"), stringField("scrollToTopLabel", "Scroll-to-top label"),
     ], "{{fields.homeAriaLabel}}"),
     objectField("seo", "13. SEO & social sharing", [
       stringField("title", "Page title"), textField("description", "Meta description"), textField("ogDescription", "Social description"),
@@ -134,6 +134,33 @@ function portfolioFields(): DecapField[] {
       ]),
     ], "{{fields.title}}"),
   ];
+}
+
+const editorSections = [
+  { name: "profile", label: "1. Profile & site identity", file: "content/portfolio/identity.json", source: "identity" },
+  { name: "navigation", label: "2. Navigation", file: "content/portfolio/navigation.json", source: "navigation" },
+  { name: "hero", label: "3. Hero & introduction", file: "content/portfolio/hero.json", source: "hero" },
+  { name: "work", label: "4. Selected work & project visuals", file: "content/portfolio/work.json", source: "work" },
+  { name: "practice", label: "5. Practice & skills", file: "content/portfolio/practice.json", source: "practice" },
+  { name: "achievements", label: "6. Achievements & participation", file: "content/portfolio/achievements.json", source: "achievements" },
+  { name: "about", label: "7. About", file: "content/portfolio/about.json", source: "about" },
+  { name: "experience", label: "8. Experience", file: "content/portfolio/experience.json", source: "experience" },
+  { name: "philosophy", label: "9. Engineering philosophy", file: "content/portfolio/philosophy.json", source: "philosophy" },
+  { name: "contact", label: "10. Contact & enquiry form", file: "content/portfolio/contact.json", source: "contact" },
+  { name: "footer", label: "11. Footer", file: "content/portfolio/footer.json", source: "footer" },
+  { name: "interface", label: "12. Interface labels & accessibility", file: "content/portfolio/ui.json", source: "ui" },
+  { name: "seo", label: "13. SEO & social sharing", file: "content/portfolio/seo.json", source: "seo" },
+] as const;
+
+function sectionFields(source: (typeof editorSections)[number]["source"]): DecapField[] {
+  const field = portfolioFields().find(candidate => candidate.name === source);
+  if (!field) throw new Error(`Missing CMS field definition for ${source}.`);
+
+  if (source === "navigation") {
+    return [listOfObjects("items", "Navigation items", field.fields ?? [], field.summary, "Navigation item")];
+  }
+
+  return field.fields ?? [];
 }
 
 export function buildDecapConfig(origin: string) {
@@ -151,7 +178,12 @@ export function buildDecapConfig(origin: string) {
     media_library: { name: "vercel-blob" },
     publish_mode: "simple",
     editor: { preview: false },
-    collections: [{ name: "portfolio", label: "Portfolio content", format: "json", files: [{ name: "portfolio", label: "Portfolio", file: "content/portfolio.json", fields: portfolioFields() }] }],
+    collections: editorSections.map(section => ({
+      name: `portfolio-${section.name}`,
+      label: section.label,
+      format: "json",
+      files: [{ name: section.name, label: section.label, file: section.file, fields: sectionFields(section.source) }],
+    })),
   };
 }
 

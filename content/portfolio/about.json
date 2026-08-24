@@ -1,0 +1,12 @@
+{
+  "eyebrow": "About",
+  "heading": "A little about me.",
+  "experienceLabel": "2+ years of experience",
+  "statement": "I studied Computer Science and Engineering at SVNIT Surat and now work as a Software Developer at Wells Fargo. I care about what software does under the hood—and how it feels in the hands of the person using it.",
+  "description": "My work has taken me across frontend development, backend engineering, databases, and risk technology. I particularly enjoy problems where the answer is not obvious: understanding the constraints, breaking the work down, and shaping an experience that can scale.",
+  "facts": [
+    { "label": "Now", "primary": "Software Developer", "secondary": "Wells Fargo" },
+    { "label": "Education", "primary": "B.Tech, CSE", "secondary": "SVNIT Surat" },
+    { "label": "Focus", "primary": "Product systems", "secondary": "Interface to data" }
+  ]
+}

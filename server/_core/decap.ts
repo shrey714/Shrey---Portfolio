@@ -234,7 +234,7 @@ function unavailable(res: Parameters<Express["get"]>[1] extends (...args: infer 
 }
 
 function editorShell() {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex,nofollow" /><title>Portfolio content editor</title></head><body><noscript>This private editor requires JavaScript.</noscript><script src="https://unpkg.com/decap-cms@3.7.1/dist/decap-cms.js"></script><script src="/admin/vercel-blob-media-library.js"></script></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="robots" content="noindex,nofollow" /><title>Portfolio content editor</title></head><body><noscript>This private editor requires JavaScript.</noscript><script src="https://unpkg.com/decap-cms@3.7.1/dist/decap-cms.js"></script><script src="/admin/vercel-blob-media-library.js"></script></body></html>`;
 }
 
 export function isAllowedDecapGithubProxyRequest(pathname: string, method: string) {

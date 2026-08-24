@@ -36,6 +36,7 @@ test("unified Vercel entry serves the private Decap shell with noindex", async (
   expect(html).toContain("vercel-blob-media-library.js");
   expect(html).not.toContain("CMS_MANUAL_INIT");
   expect(html).not.toContain("CMS.init");
+  expect(html).not.toContain('name="viewport"');
 });
 
 test("unified Vercel entry serves the native Decap Blob media adapter and rejects invalid public paths", async () => {

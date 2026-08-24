@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getActiveNavigationIndex, sidebarSectionObserverOptions } from "./sidebarNavigation";
+import { getActiveNavigationIndex, resolveSidebarObserverActiveId, sidebarSectionObserverOptions } from "./sidebarNavigation";
 
 describe("sidebar navigation", () => {
   const ids = ["top", "work", "practice", "achievements", "about", "contact"];
@@ -17,5 +17,18 @@ describe("sidebar navigation", () => {
       rootMargin: "-32% 0px -55% 0px",
       threshold: 0,
     });
+  });
+
+  it("holds a clicked distant destination while intermediate sections cross the observer band", () => {
+    expect(resolveSidebarObserverActiveId([
+      { target: { id: "work" }, isIntersecting: true, intersectionRatio: 0.3 },
+      { target: { id: "practice" }, isIntersecting: true, intersectionRatio: 0.4 },
+    ], "contact")).toEqual({ activeId: null, destinationReached: false });
+  });
+
+  it("releases the click lock only when the clicked destination reaches the observer band", () => {
+    expect(resolveSidebarObserverActiveId([
+      { target: { id: "contact" }, isIntersecting: true, intersectionRatio: 0.06 },
+    ], "contact")).toEqual({ activeId: "contact", destinationReached: true });
   });
 });

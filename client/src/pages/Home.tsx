@@ -30,7 +30,7 @@ import { getAppearanceToggleState } from "@/lib/appearanceToggle";
 import { getAchievementVisualKind } from "@/lib/achievementPresentation";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
 import { getSkillVisual } from "@/lib/skillPresentation";
-import { getActiveNavigationIndex, sidebarSectionObserverOptions } from "@/lib/sidebarNavigation";
+import { getActiveNavigationIndex, resolveSidebarObserverActiveId, sidebarSectionObserverOptions } from "@/lib/sidebarNavigation";
 import { getScrollToTopBehavior, shouldShowScrollToTop } from "@/lib/scrollToTop";
 import { getProjectImageUrls } from "@/lib/projectImages";
 
@@ -282,6 +282,7 @@ export default function Home() {
   const [contactError, setContactError] = useState("");
   const [contactSubmitting, setContactSubmitting] = useState(false);
   const menuCloseTimer = useRef<number | null>(null);
+  const sidebarDestinationLock = useRef<{ id: string; timeout: number } | null>(null);
   const registerEvidence = useBatchedEvidenceScrollMotion();
   const observedIds = useMemo(() => navItems.map((item) => item.id), []);
   const activeNavIndex = getActiveNavigationIndex(observedIds, active);
@@ -298,6 +299,17 @@ export default function Home() {
   };
 
   const showHeroSlide = (index: number) => setActiveHeroSlide((index + hero.slides.length) % hero.slides.length);
+
+  const startSidebarNavigation = useCallback((id: string) => {
+    if (sidebarDestinationLock.current) window.clearTimeout(sidebarDestinationLock.current.timeout);
+    setActive(id);
+    sidebarDestinationLock.current = {
+      id,
+      timeout: window.setTimeout(() => {
+        sidebarDestinationLock.current = null;
+      }, 1800),
+    };
+  }, []);
 
   const scrollToTop = () => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -335,10 +347,13 @@ export default function Home() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target.id) setActive(visible.target.id);
+        const lock = sidebarDestinationLock.current;
+        const resolution = resolveSidebarObserverActiveId(entries, lock?.id ?? null);
+        if (resolution.destinationReached && lock) {
+          window.clearTimeout(lock.timeout);
+          sidebarDestinationLock.current = null;
+        }
+        if (resolution.activeId) setActive(resolution.activeId);
       },
       sidebarSectionObserverOptions,
     );
@@ -387,6 +402,7 @@ export default function Home() {
 
   useEffect(() => () => {
     if (menuCloseTimer.current) window.clearTimeout(menuCloseTimer.current);
+    if (sidebarDestinationLock.current) window.clearTimeout(sidebarDestinationLock.current.timeout);
   }, []);
 
   return (
@@ -438,7 +454,7 @@ export default function Home() {
             <a
               key={item.id}
               href={`#${item.id}`}
-              onClick={() => setActive(item.id)}
+              onClick={() => startSidebarNavigation(item.id)}
               className={`group relative z-10 flex h-10 items-center gap-3 rounded-lg px-2 text-[13px] transition-[color,transform] duration-200 ${
                 active === item.id ? "text-[#3455b8]" : "sidebar-nav-inactive text-[#5f5d59]"
               }`}

@@ -56,13 +56,13 @@ test("unified Vercel entry provides Decap's focused section-entry configuration"
   expect(response.status).toBe(200);
   expect(response.headers.get("content-type")).toContain("text/yaml");
   expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
-  const config = await response.json() as { backend: Record<string, string>; media_folder?: string; public_folder?: string; collections?: Array<{ name: string; files: Array<{ file: string }> }> };
+  const config = await response.json() as { backend: Record<string, string>; media_folder?: string; public_folder?: string; collections?: Array<{ name: string; files: Array<{ name: string; file: string }> }> };
   expect(config.backend.repo).toBe("shrey714/Shrey---Portfolio");
   expect(config.backend.api_root).toBe(`${origin}/api/decap/github`);
   expect(config.media_folder).toBe("content/media");
   expect(config.public_folder).toBe("/api/media/portfolio");
-  expect(config.collections?.map(collection => collection.name)).toContain("portfolio-work");
-  expect(config.collections?.find(collection => collection.name === "portfolio-work")?.files[0]?.file).toBe("content/portfolio/work.json");
+  expect(config.collections?.map(collection => collection.name)).toEqual(["portfolio"]);
+  expect(config.collections?.[0]?.files.find(section => section.name === "work")?.file).toBe("content/portfolio/work.json");
 });
 
 test("Vercel's API runtime receives Portfolio-derived metadata from the SSR render result", async () => {

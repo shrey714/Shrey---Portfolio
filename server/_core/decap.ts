@@ -178,12 +178,17 @@ export function buildDecapConfig(origin: string) {
     media_library: { name: "vercel-blob" },
     publish_mode: "simple",
     editor: { preview: false },
-    collections: editorSections.map(section => ({
-      name: `portfolio-${section.name}`,
-      label: section.label,
+    collections: [{
+      name: "portfolio",
+      label: "Portfolio",
       format: "json",
-      files: [{ name: section.name, label: section.label, file: section.file, fields: sectionFields(section.source) }],
-    })),
+      files: editorSections.map(section => ({
+        name: section.name,
+        label: section.label,
+        file: section.file,
+        fields: sectionFields(section.source),
+      })),
+    }],
   };
 }
 

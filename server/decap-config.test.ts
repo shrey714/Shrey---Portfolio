@@ -21,6 +21,12 @@ describe("Decap CMS configuration", () => {
     expect(config.media_library).toEqual({ name: "vercel-blob" });
     expect(config.editor.preview).toBe(false);
 
+    const expectedSectionNames = ["identity", "navigation", "hero", "work", "practice", "achievements", "about", "experience", "philosophy", "contact", "footer", "ui", "seo"];
+    expect(portfolio.fields.map(field => field.name)).toEqual(expectedSectionNames);
+    expect(portfolio.fields.every(field => field.collapsed === true)).toBe(true);
+    expect(portfolio.fields.find(field => field.name === "identity")).toMatchObject({ label: "1. Profile & site identity", summary: "{{fields.name}} — {{fields.roleDescriptor}}" });
+    expect(portfolio.fields.find(field => field.name === "work")).toMatchObject({ label: "4. Selected work & project visuals", summary: "{{fields.heading}}" });
+
     const hero = portfolio.fields.find(field => field.name === "hero") as { fields: Array<{ name: string; widget: string }> };
     const resume = hero.fields.find(field => field.name === "resume") as { fields: Array<{ name: string; widget: string }> };
     const seo = portfolio.fields.find(field => field.name === "seo") as { fields: Array<{ name: string; widget: string }> };
@@ -38,6 +44,7 @@ describe("Decap CMS configuration", () => {
     expect(customImages).toMatchObject({ widget: "list", field: { widget: "image", name: "image" } });
     expect(customImages).toMatchObject({ label: "Project images" });
     expect(projectFields.find(field => field.name === "visualImageUrl")).toBeUndefined();
+    expect(work.fields.find(field => field.name === "projects")).toMatchObject({ collapsed: true, summary: "{{fields.name}} — {{fields.type}}", label_singular: "Project" });
 
     const achievements = portfolio.fields.find(field => field.name === "achievements") as { fields: Array<{ name: string; fields: Array<{ name: string; widget?: string; required?: boolean; options?: unknown[] }> }> };
     const achievementFields = achievements.fields.find(field => field.name === "entries")?.fields ?? [];

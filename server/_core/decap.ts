@@ -16,6 +16,10 @@ type DecapField = {
   widget?: string;
   required?: boolean;
   hint?: string;
+  collapsed?: boolean;
+  summary?: string;
+  label_singular?: string;
+  minimize_collapsed?: boolean;
   fields?: DecapField[];
   field?: DecapField;
   default?: unknown;
@@ -24,20 +28,20 @@ type DecapField = {
 const stringField = (name: string, label: string, required = true): DecapField => ({ name, label, widget: "string", required });
 const textField = (name: string, label: string, required = true): DecapField => ({ name, label, widget: "text", required });
 const mediaField = (name: string, label: string, widget: "file" | "image", required = true, hint?: string): DecapField => ({ name, label, widget, required, hint });
-const listOfStrings = (name: string, label: string): DecapField => ({ name, label, widget: "list", field: stringField("value", "Value") });
-const listOfMedia = (name: string, label: string, hint?: string): DecapField => ({ name, label, widget: "list", hint, field: mediaField("image", "Image", "image") });
-const objectField = (name: string, label: string, fields: DecapField[]): DecapField => ({ name, label, widget: "object", fields });
-const listOfObjects = (name: string, label: string, fields: DecapField[]): DecapField => ({ name, label, widget: "list", fields });
+const listOfStrings = (name: string, label: string): DecapField => ({ name, label, widget: "list", collapsed: true, label_singular: "Item", field: stringField("value", "Value") });
+const listOfMedia = (name: string, label: string, hint?: string): DecapField => ({ name, label, widget: "list", collapsed: true, label_singular: "Image", summary: "{{fields.image}}", hint, field: mediaField("image", "Image", "image") });
+const objectField = (name: string, label: string, fields: DecapField[], summary?: string): DecapField => ({ name, label, widget: "object", collapsed: true, summary, fields });
+const listOfObjects = (name: string, label: string, fields: DecapField[], summary?: string, labelSingular = "Entry"): DecapField => ({ name, label, widget: "list", collapsed: true, summary, label_singular: labelSingular, fields });
 
 function portfolioFields(): DecapField[] {
   return [
-    objectField("identity", "Identity", [
+    objectField("identity", "1. Profile & site identity", [
       stringField("name", "Name"), stringField("pageDescriptor", "Page descriptor"), stringField("roleDescriptor", "Role descriptor"),
       stringField("location", "Location"), stringField("availability", "Availability"), stringField("railNote", "Rail note"),
       stringField("appearanceLabel", "Appearance label"),
-    ]),
-    listOfObjects("navigation", "Navigation", [stringField("id", "Section ID"), stringField("label", "Label"), stringField("number", "Number")]),
-    objectField("hero", "Hero", [
+    ], "{{fields.name}} — {{fields.roleDescriptor}}"),
+    listOfObjects("navigation", "2. Navigation", [stringField("id", "Section ID"), stringField("label", "Label"), stringField("number", "Number")], "{{fields.number}} — {{fields.label}}", "Navigation item"),
+    objectField("hero", "3. Hero & introduction", [
       stringField("roleLine", "Role line"), listOfStrings("heading", "Heading lines"), textField("introduction", "Introduction"),
       stringField("workCta", "Work button"), stringField("contactCta", "Contact button"),
       objectField("resume", "Resume", [stringField("label", "Button label"), mediaField("url", "PDF URL", "file"), stringField("filename", "Download filename")]),
@@ -48,9 +52,9 @@ function portfolioFields(): DecapField[] {
         stringField("label", "Label"), textField("caption", "Caption"), stringField("alt", "Alternative text"),
         stringField("metaLeft", "Left meta", false), stringField("metaRight", "Right meta", false), stringField("annotation", "Annotation", false),
         listOfStrings("nodes", "System nodes"),
-      ]),
-    ]),
-    objectField("work", "Selected work", [
+      ], "{{fields.label}}", "Slide"),
+    ], "{{fields.roleLine}}"),
+    objectField("work", "4. Selected work & project visuals", [
       stringField("eyebrow", "Eyebrow"), stringField("heading", "Heading"), textField("introduction", "Introduction"),
       listOfObjects("projects", "Projects", [
         { name: "visualLayout", label: "Project visual", widget: "select", options: [
@@ -66,15 +70,15 @@ function portfolioFields(): DecapField[] {
         textField("description", "Description"), listOfStrings("technologies", "Technologies"), stringField("cta", "Button label"),
         stringField("ariaLabel", "Button accessibility label"), stringField("repositoryUrl", "GitHub or source URL"), stringField("liveUrl", "Live project URL", false), stringField("visualMeta", "Visual meta"), stringField("visualTitle", "Visual title"),
         listOfStrings("visualRows", "Visual rows"),
-      ]),
-    ]),
-    objectField("practice", "Practice", [
+      ], "{{fields.name}} — {{fields.type}}", "Project"),
+    ], "{{fields.heading}}"),
+    objectField("practice", "5. Practice & skills", [
       stringField("eyebrow", "Eyebrow"), stringField("heading", "Heading"), textField("introduction", "Introduction"),
       stringField("visualFlow", "Visual flow label"), stringField("visualSystemNote", "Visual system note"), stringField("visualTag", "Visual tag"), stringField("visualCallout", "Visual callout"),
-      listOfObjects("disciplines", "Disciplines", [stringField("title", "Title"), textField("text", "Description")]),
-      listOfObjects("skills", "Skill groups", [stringField("name", "Name"), stringField("tools", "Tools")]),
-    ]),
-    objectField("achievements", "Achievements and participation", [
+      listOfObjects("disciplines", "Disciplines", [stringField("title", "Title"), textField("text", "Description")], "{{fields.title}}", "Discipline"),
+      listOfObjects("skills", "Skill groups", [stringField("name", "Name"), stringField("tools", "Tools")], "{{fields.name}}", "Skill group"),
+    ], "{{fields.heading}}"),
+    objectField("achievements", "6. Achievements & participation", [
       stringField("eyebrow", "Eyebrow"), stringField("heading", "Heading"), textField("introduction", "Introduction"),
       listOfObjects("entries", "Achievement entries", [
         stringField("meta", "Meta"), stringField("title", "Title"), stringField("organization", "Organization or host"), stringField("date", "Date"), textField("description", "Description"),
@@ -84,25 +88,25 @@ function portfolioFields(): DecapField[] {
         ] } as DecapField,
         mediaField("visualImageUrl", "Achievement image", "image", false, "Required only when Achievement visual is set to Image."),
         stringField("visualLabel", "Placeholder label"), stringField("imageAlt", "Image alternative text"),
-      ]),
-    ]),
-    objectField("about", "About", [
+      ], "{{fields.title}} — {{fields.organization}}", "Achievement"),
+    ], "{{fields.heading}}"),
+    objectField("about", "7. About", [
       stringField("eyebrow", "Eyebrow"), stringField("heading", "Heading"), stringField("experienceLabel", "Experience label"),
       textField("statement", "Statement"), textField("description", "Description"),
-      listOfObjects("facts", "Facts", [stringField("label", "Label"), stringField("primary", "Primary"), stringField("secondary", "Secondary")]),
-    ]),
-    objectField("experience", "Experience", [
+      listOfObjects("facts", "Facts", [stringField("label", "Label"), stringField("primary", "Primary"), stringField("secondary", "Secondary")], "{{fields.label}}", "Fact"),
+    ], "{{fields.heading}}"),
+    objectField("experience", "8. Experience", [
       stringField("eyebrow", "Eyebrow"), textField("introduction", "Introduction"),
       listOfObjects("entries", "Experience entries", [
         stringField("company", "Company"), stringField("role", "Role"), stringField("date", "Date"), textField("description", "Description"),
         stringField("responsibilityLabel", "Responsibilities label"), listOfStrings("responsibilities", "Responsibilities"),
-      ]),
-    ]),
-    objectField("philosophy", "Philosophy", [
+      ], "{{fields.company}} — {{fields.role}}", "Role"),
+    ], "{{fields.eyebrow}}"),
+    objectField("philosophy", "9. Engineering philosophy", [
       stringField("eyebrow", "Eyebrow"), stringField("headingLineOne", "Heading line one"), stringField("headingLineTwo", "Heading line two"),
-      textField("introduction", "Introduction"), listOfObjects("principles", "Principles", [stringField("number", "Number"), stringField("title", "Title"), textField("text", "Description")]),
-    ]),
-    objectField("contact", "Contact", [
+      textField("introduction", "Introduction"), listOfObjects("principles", "Principles", [stringField("number", "Number"), stringField("title", "Title"), textField("text", "Description")], "{{fields.number}} — {{fields.title}}", "Principle"),
+    ], "{{fields.headingLineOne}}"),
+    objectField("contact", "10. Contact & enquiry form", [
       stringField("eyebrow", "Eyebrow"), textField("introduction", "Introduction"), stringField("headingLineOne", "Heading line one"),
       stringField("headingLineTwo", "Heading line two"), { name: "email", label: "Email", widget: "string", pattern: ["^.+@.+\\..+$", "Enter a valid email address"] } as DecapField,
       stringField("githubUrl", "GitHub URL"), stringField("linkedinUrl", "LinkedIn URL"), stringField("githubLabel", "GitHub label"),
@@ -114,21 +118,21 @@ function portfolioFields(): DecapField[] {
         stringField("sendingMessage", "Sending message"), stringField("successMessage", "Success message"), stringField("fallbackMessage", "Fallback message"),
         stringField("privacyNote", "Privacy note"),
       ]),
-    ]),
-    objectField("footer", "Footer", [stringField("left", "Left text"), stringField("right", "Right text")]),
-    objectField("ui", "Interface labels", [
+    ], "{{fields.email}}"),
+    objectField("footer", "11. Footer", [stringField("left", "Left text"), stringField("right", "Right text")], "{{fields.left}}"),
+    objectField("ui", "12. Interface labels & accessibility", [
       stringField("homeAriaLabel", "Home label"), stringField("mobileNavigationLabel", "Mobile navigation label"),
       stringField("sectionNavigationLabel", "Section navigation label"), stringField("navigateLabel", "Navigate label"),
       stringField("themeLightLabel", "Light mode label"), stringField("themeDarkLabel", "Dark mode label"),
-    ]),
-    objectField("seo", "SEO and social sharing", [
+    ], "{{fields.homeAriaLabel}}"),
+    objectField("seo", "13. SEO & social sharing", [
       stringField("title", "Page title"), textField("description", "Meta description"), textField("ogDescription", "Social description"),
       listOfStrings("keywords", "Keywords"), mediaField("shareImage", "Social share image", "image"),
       objectField("person", "Structured person data", [
         listOfStrings("jobTitles", "Job titles"), stringField("locality", "City"), stringField("countryCode", "Country code"),
         stringField("education", "Education"), stringField("employer", "Employer"), listOfStrings("knowsAbout", "Expertise topics"),
       ]),
-    ]),
+    ], "{{fields.title}}"),
   ];
 }
 

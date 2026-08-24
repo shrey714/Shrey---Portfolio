@@ -34,4 +34,13 @@ describe("project visual carousel contract", () => {
     expect(cssSource).toContain("flex: 0 0 100%;");
     expect(cssSource).not.toContain(".project-image-control");
   });
+
+  it("uses a light Selected Work panel in light theme and restores its charcoal material in dark theme", () => {
+    expect(homeSource).toContain('className="theme-work-panel mx-auto max-w-7xl');
+    expect(homeSource).toContain('className="theme-work-header flex flex-col');
+    expect(cssSource).toContain(".theme-work-panel {");
+    expect(cssSource).toContain("background-color: #f6f4ef;");
+    expect(cssSource).toContain(".dark .portfolio .theme-work-panel {");
+    expect(cssSource).toContain("background-color: #1b1c1d;");
+  });
 });

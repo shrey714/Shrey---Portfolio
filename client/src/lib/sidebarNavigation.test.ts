@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getActiveNavigationIndex } from "./sidebarNavigation";
+import { getActiveNavigationIndex, sidebarSectionObserverOptions } from "./sidebarNavigation";
 
 describe("sidebar navigation", () => {
   const ids = ["top", "work", "practice", "achievements", "about", "contact"];
@@ -10,5 +10,12 @@ describe("sidebar navigation", () => {
 
   it("keeps the indicator at the first item until a tracked section is active", () => {
     expect(getActiveNavigationIndex(ids, "unknown")).toBe(0);
+  });
+
+  it("observes the current reading band without a minimum intersection ratio that excludes long sections", () => {
+    expect(sidebarSectionObserverOptions).toEqual({
+      rootMargin: "-32% 0px -55% 0px",
+      threshold: 0,
+    });
   });
 });

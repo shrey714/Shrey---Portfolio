@@ -30,7 +30,7 @@ import { getAppearanceToggleState } from "@/lib/appearanceToggle";
 import { getAchievementVisualKind } from "@/lib/achievementPresentation";
 import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
 import { getSkillVisual } from "@/lib/skillPresentation";
-import { getActiveNavigationIndex } from "@/lib/sidebarNavigation";
+import { getActiveNavigationIndex, sidebarSectionObserverOptions } from "@/lib/sidebarNavigation";
 import { getScrollToTopBehavior, shouldShowScrollToTop } from "@/lib/scrollToTop";
 import { getProjectImageUrls } from "@/lib/projectImages";
 
@@ -340,7 +340,7 @@ export default function Home() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (visible?.target.id) setActive(visible.target.id);
       },
-      { rootMargin: "-32% 0px -55% 0px", threshold: [0.05, 0.35, 0.6] },
+      sidebarSectionObserverOptions,
     );
 
     sections.forEach((section) => observer.observe(section));
@@ -438,6 +438,7 @@ export default function Home() {
             <a
               key={item.id}
               href={`#${item.id}`}
+              onClick={() => setActive(item.id)}
               className={`group relative z-10 flex h-10 items-center gap-3 rounded-lg px-2 text-[13px] transition-[color,transform] duration-200 ${
                 active === item.id ? "text-[#3455b8]" : "sidebar-nav-inactive text-[#5f5d59]"
               }`}
@@ -513,14 +514,14 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="work" className="theme-work-surface relative bg-[#e9e6df] px-5 py-12 text-[#f4f1eb] sm:px-8 sm:py-16 lg:px-12 xl:px-16">
-          <div className="mx-auto max-w-7xl rounded-[2rem] border border-[#1b1c1d]/10 bg-[#1b1c1d] px-6 py-10 shadow-[0_32px_70px_-48px_rgba(27,28,29,0.65)] sm:px-10 sm:py-14 lg:px-14 lg:py-16">
-            <div className="flex flex-col justify-between gap-8 border-b border-white/15 pb-10 sm:flex-row sm:items-end">
+        <section id="work" className="theme-work-surface relative px-5 py-12 sm:px-8 sm:py-16 lg:px-12 xl:px-16">
+          <div className="theme-work-panel mx-auto max-w-7xl rounded-[2rem] border px-6 py-10 sm:px-10 sm:py-14 lg:px-14 lg:py-16">
+            <div className="theme-work-header flex flex-col justify-between gap-8 border-b pb-10 sm:flex-row sm:items-end">
               <div>
-                <p className="eyebrow text-[#aebff6]">{content.work.eyebrow}</p>
+                <p className="theme-work-eyebrow eyebrow">{content.work.eyebrow}</p>
                 <h2 className="mt-4 max-w-2xl font-serif text-[clamp(2.75rem,5vw,5rem)] leading-[0.92] tracking-[-0.065em]">{content.work.heading}</h2>
               </div>
-              <p className="max-w-xs text-sm leading-6 text-[#c6c4bf]">{content.work.introduction}</p>
+              <p className="theme-work-introduction max-w-xs text-sm leading-6">{content.work.introduction}</p>
             </div>
 
             <div className="mt-10 space-y-16 lg:mt-14 lg:space-y-24">
@@ -529,16 +530,16 @@ export default function Home() {
                 const primaryUrl = project.liveUrl || project.repositoryUrl;
                 const details = (
                   <div className="lg:pb-2">
-                    <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.14em] text-[#a8a6a2]"><span>{project.meta}</span><span>{project.date}</span></div>
+                    <div className="theme-work-meta flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.14em]"><span>{project.meta}</span><span>{project.date}</span></div>
                     <h3 className="mt-4 text-2xl font-semibold tracking-[-0.05em] lg:text-[1.65rem]">{project.name}</h3>
-                    <p className="mt-2 text-base text-[#d0cdc7]">{project.type}</p>
-                    <p className="mt-5 text-sm leading-6 text-[#aaa8a3]">{project.description}</p>
-                    <div className="mt-6 flex flex-wrap gap-2 text-[10px] font-medium uppercase tracking-[0.11em] text-[#bab7b1]">
-                      {project.technologies.map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5">{tag}</span>)}
+                    <p className="theme-work-type mt-2 text-base">{project.type}</p>
+                    <p className="theme-work-description mt-5 text-sm leading-6">{project.description}</p>
+                    <div className="theme-work-tags mt-6 flex flex-wrap gap-2 text-[10px] font-medium uppercase tracking-[0.11em]">
+                      {project.technologies.map((tag) => <span key={tag} className="theme-work-tag rounded-full border px-3 py-1.5">{tag}</span>)}
                     </div>
-                    <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-semibold text-[#f4f1eb]">
-                      <a href={project.repositoryUrl} target="_blank" rel="noreferrer" className="group/link inline-flex items-center gap-2 hover:text-[#aebff6]">View source <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
-                      {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noreferrer" className="group/link inline-flex items-center gap-2 hover:text-[#aebff6]">{project.cta} <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>}
+                    <div className="theme-work-links mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-semibold">
+                      <a href={project.repositoryUrl} target="_blank" rel="noreferrer" className="group/link inline-flex items-center gap-2">View source <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>
+                      {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noreferrer" className="group/link inline-flex items-center gap-2">{project.cta} <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" /></a>}
                     </div>
                   </div>
                 );
@@ -547,12 +548,12 @@ export default function Home() {
                 const visual = hasMultipleProjectImages ? (
                   <div className={visualClassName} aria-label={project.ariaLabel}>
                     <ProductEvidence project={project} registerEvidence={registerEvidence} />
-                    <a href={primaryUrl} target="_blank" rel="noreferrer" aria-label={project.ariaLabel} className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></a>
+                    <a href={primaryUrl} target="_blank" rel="noreferrer" aria-label={project.ariaLabel} className="theme-work-visual-link absolute right-4 top-4 rounded-full border p-2.5 backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></a>
                   </div>
                 ) : (
                   <a href={primaryUrl} target="_blank" rel="noreferrer" className={visualClassName} aria-label={project.ariaLabel}>
                     <ProductEvidence project={project} registerEvidence={registerEvidence} />
-                    <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#1b1c1d]/65 p-2.5 text-white backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
+                    <span className="theme-work-visual-link absolute right-4 top-4 rounded-full border p-2.5 backdrop-blur-sm"><ArrowUpRight className="h-4 w-4" /></span>
                   </a>
                 );
 

@@ -22,7 +22,8 @@ describe("portfolio content validation", () => {
   it("requires a custom image when the custom-image layout is selected", () => {
     const invalid = structuredClone(portfolioContent) as typeof portfolioContent;
     invalid.work.projects[0].visualLayout = "custom-image";
-    expect(() => validatePortfolioContent(invalid)).toThrow(/visualImageUrl/);
+    invalid.work.projects[0].visualImageUrls = [];
+    expect(() => validatePortfolioContent(invalid)).toThrow(/visualImageUrls/);
   });
 
   it("accepts multiple custom project images", () => {

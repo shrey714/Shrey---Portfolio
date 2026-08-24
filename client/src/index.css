@@ -223,8 +223,49 @@
 
   /* Scoped PageSpeed contrast corrections retain the established editorial
      hierarchy without changing component geometry or the global gray scale. */
-  .theme-work-surface .eyebrow {
-    color: #aebff6;
+  .theme-work-surface {
+    background-color: #e9e6df;
+    color: #1b1c1d;
+  }
+
+  .theme-work-panel {
+    border-color: rgba(27, 28, 29, 0.12);
+    background-color: #f6f4ef;
+    box-shadow: 0 32px 70px -48px rgba(27, 28, 29, 0.42);
+  }
+
+  .theme-work-header {
+    border-color: rgba(27, 28, 29, 0.14);
+  }
+
+  .theme-work-eyebrow,
+  .theme-work-links a:hover {
+    color: #3455b8;
+  }
+
+  .theme-work-introduction,
+  .theme-work-type {
+    color: #5f5d59;
+  }
+
+  .theme-work-meta,
+  .theme-work-description,
+  .theme-work-tags {
+    color: #6d6b67;
+  }
+
+  .theme-work-tag {
+    border-color: rgba(27, 28, 29, 0.16);
+  }
+
+  .theme-work-links {
+    color: #1b1c1d;
+  }
+
+  .theme-work-visual-link {
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(27, 28, 29, 0.72);
+    color: #fff;
   }
 
   #achievements .eyebrow {
@@ -274,6 +315,40 @@
 
 .dark .portfolio .theme-work-surface {
   background-color: #17191c !important;
+}
+
+.dark .portfolio .theme-work-panel {
+  border-color: rgba(255, 255, 255, 0.12);
+  background-color: #1b1c1d;
+  box-shadow: 0 32px 70px -48px rgba(0, 0, 0, 0.78);
+}
+
+.dark .portfolio .theme-work-header {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.dark .portfolio .theme-work-eyebrow,
+.dark .portfolio .theme-work-links a:hover {
+  color: #aebff6;
+}
+
+.dark .portfolio .theme-work-introduction,
+.dark .portfolio .theme-work-type {
+  color: #c6c4bf;
+}
+
+.dark .portfolio .theme-work-meta,
+.dark .portfolio .theme-work-description,
+.dark .portfolio .theme-work-tags {
+  color: #aaa8a3;
+}
+
+.dark .portfolio .theme-work-tag {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.dark .portfolio .theme-work-links {
+  color: #f4f1eb;
 }
 
 .dark .portfolio .theme-light-surface :is(h1, h2, h3, p, a, span, li),
@@ -349,10 +424,6 @@
 
 .dark .portfolio .theme-light-surface .sidebar-nav-inactive span:first-child {
   color: #858993 !important;
-}
-
-.dark .portfolio .theme-work-surface .eyebrow {
-  color: #b7c7ff !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

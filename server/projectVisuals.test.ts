@@ -68,8 +68,12 @@ describe("project visual carousel contract", () => {
     expect(cssSource).toContain("background-color: #e7e4dc;");
     expect(cssSource).toContain(".dark .portfolio .theme-project-carousel {");
     expect(cssSource).toContain("background-color: #202124;");
-    expect(cssSource).toContain("--project-image-dot-active: #1b1c1d;");
+    expect(cssSource).toContain("--project-image-dot-active: #fff;");
+    expect(cssSource).not.toContain("--project-image-dot-active: #1b1c1d;");
     expect(cssSource).toContain("--project-image-dot-active: #fff;");
     expect(cssSource).toContain("background: var(--project-image-dot-active, #fff);");
+    expect(cssSource).toContain("--project-carousel-inner-shadow: linear-gradient(to top, rgba(27, 28, 29, 0.46)");
+    expect(cssSource).toContain("--project-carousel-inner-shadow: linear-gradient(to top, rgba(0, 0, 0, 0.7)");
+    expect(cssSource).toContain("background-image: var(--project-carousel-inner-shadow) !important;");
   });
 });

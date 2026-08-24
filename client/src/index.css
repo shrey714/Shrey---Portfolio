@@ -224,8 +224,9 @@
   /* Scoped PageSpeed contrast corrections retain the established editorial
      hierarchy without changing component geometry or the global gray scale. */
   .theme-work-surface {
-    --project-image-dot-active: #1b1c1d;
-    --project-image-dot-hover: #1b1c1d;
+    --project-image-dot-active: #fff;
+    --project-image-dot-hover: #fff;
+    --project-carousel-inner-shadow: linear-gradient(to top, rgba(27, 28, 29, 0.46) 0%, rgba(27, 28, 29, 0.14) 44%, rgba(27, 28, 29, 0) 100%);
     background-color: #e9e6df;
     color: #1b1c1d;
   }
@@ -333,7 +334,7 @@
   }
 
   .theme-project-carousel-scrim {
-    --tw-gradient-from: rgba(246, 244, 239, 0.86) var(--tw-gradient-from-position);
+    background-image: var(--project-carousel-inner-shadow) !important;
   }
 
   .theme-work-surface .project-image-dot {
@@ -394,6 +395,7 @@
 .dark .portfolio .theme-work-surface {
   --project-image-dot-active: #fff;
   --project-image-dot-hover: #fff;
+  --project-carousel-inner-shadow: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 44%, rgba(0, 0, 0, 0) 100%);
   background-color: #17191c !important;
   color: #f2f1ed;
 }
@@ -472,10 +474,6 @@
 .dark .portfolio .theme-project-carousel {
   border-color: rgba(255, 255, 255, 0.1);
   background-color: #202124;
-}
-
-.dark .portfolio .theme-project-carousel-scrim {
-  --tw-gradient-from: rgb(0 0 0 / 0.7) var(--tw-gradient-from-position);
 }
 
 .dark .portfolio .theme-work-surface .project-image-dot {

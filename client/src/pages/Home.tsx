@@ -223,8 +223,8 @@ function ProductEvidence({ project, registerEvidence }: { project: WorkProject; 
     };
   }, [registerEvidence]);
 
-  const header = <div className="flex items-center justify-between border-b border-white/10 pb-3 text-[8px] font-semibold uppercase tracking-[0.14em] text-white/60"><span>{project.visualMeta}</span><span className="flex gap-1.5"><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-white/25" /><i className="h-1.5 w-1.5 rounded-full bg-[#3455b8]" /></span></div>;
-  const rows = project.visualRows.map((row, index) => <div key={row} className="flex items-center gap-3"><span className={`h-1.5 w-1.5 shrink-0 rounded-full ${index === 1 ? "bg-[#3455b8]" : "bg-white/25"}`} /><span className="h-1.5 flex-1 rounded-full bg-white/20" /><span className="h-1.5 w-9 rounded-full bg-white/10" /></div>);
+  const header = <div className="project-visual-header flex items-center justify-between border-b pb-3 text-[8px] font-semibold uppercase tracking-[0.14em]"><span>{project.visualMeta}</span><span className="flex gap-1.5"><i className="project-visual-header-dot h-1.5 w-1.5 rounded-full" /><i className="project-visual-header-dot h-1.5 w-1.5 rounded-full" /><i className="h-1.5 w-1.5 rounded-full bg-[#3455b8]" /></span></div>;
+  const rows = project.visualRows.map((row, index) => <div key={row} className="flex items-center gap-3"><span className={`project-visual-row-marker h-1.5 w-1.5 shrink-0 rounded-full ${index === 1 ? "bg-[#3455b8]" : ""}`} /><span className="project-visual-row-line h-1.5 flex-1 rounded-full" /><span className="project-visual-row-value h-1.5 w-9 rounded-full" /></div>);
   const imageUrls = project.visualLayout === "custom-image" ? getProjectImageUrls(project) : [];
   const customImage = imageUrls.length > 0;
 
@@ -242,7 +242,7 @@ function ProductEvidence({ project, registerEvidence }: { project: WorkProject; 
     return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.37fr_0.63fr] gap-3"><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border-[10px] border-[#3455b8]/70 border-r-white/10 text-[9px] font-semibold text-white/70">72%</div><div className="mt-4 space-y-2">{["Signal", "Reach", "Trend"].map((label, index) => <div key={label} className="flex items-center justify-between text-[8px] text-white/60"><span>{label}</span><span className={index === 1 ? "text-[#9fb2ff]" : ""}>+{index + 2}%</span></div>)}</div></div><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex h-24 items-end gap-2">{[35, 58, 44, 76, 62, 90, 70].map((height, index) => <span key={index} style={{ height: `${height}%` }} className={`flex-1 rounded-t-sm ${index === 5 ? "bg-[#3455b8]" : "bg-white/15"}`} />)}</div><div className="mt-4 space-y-2.5">{rows}</div></div></div></div>;
   })();
 
-  return <div ref={evidenceRef} className={`project-evidence relative overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#26272a] p-3 shadow-[0_24px_55px_-40px_rgba(0,0,0,0.8)] ${isVisible ? "is-visible" : ""}`}><div className="project-evidence-glow absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(69,111,232,0.22),transparent_35%)]" /><div className="relative">{layout}</div><div className="relative flex items-end justify-between px-1 pb-1 pt-4 text-white"><p className="max-w-[12rem] text-xs font-medium tracking-[-0.02em] text-white/80 sm:text-sm">{project.visualTitle}</p>{!customImage && <span className="rounded-full border border-white/14 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.13em] text-white/60">{project.visualLayout.replace("layout-", "Layout ")}</span>}</div></div>;
+  return <div ref={evidenceRef} className={`project-evidence project-evidence--${project.visualLayout} relative overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#26272a] p-3 shadow-[0_24px_55px_-40px_rgba(0,0,0,0.8)] ${isVisible ? "is-visible" : ""}`}><div className="project-evidence-glow absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(69,111,232,0.22),transparent_35%)]" /><div className="relative">{layout}</div><div className="relative flex items-end justify-between px-1 pb-1 pt-4 text-white"><p className="max-w-[12rem] text-xs font-medium tracking-[-0.02em] text-white/80 sm:text-sm">{project.visualTitle}</p>{!customImage && <span className="rounded-full border border-white/14 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.13em] text-white/60">{project.visualLayout.replace("layout-", "Layout ")}</span>}</div></div>;
 }
 
 function SystemsEvidence() {
@@ -519,7 +519,7 @@ export default function Home() {
             <div className="theme-work-header flex flex-col justify-between gap-8 border-b pb-10 sm:flex-row sm:items-end">
               <div>
                 <p className="theme-work-eyebrow eyebrow">{content.work.eyebrow}</p>
-                <h2 className="mt-4 max-w-2xl font-serif text-[clamp(2.75rem,5vw,5rem)] leading-[0.92] tracking-[-0.065em]">{content.work.heading}</h2>
+                <h2 className="theme-work-heading mt-4 max-w-2xl font-serif text-[clamp(2.75rem,5vw,5rem)] leading-[0.92] tracking-[-0.065em]">{content.work.heading}</h2>
               </div>
               <p className="theme-work-introduction max-w-xs text-sm leading-6">{content.work.introduction}</p>
             </div>

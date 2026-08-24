@@ -224,6 +224,8 @@
   /* Scoped PageSpeed contrast corrections retain the established editorial
      hierarchy without changing component geometry or the global gray scale. */
   .theme-work-surface {
+    --project-image-dot-active: #1b1c1d;
+    --project-image-dot-hover: #1b1c1d;
     background-color: #e9e6df;
     color: #1b1c1d;
   }
@@ -232,6 +234,10 @@
     border-color: rgba(27, 28, 29, 0.12);
     background-color: #f6f4ef;
     box-shadow: 0 32px 70px -48px rgba(27, 28, 29, 0.42);
+  }
+
+  .theme-work-heading {
+    color: #1b1c1d;
   }
 
   .theme-work-header {
@@ -266,6 +272,78 @@
     border-color: rgba(255, 255, 255, 0.3);
     background-color: rgba(27, 28, 29, 0.72);
     color: #fff;
+  }
+
+  .theme-work-surface .project-evidence {
+    border-color: rgba(27, 28, 29, 0.14);
+    background-color: #eeece6;
+    box-shadow: 0 24px 55px -40px rgba(27, 28, 29, 0.5);
+  }
+
+  .theme-work-surface .project-evidence > div:last-child p {
+    color: #333437;
+  }
+
+  .theme-work-surface .project-evidence > div:last-child span {
+    border-color: rgba(27, 28, 29, 0.16);
+    color: #6d6b67;
+  }
+
+  html:not(.dark) .portfolio .theme-work-surface :is(
+    .project-evidence--layout-1,
+    .project-evidence--layout-2,
+    .project-evidence--layout-3,
+    .project-evidence--layout-4,
+    .project-evidence--layout-5
+  ) > .relative > [class*="bg-[#202124]"] {
+    background-color: #d9d6ce !important;
+  }
+
+  html:not(.dark) .portfolio .theme-work-surface :is(
+    .project-evidence--layout-1,
+    .project-evidence--layout-2,
+    .project-evidence--layout-3,
+    .project-evidence--layout-5
+  ) [class*="border-white"] {
+    border-color: rgba(27, 28, 29, 0.14) !important;
+  }
+
+  html:not(.dark) .portfolio .theme-work-surface .project-evidence--layout-5 [class*="text-white"] {
+    color: #4e4d49 !important;
+  }
+
+  .project-visual-header {
+    border-color: rgba(27, 28, 29, 0.16);
+    color: #66645f;
+  }
+
+  .project-visual-header-dot,
+  .project-visual-row-marker:not(.bg-\[\#3455b8\]),
+  .project-visual-row-value {
+    background-color: rgba(27, 28, 29, 0.2);
+  }
+
+  .project-visual-row-line {
+    background-color: rgba(27, 28, 29, 0.14);
+  }
+
+  .theme-project-carousel {
+    border-color: rgba(27, 28, 29, 0.16);
+    background-color: #e7e4dc;
+  }
+
+  .theme-project-carousel-scrim {
+    --tw-gradient-from: rgba(246, 244, 239, 0.86) var(--tw-gradient-from-position);
+  }
+
+  .theme-work-surface .project-image-dot {
+    border-color: rgba(27, 28, 29, 0.28);
+    background: rgba(246, 244, 239, 0.78);
+  }
+
+  .theme-work-surface .project-image-dot:hover,
+  .theme-work-surface .project-image-dot.is-active {
+    background: #1b1c1d;
   }
 
   #achievements .eyebrow {
@@ -314,13 +392,20 @@
 }
 
 .dark .portfolio .theme-work-surface {
+  --project-image-dot-active: #fff;
+  --project-image-dot-hover: #fff;
   background-color: #17191c !important;
+  color: #f2f1ed;
 }
 
 .dark .portfolio .theme-work-panel {
   border-color: rgba(255, 255, 255, 0.12);
   background-color: #1b1c1d;
   box-shadow: 0 32px 70px -48px rgba(0, 0, 0, 0.78);
+}
+
+.dark .portfolio .theme-work-heading {
+  color: #f4f1eb;
 }
 
 .dark .portfolio .theme-work-header {
@@ -349,6 +434,58 @@
 
 .dark .portfolio .theme-work-links {
   color: #f4f1eb;
+}
+
+.dark .portfolio .theme-work-surface .project-evidence {
+  border-color: rgba(255, 255, 255, 0.12);
+  background-color: #26272a;
+  box-shadow: 0 24px 55px -40px rgba(0, 0, 0, 0.8);
+}
+
+.dark .portfolio .theme-work-surface .project-evidence > div:last-child p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dark .portfolio .theme-work-surface .project-evidence > div:last-child span {
+  border-color: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dark .portfolio .project-visual-header {
+  border-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dark .portfolio .project-visual-header-dot,
+.dark .portfolio .project-visual-row-marker:not(.bg-\[\#3455b8\]) {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.dark .portfolio .project-visual-row-line {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark .portfolio .project-visual-row-value {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .portfolio .theme-project-carousel {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: #202124;
+}
+
+.dark .portfolio .theme-project-carousel-scrim {
+  --tw-gradient-from: rgb(0 0 0 / 0.7) var(--tw-gradient-from-position);
+}
+
+.dark .portfolio .theme-work-surface .project-image-dot {
+  border-color: rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.dark .portfolio .theme-work-surface .project-image-dot:hover,
+.dark .portfolio .theme-work-surface .project-image-dot.is-active {
+  background: #fff;
 }
 
 .dark .portfolio .theme-light-surface :is(h1, h2, h3, p, a, span, li),
@@ -495,7 +632,7 @@
 }
 
 .project-image-dot:hover {
-  background: #fff;
+  background: var(--project-image-dot-hover, #fff);
 }
 
 .project-image-dot:active {
@@ -504,7 +641,7 @@
 
 .project-image-dot.is-active {
   width: 1.25rem;
-  background: #fff;
+  background: var(--project-image-dot-active, #fff);
 }
 
 .project-image-dot:focus-visible {

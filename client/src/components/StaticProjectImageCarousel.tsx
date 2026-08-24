@@ -10,7 +10,7 @@ export function StaticProjectImageCarousel({ projectName, imageUrls }: StaticPro
   const imageCount = imageUrls.length;
 
   return (
-    <div className="relative aspect-[16/10] overflow-hidden rounded-[1rem] border border-white/10 bg-[#202124]" data-project-image-count={imageCount}>
+    <div className="theme-project-carousel relative aspect-[16/10] overflow-hidden rounded-[1rem] border" data-project-image-count={imageCount}>
       <div className="project-image-viewport h-full w-full">
         <div className="project-image-track h-full">
           {imageUrls.map((imageUrl, index) => (
@@ -20,7 +20,7 @@ export function StaticProjectImageCarousel({ projectName, imageUrls }: StaticPro
           ))}
         </div>
       </div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" aria-hidden="true" />
+      <div className="theme-project-carousel-scrim pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t to-transparent" aria-hidden="true" />
       <ProjectImageDots projectName={projectName} imageUrls={imageUrls} activeIndex={0} onSelect={() => {}} />
     </div>
   );

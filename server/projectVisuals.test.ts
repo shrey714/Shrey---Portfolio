@@ -11,8 +11,18 @@ describe("project visual carousel contract", () => {
   it("keeps all existing built-in project visual layout branches intact", () => {
     for (const layout of ["layout-1", "layout-2", "layout-3", "layout-4"]) {
       expect(homeSource).toContain(`project.visualLayout === "${layout}"`);
+      expect(homeSource).toContain("project-evidence--${project.visualLayout}");
     }
     expect(homeSource).toContain('return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">');
+    for (const layout of ["layout-1", "layout-2", "layout-3", "layout-4", "layout-5"]) {
+      expect(cssSource).toContain(`.project-evidence--${layout}`);
+    }
+    expect(homeSource).toContain("project-visual-header");
+    expect(homeSource).toContain("project-visual-row-line");
+    expect(cssSource).toContain(".project-visual-header {");
+    expect(cssSource).toContain(".project-visual-row-line {");
+    expect(cssSource).toContain(".dark .portfolio .project-visual-header {");
+    expect(cssSource).toContain("color: rgba(255, 255, 255, 0.6);");
   });
 
   it("uses client-only Embla autoplay with an SSR-safe static fallback and dot pagination", () => {
@@ -38,9 +48,28 @@ describe("project visual carousel contract", () => {
   it("uses a light Selected Work panel in light theme and restores its charcoal material in dark theme", () => {
     expect(homeSource).toContain('className="theme-work-panel mx-auto max-w-7xl');
     expect(homeSource).toContain('className="theme-work-header flex flex-col');
+    expect(homeSource).toContain('className="theme-work-heading mt-4');
     expect(cssSource).toContain(".theme-work-panel {");
     expect(cssSource).toContain("background-color: #f6f4ef;");
     expect(cssSource).toContain(".dark .portfolio .theme-work-panel {");
     expect(cssSource).toContain("background-color: #1b1c1d;");
+    expect(cssSource).toContain(".dark .portfolio .theme-work-heading {");
+    expect(cssSource).toContain("color: #f4f1eb;");
+  });
+
+  it("uses a porcelain carousel frame in light theme and restores the dark frame only in dark theme", () => {
+    expect(homeSource).toContain("project-evidence project-evidence--${project.visualLayout} relative overflow-hidden");
+    expect(emblaSource).toContain("theme-project-carousel relative aspect-[16/10]");
+    expect(staticSource).toContain("theme-project-carousel relative aspect-[16/10]");
+    expect(emblaSource).toContain("theme-project-carousel-scrim");
+    expect(staticSource).toContain("theme-project-carousel-scrim");
+    expect(cssSource).toContain(".theme-work-surface .project-evidence {");
+    expect(cssSource).toContain(".theme-project-carousel {");
+    expect(cssSource).toContain("background-color: #e7e4dc;");
+    expect(cssSource).toContain(".dark .portfolio .theme-project-carousel {");
+    expect(cssSource).toContain("background-color: #202124;");
+    expect(cssSource).toContain("--project-image-dot-active: #1b1c1d;");
+    expect(cssSource).toContain("--project-image-dot-active: #fff;");
+    expect(cssSource).toContain("background: var(--project-image-dot-active, #fff);");
   });
 });

@@ -26,7 +26,7 @@ export function EmblaProjectImageCarousel({ projectName, imageUrls }: EmblaProje
   }, [emblaApi]);
 
   return (
-    <div className="relative aspect-[16/10] overflow-hidden rounded-[1rem] border border-white/10 bg-[#202124]" data-project-image-count={imageCount}>
+    <div className="theme-project-carousel relative aspect-[16/10] overflow-hidden rounded-[1rem] border" data-project-image-count={imageCount}>
       <div className="project-image-viewport h-full w-full" ref={emblaRef}>
         <div className="project-image-track h-full">
           {imageUrls.map((imageUrl, index) => (
@@ -36,7 +36,7 @@ export function EmblaProjectImageCarousel({ projectName, imageUrls }: EmblaProje
           ))}
         </div>
       </div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" aria-hidden="true" />
+      <div className="theme-project-carousel-scrim pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t to-transparent" aria-hidden="true" />
       <ProjectImageDots projectName={projectName} imageUrls={imageUrls} activeIndex={activeIndex} onSelect={(index) => emblaApi?.scrollTo(index)} />
     </div>
   );

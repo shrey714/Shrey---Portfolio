@@ -1,5 +1,4 @@
 import superjson from "superjson";
-import { portfolioContent } from "../../content/portfolioContent";
 import type { RenderResult } from "../../client/src/entry-server.js";
 import { ENV } from "./env.js";
 
@@ -18,16 +17,16 @@ function jsonForScript(value: unknown) {
 function buildHeadTags(result: RenderResult) {
   const { head } = result;
   const canonicalUrl = absoluteUrl(head.canonicalPath);
-  const shareImageUrl = absoluteUrl(portfolioContent.seo.shareImage);
+  const shareImageUrl = absoluteUrl(head.shareImage);
   const robots = head.noindex ? "noindex,nofollow" : "index,follow,max-image-preview:large";
-  const person = portfolioContent.seo.person;
+  const person = head.person;
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: portfolioContent.identity.name,
+    name: person.name,
     url: canonicalUrl,
     jobTitle: person.jobTitles,
-    description: portfolioContent.seo.description,
+    description: head.description,
     address: { "@type": "PostalAddress", addressLocality: person.locality, addressCountry: person.countryCode },
     alumniOf: { "@type": "CollegeOrUniversity", name: person.education },
     worksFor: { "@type": "Organization", name: person.employer },
@@ -37,8 +36,8 @@ function buildHeadTags(result: RenderResult) {
   return [
     `<title>${escapeHtml(head.title)}</title>`,
     `<meta name="description" content="${escapeHtml(head.description)}" />`,
-    `<meta name="author" content="${escapeHtml(portfolioContent.identity.name)}" />`,
-    `<meta name="keywords" content="${escapeHtml(portfolioContent.seo.keywords.join(", "))}" />`,
+    `<meta name="author" content="${escapeHtml(head.author)}" />`,
+    `<meta name="keywords" content="${escapeHtml(head.keywords.join(", "))}" />`,
     `<meta name="robots" content="${robots}" />`,
     `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />`,
     `<meta property="og:type" content="website" />`,

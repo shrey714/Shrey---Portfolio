@@ -1,5 +1,6 @@
 import http from "node:http";
 import { once } from "node:events";
+import { readFile } from "node:fs/promises";
 import { afterAll, beforeAll, expect, test } from "vitest";
 import app from "../api/index";
 
@@ -50,16 +51,25 @@ test("unified Vercel entry serves the native Decap Blob media adapter and reject
   expect(invalidMedia.status).toBe(404);
 });
 
-test("unified Vercel entry provides Decap's conventional configuration fallback", async () => {
+test("unified Vercel entry provides Decap's focused section-entry configuration", async () => {
   const response = await fetch(`${origin}/config.yml`);
   expect(response.status).toBe(200);
   expect(response.headers.get("content-type")).toContain("text/yaml");
   expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
-  const config = await response.json() as { backend: Record<string, string>; media_folder?: string; public_folder?: string };
+  const config = await response.json() as { backend: Record<string, string>; media_folder?: string; public_folder?: string; collections?: Array<{ name: string; files: Array<{ file: string }> }> };
   expect(config.backend.repo).toBe("shrey714/Shrey---Portfolio");
   expect(config.backend.api_root).toBe(`${origin}/api/decap/github`);
   expect(config.media_folder).toBe("content/media");
   expect(config.public_folder).toBe("/api/media/portfolio");
+  expect(config.collections?.map(collection => collection.name)).toContain("portfolio-work");
+  expect(config.collections?.find(collection => collection.name === "portfolio-work")?.files[0]?.file).toBe("content/portfolio/work.json");
+});
+
+test("Vercel's API runtime receives Portfolio-derived metadata from the SSR render result", async () => {
+  const ssrSource = await readFile(new URL("./_core/ssr.ts", import.meta.url), "utf8");
+  expect(ssrSource).not.toContain("content/portfolioContent");
+  expect(ssrSource).toContain("head.shareImage");
+  expect(ssrSource).toContain("head.person");
 });
 
 test("Decap GitHub proxy rejects unauthenticated repository calls without contacting GitHub", async () => {

@@ -43,7 +43,10 @@ describe("project visual carousel contract", () => {
     expect(cssSource).toContain(".project-image-dot");
     expect(cssSource).toContain("flex: 0 0 100%;");
     expect(cssSource).not.toContain(".project-image-control");
-    expect(homeSource).toContain('key={`${theme}:${imageUrls.join("|")}`}');
+    expect(homeSource).not.toContain('key={`${theme}:${imageUrls.join("|")}`}');
+    expect(emblaSource).toContain("getPreservedProjectImageIndex");
+    expect(emblaSource).toContain("watchSlides: false");
+    expect(emblaSource).toContain("emblaApi.scrollTo(nextIndex, true)");
   });
 
   it("uses a light Selected Work panel in light theme and restores its charcoal material in dark theme", () => {

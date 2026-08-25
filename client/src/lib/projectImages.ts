@@ -18,3 +18,13 @@ export function getProjectImageUrls(project: ProjectImageSource, theme: ProjectI
     return entry.image && visibleInTheme ? [entry.image] : [];
   });
 }
+
+export function getPreservedProjectImageIndex(previousImageUrls: string[], nextImageUrls: string[], currentIndex: number) {
+  if (nextImageUrls.length === 0) return 0;
+
+  const currentImageUrl = previousImageUrls[currentIndex];
+  const matchingImageIndex = currentImageUrl ? nextImageUrls.indexOf(currentImageUrl) : -1;
+  if (matchingImageIndex >= 0) return matchingImageIndex;
+
+  return Math.min(Math.max(currentIndex, 0), nextImageUrls.length - 1);
+}

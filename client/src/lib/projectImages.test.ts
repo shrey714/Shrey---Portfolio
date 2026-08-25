@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getProjectImageUrls } from "./projectImages";
+import { getPreservedProjectImageIndex, getProjectImageUrls } from "./projectImages";
 
 describe("project image carousel helpers", () => {
   it("keeps legacy image URL lists visible in both themes", () => {
@@ -27,6 +27,18 @@ describe("project image carousel helpers", () => {
   it("returns no project images when the single repeatable field is empty", () => {
     expect(getProjectImageUrls({ visualImageUrls: [] })).toEqual([]);
     expect(getProjectImageUrls({})).toEqual([]);
+  });
+
+  it("keeps the same image selected when it remains available in the next theme", () => {
+    expect(getPreservedProjectImageIndex(["/one.webp", "/two.webp", "/three.webp"], ["/two.webp", "/three.webp"], 2)).toBe(1);
+  });
+
+  it("keeps the current position when its image is unavailable but that position still exists", () => {
+    expect(getPreservedProjectImageIndex(["/one.webp", "/two.webp", "/three.webp"], ["/four.webp", "/five.webp", "/six.webp"], 2)).toBe(2);
+  });
+
+  it("falls back to the nearest valid position when the next theme has fewer images", () => {
+    expect(getPreservedProjectImageIndex(["/one.webp", "/two.webp", "/three.webp", "/four.webp", "/five.webp"], ["/one.webp", "/two.webp", "/three.webp"], 4)).toBe(2);
   });
 
 });

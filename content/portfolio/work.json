@@ -88,34 +88,44 @@
       "description": "A React Native package-management application built with the NPM Registry API and Firebase. It includes package-specific communication groups, favourites, dynamic theming, notifications, advertising, and quizzes covering NPM, React, and Angular.",
       "visualImageUrls": [
         {
-          "image": "https://user-images.githubusercontent.com/76216765/183025641-f43b011c-5f8c-407a-860c-75b9c8e0a0ff.png",
           "showInLight": true,
-          "showInDark": true
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648442556-22d49aa9-88530f96-84cc-4196-87b0-e48be87954f8.png"
         },
         {
-          "image": "https://user-images.githubusercontent.com/76216765/183025649-22f95c23-00bd-4c81-b993-46ca8f7fdb64.png",
-          "showInLight": true,
-          "showInDark": true
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648432412-d8aaee41-watermarked_img_10727376992562473150.jpg"
         },
         {
-          "image": "https://user-images.githubusercontent.com/76216765/183025664-ae1ca0fb-05bd-4a60-a6de-d4701d1670e1.png",
           "showInLight": true,
-          "showInDark": true
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648430976-4016a3c9-watermarked_img_10853470720910711085.jpg"
         },
         {
-          "image": "https://user-images.githubusercontent.com/76216765/183025658-296c42ad-0f60-465b-b99c-b49d2e7f399d.png",
-          "showInLight": true,
-          "showInDark": true
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648440048-989b773d-watermarked_img_1040599904509347106.jpg"
         },
         {
-          "image": "https://user-images.githubusercontent.com/76216765/183025666-e38bbbc3-419c-4b37-b9f6-aef28bfab6aa.png",
           "showInLight": true,
-          "showInDark": true
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648428986-1ed51543-watermarked_img_13078724525706223797.jpg"
         },
         {
-          "image": "https://user-images.githubusercontent.com/76216765/183025671-17ac72b0-4a15-47e4-93bc-d35b447a0de6.png",
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648436274-9bba8648-watermarked_img_2524438858833865311.jpg"
+        },
+        {
           "showInLight": true,
-          "showInDark": true
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648434330-10fcb8fb-watermarked_img_7121229036110981653.jpg"
+        },
+        {
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648438213-83def92b-watermarked_img_1243184247577306663.jpg"
         }
       ]
     },

@@ -50,11 +50,16 @@ describe("Lighthouse regressions", () => {
     expect(document).not.toContain("maximum-scale");
   });
 
-  it("keeps fixed mobile navigation surfaces explicit for Safari tinting", async () => {
+  it("keeps the mobile navigation overlay transparent while preserving a readable translucent menu surface", async () => {
     const styles = await readFile(projectFile("client/src/index.css"), "utf8");
 
-    expect(styles).toContain(".mobile-menu-layer {\n  position: fixed;\n  inset: 64px 0 0;\n  background: #f6f4ef;");
-    expect(styles).toContain(".dark .mobile-menu-layer { background: #101113; }");
+    expect(styles).toContain(".mobile-menu-layer {\n  position: fixed;\n  inset: 64px 0 0;\n  background: transparent;");
+    expect(styles).toContain(".dark .mobile-menu-layer { background: transparent; }");
+    expect(styles).toContain("background: rgba(246, 244, 239, 0.82);");
+    expect(styles).toContain("background: rgba(16, 17, 19, 0.82);");
+    expect(styles).toContain(".dark .portfolio .mobile-menu-panel.theme-light-surface {\n  background-color: rgba(16, 17, 19, 0.82) !important;");
+    expect(styles).toContain("background: rgba(16, 17, 19, 0.14);");
+    expect(styles).toContain(".mobile-menu-layer.is-open .mobile-menu-link:nth-child(6) { transition-delay: 185ms; }");
   });
 
   it("keeps theme toggles on the single runtime environment path", async () => {

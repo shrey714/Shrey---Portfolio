@@ -23,6 +23,8 @@ describe("project visual carousel contract", () => {
     expect(cssSource).toContain(".project-visual-row-line {");
     expect(cssSource).toContain(".dark .portfolio .project-visual-header {");
     expect(cssSource).toContain("color: rgba(255, 255, 255, 0.6);");
+    expect(homeSource).not.toContain('project.visualLayout.replace("layout-", "Layout ")');
+    expect(homeSource).toContain('className="max-w-none text-xs font-medium tracking-[-0.02em] text-white/80 sm:text-sm"');
   });
 
   it("uses client-only Embla autoplay with an SSR-safe static fallback and dot pagination", () => {
@@ -46,7 +48,27 @@ describe("project visual carousel contract", () => {
     expect(homeSource).not.toContain('key={`${theme}:${imageUrls.join("|")}`}');
     expect(emblaSource).toContain("getPreservedProjectImageIndex");
     expect(emblaSource).toContain("watchSlides: false");
-    expect(emblaSource).toContain("emblaApi.scrollTo(nextIndex, true)");
+    expect(emblaSource).toContain("duration: 32");
+    expect(emblaSource).toContain("emblaApi.scrollTo(nextIndex)");
+    expect(emblaSource).toContain("project-image-slide-image");
+    expect(cssSource).toContain("@keyframes project-image-reveal");
+    expect(cssSource).toContain("transition: transform 460ms cubic-bezier(0.23, 1, 0.32, 1)");
+  });
+
+  it("adds a keyboard-accessible full-screen image lightbox without removing carousel controls", () => {
+    expect(emblaSource).toContain('import { createPortal } from "react-dom"');
+    expect(emblaSource).toContain('aria-label={`${projectName} image viewer`}');
+    expect(emblaSource).toContain('aria-label="Close full-screen image viewer"');
+    expect(emblaSource).toContain('event.key === "Escape"');
+    expect(emblaSource).toContain('event.key === "ArrowLeft"');
+    expect(emblaSource).toContain('event.key === "ArrowRight"');
+    expect(emblaSource).toContain('Open image ${index + 1} of ${imageCount} for ${projectName} in full screen');
+    expect(emblaSource).toContain('          </div>\n          {imageCount > 1 && <div className="project-image-lightbox-controls"');
+    expect(cssSource).toContain(".project-image-lightbox {");
+    expect(cssSource).toContain(".project-image-lightbox-controls {");
+    expect(cssSource).toContain("position: fixed;");
+    expect(cssSource).toContain("bottom: max(1rem, env(safe-area-inset-bottom));");
+    expect(cssSource).toContain("@keyframes project-image-lightbox-enter");
   });
 
   it("uses a light Selected Work panel in light theme and restores its charcoal material in dark theme", () => {

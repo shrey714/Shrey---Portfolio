@@ -36,13 +36,14 @@ describe("portfolio content validation", () => {
     expect(validatePortfolioContent(valid).work.projects[0].visualImageUrls).toHaveLength(2);
   });
 
-  it("migrates existing editable custom project images to structured entries enabled in both themes", () => {
+  it("keeps existing editable custom project images as valid structured theme-aware entries", () => {
     const imageEntries = portfolioContent.work.projects.flatMap(project => project.visualImageUrls ?? []);
 
     expect(imageEntries.length).toBeGreaterThan(0);
     imageEntries.forEach(entry => {
       expect(typeof entry).toBe("object");
-      expect(entry).toMatchObject({ showInLight: true, showInDark: true });
+      expect(entry).toMatchObject({ image: expect.any(String), showInLight: expect.any(Boolean), showInDark: expect.any(Boolean) });
+      expect(entry.showInLight || entry.showInDark).toBe(true);
     });
   });
 

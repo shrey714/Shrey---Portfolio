@@ -145,14 +145,24 @@
       "description": "A GenAI-powered fashion assistant built with React, Node.js, and Python deep learning. It analyzes user history and preferences to deliver personalized outfit suggestions and customized fashion recommendations.",
       "visualImageUrls": [
         {
-          "image": "/api/media/portfolio/1787571083380-d5f52364-browserling-screenshot-3.png",
           "showInLight": true,
-          "showInDark": true
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648205379-40ca7036-Screenshot-2026-08-25-at-1.38.29-PM.png"
         },
         {
-          "image": "/api/media/portfolio/1787571093381-df965c51-browserling-screenshot-4.png",
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648208702-a826c53b-Screenshot-2026-08-25-at-1.36.21-PM.png"
+        },
+        {
           "showInLight": true,
-          "showInDark": true
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648202499-83fffdd4-Screenshot-2026-08-25-at-1.38.56-PM.png"
+        },
+        {
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648208702-a826c53b-Screenshot-2026-08-25-at-1.36.21-PM.png"
         }
       ]
     },

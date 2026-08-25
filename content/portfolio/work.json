@@ -161,7 +161,7 @@
       "visualMeta": "Bill Splitter / shared expenses",
       "repositoryUrl": "https://github.com/shrey714/Bill-Splitter",
       "meta": "05 — Personal finance tool",
-      "visualLayout": "layout-3",
+      "visualLayout": "custom-image",
       "technologies": [
         "React Native",
         "Firebase"

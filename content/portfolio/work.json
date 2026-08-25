@@ -29,14 +29,79 @@
       "description": "A digital workspace that brings authentication, real-time collaboration, operational state, and subscription experiences into one calmer clinical workflow.",
       "visualImageUrls": [
         {
-          "image": "/api/media/portfolio/1787570795797-bfe38cf3-browserling-screenshot.png",
           "showInLight": true,
-          "showInDark": true
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787649382887-8deea061-Screenshot-2026-08-25-at-2.42.01P-500kb.jpg"
         },
         {
-          "image": "/api/media/portfolio/1787570808959-05896e14-browserling-screenshot-2.png",
           "showInLight": true,
-          "showInDark": true
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648873280-63c8477e-Screenshot-2026-08-25-at-1.34.45-PM.png"
+        },
+        {
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648876677-f7c8170f-Screenshot-2026-08-25-at-1.34.26-PM.png"
+        },
+        {
+          "showInLight": true,
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648901896-03e83599-Screenshot-2026-08-25-at-1.24.19-PM.png"
+        },
+        {
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648905029-7452369c-Screenshot-2026-08-25-at-1.23.58-PM.png"
+        },
+        {
+          "showInLight": true,
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648912182-29e19788-Screenshot-2026-08-25-at-1.19.32-PM.png"
+        },
+        {
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648908535-47f3ec81-Screenshot-2026-08-25-at-1.19.52-PM.png"
+        },
+        {
+          "showInLight": true,
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648887502-2a4ae188-Screenshot-2026-08-25-at-1.30.27-PM.png"
+        },
+        {
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648891428-fdb6bd31-Screenshot-2026-08-25-at-1.30.04-PM.png"
+        },
+        {
+          "showInLight": true,
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648894596-08e6c5c2-Screenshot-2026-08-25-at-1.25.58-PM.png"
+        },
+        {
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648898139-00f82ed9-Screenshot-2026-08-25-at-1.25.34-PM.png"
+        },
+        {
+          "showInLight": true,
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648880179-5fbe3b41-Screenshot-2026-08-25-at-1.32.44-PM.png"
+        },
+        {
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648883616-74e6f5c9-Screenshot-2026-08-25-at-1.32.27-PM.png"
+        },
+        {
+          "showInLight": true,
+          "showInDark": false,
+          "image": "/api/media/portfolio/1787648865660-c6f2ba07-Screenshot-2026-08-25-at-1.35.37-PM.png"
+        },
+        {
+          "showInLight": false,
+          "showInDark": true,
+          "image": "/api/media/portfolio/1787648869601-0f904926-Screenshot-2026-08-25-at-1.35.20-PM.png"
         }
       ]
     },

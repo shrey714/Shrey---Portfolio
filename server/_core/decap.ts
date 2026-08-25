@@ -23,6 +23,7 @@ type DecapField = {
   fields?: DecapField[];
   field?: DecapField;
   default?: unknown;
+  options?: unknown[];
 };
 
 const stringField = (name: string, label: string, required = true): DecapField => ({ name, label, widget: "string", required });
@@ -32,6 +33,12 @@ const listOfStrings = (name: string, label: string): DecapField => ({ name, labe
 const listOfMedia = (name: string, label: string, hint?: string): DecapField => ({ name, label, widget: "list", collapsed: true, label_singular: "Image", summary: "{{fields.image}}", hint, field: mediaField("image", "Image", "image") });
 const objectField = (name: string, label: string, fields: DecapField[], summary?: string): DecapField => ({ name, label, widget: "object", collapsed: true, summary, fields });
 const listOfObjects = (name: string, label: string, fields: DecapField[], summary?: string, labelSingular = "Entry"): DecapField => ({ name, label, widget: "list", collapsed: true, summary, label_singular: labelSingular, fields });
+const booleanField = (name: string, label: string, hint: string): DecapField => ({ name, label, widget: "boolean", default: true, hint });
+const listOfThemeProjectImages = (): DecapField => listOfObjects("visualImageUrls", "Project images", [
+  mediaField("image", "Image", "image"),
+  booleanField("showInLight", "Show in light mode", "Keep this image visible when the public portfolio is in light mode."),
+  booleanField("showInDark", "Show in dark mode", "Keep this image visible when the public portfolio is in dark mode."),
+], "{{fields.image}}", "Image");
 
 function portfolioFields(): DecapField[] {
   return [
@@ -65,7 +72,7 @@ function portfolioFields(): DecapField[] {
           { label: "Layout 5 — Analytics panel", value: "layout-5" },
           { label: "Project images — Add images below", value: "custom-image" },
         ] } as DecapField,
-        listOfMedia("visualImageUrls", "Project images", "Add one or more images here when Project visual is set to Project images."),
+        { ...listOfThemeProjectImages(), hint: "Add one or more images when Project visual is set to Project images. For every image, choose light mode, dark mode, or both." },
         stringField("meta", "Meta"), stringField("date", "Date"), stringField("name", "Project name"), stringField("type", "Project type"),
         textField("description", "Description"), listOfStrings("technologies", "Technologies"), stringField("cta", "Button label"),
         stringField("ariaLabel", "Button accessibility label"), stringField("repositoryUrl", "GitHub or source URL"), stringField("liveUrl", "Live project URL", false), stringField("visualMeta", "Visual meta"), stringField("visualTitle", "Visual title"),

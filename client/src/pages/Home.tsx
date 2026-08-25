@@ -32,11 +32,11 @@ import { getEvidenceScrollMotion } from "@/lib/evidenceMotion";
 import { getSkillVisual } from "@/lib/skillPresentation";
 import { getActiveNavigationIndex, resolveSidebarObserverActiveId, sidebarSectionObserverOptions } from "@/lib/sidebarNavigation";
 import { getScrollToTopBehavior, shouldShowScrollToTop } from "@/lib/scrollToTop";
-import { getProjectImageUrls } from "@/lib/projectImages";
+import { getProjectImageUrls, type ProjectImageSource } from "@/lib/projectImages";
 
 const hero = content.hero;
 const navItems = content.navigation;
-type WorkProject = (typeof content.work.projects)[number] & { visualImageUrls?: string[] };
+type WorkProject = Omit<(typeof content.work.projects)[number], "visualImageUrls"> & ProjectImageSource;
 type AchievementEntry = (typeof content.achievements.entries)[number] & { visualImageUrl?: string };
 
 function CustomProjectImageCarousel({ project, imageUrls }: { project: WorkProject; imageUrls: string[] }) {
@@ -186,6 +186,7 @@ function useBatchedEvidenceScrollMotion(): EvidenceRegistration {
 }
 
 function ProductEvidence({ project, registerEvidence }: { project: WorkProject; registerEvidence: EvidenceRegistration }) {
+  const { theme } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
   const evidenceRef = useRef<HTMLDivElement | null>(null);
 
@@ -225,11 +226,11 @@ function ProductEvidence({ project, registerEvidence }: { project: WorkProject; 
 
   const header = <div className="project-visual-header flex items-center justify-between border-b pb-3 text-[8px] font-semibold uppercase tracking-[0.14em]"><span>{project.visualMeta}</span><span className="flex gap-1.5"><i className="project-visual-header-dot h-1.5 w-1.5 rounded-full" /><i className="project-visual-header-dot h-1.5 w-1.5 rounded-full" /><i className="h-1.5 w-1.5 rounded-full bg-[#3455b8]" /></span></div>;
   const rows = project.visualRows.map((row, index) => <div key={row} className="flex items-center gap-3"><span className={`project-visual-row-marker h-1.5 w-1.5 shrink-0 rounded-full ${index === 1 ? "bg-[#3455b8]" : ""}`} /><span className="project-visual-row-line h-1.5 flex-1 rounded-full" /><span className="project-visual-row-value h-1.5 w-9 rounded-full" /></div>);
-  const imageUrls = project.visualLayout === "custom-image" ? getProjectImageUrls(project) : [];
+  const imageUrls = project.visualLayout === "custom-image" ? getProjectImageUrls(project, theme) : [];
   const customImage = imageUrls.length > 0;
 
   const layout = (() => {
-    if (customImage) return <CustomProjectImageCarousel project={project} imageUrls={imageUrls} />;
+    if (customImage) return <CustomProjectImageCarousel key={`${theme}:${imageUrls.join("|")}`} project={project} imageUrls={imageUrls} />;
 
     if (project.visualLayout === "layout-1") return <div className="rounded-[1rem] border border-white/10 bg-[#202124] p-3 sm:p-4">{header}<div className="mt-4 grid grid-cols-[0.34fr_0.66fr] gap-3"><div className="rounded-lg border border-white/9 bg-white/[0.035] p-2.5"><div className="h-1.5 w-12 rounded-full bg-white/35" /><div className="mt-4 space-y-2">{[0, 1, 2, 3].map(item => <div key={item} className={`h-5 rounded-md border border-white/[0.06] ${item === 1 ? "bg-[#456fe8]/80" : "bg-white/[0.045]"}`} />)}</div><div className="mt-4 rounded-md border border-[#456fe8]/40 bg-[#456fe8]/15 p-2"><div className="h-1.5 w-8 rounded-full bg-[#9fb2ff]" /><div className="mt-2 h-1 w-full rounded-full bg-white/15" /></div></div><div className="rounded-lg border border-white/9 bg-white/[0.035] p-3"><div className="flex items-start justify-between"><div><div className="h-1.5 w-20 rounded-full bg-white/65" /><div className="mt-2 h-1.5 w-14 rounded-full bg-white/20" /></div><div className="h-6 w-10 rounded-md bg-[#456fe8]" /></div><div className="mt-5 grid grid-cols-3 gap-2">{[0, 1, 2].map(item => <div key={item} className="rounded-md border border-white/[0.08] bg-white/[0.035] p-2"><div className="h-1 w-5 rounded-full bg-white/25" /><div className={`mt-3 h-8 rounded ${item === 1 ? "bg-[#456fe8]/60" : "bg-white/[0.09]"}`} /></div>)}</div><div className="mt-4 space-y-2.5">{rows}</div></div></div></div>;
 
@@ -270,6 +271,7 @@ function AchievementMark({ entry }: { entry: AchievementEntry }) {
 }
 
 export default function Home() {
+  const { theme } = useTheme();
   const [active, setActive] = useState("top");
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuMounted, setMenuMounted] = useState(false);
@@ -560,7 +562,7 @@ export default function Home() {
                   </div>
                 );
                 const visualClassName = `relative block transition-transform duration-300 hover:-translate-y-1 ${project.visualLayout === "layout-3" ? "lg:max-w-[31rem]" : ""}`;
-                const hasMultipleProjectImages = project.visualLayout === "custom-image" && getProjectImageUrls(project as WorkProject).length > 1;
+                const hasMultipleProjectImages = project.visualLayout === "custom-image" && getProjectImageUrls(project as WorkProject, theme).length > 1;
                 const visual = hasMultipleProjectImages ? (
                   <div className={visualClassName} aria-label={project.ariaLabel}>
                     <ProductEvidence project={project} registerEvidence={registerEvidence} />

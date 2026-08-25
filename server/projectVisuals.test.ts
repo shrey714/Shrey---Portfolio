@@ -43,6 +43,7 @@ describe("project visual carousel contract", () => {
     expect(cssSource).toContain(".project-image-dot");
     expect(cssSource).toContain("flex: 0 0 100%;");
     expect(cssSource).not.toContain(".project-image-control");
+    expect(homeSource).toContain('key={`${theme}:${imageUrls.join("|")}`}');
   });
 
   it("uses a light Selected Work panel in light theme and restores its charcoal material in dark theme", () => {

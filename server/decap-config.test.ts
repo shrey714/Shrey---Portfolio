@@ -50,9 +50,13 @@ describe("Decap CMS configuration", () => {
     const work = sectionByName("work") as { fields: Array<{ name: string; fields: Array<{ name: string; fields: Array<{ name: string; widget?: string; required?: boolean; options?: unknown[] }> }> }> };
     const projectFields = work.fields.find(field => field.name === "projects")?.fields ?? [];
     const visualLayout = projectFields.find(field => field.name === "visualLayout");
-    const customImages = projectFields.find(field => field.name === "visualImageUrls") as { widget?: string; field?: { widget?: string; name?: string } } | undefined;
+    const customImages = projectFields.find(field => field.name === "visualImageUrls") as { widget?: string; fields?: Array<{ widget?: string; name?: string; default?: boolean }> } | undefined;
     expect(visualLayout?.options).toHaveLength(6);
-    expect(customImages).toMatchObject({ widget: "list", field: { widget: "image", name: "image" } });
+    expect(customImages).toMatchObject({ widget: "list", fields: [
+      { widget: "image", name: "image" },
+      { widget: "boolean", name: "showInLight", default: true },
+      { widget: "boolean", name: "showInDark", default: true },
+    ] });
     expect(customImages).toMatchObject({ label: "Project images" });
     expect(projectFields.find(field => field.name === "visualImageUrl")).toBeUndefined();
     expect(work.fields.find(field => field.name === "projects")).toMatchObject({ collapsed: true, summary: "{{fields.name}} — {{fields.type}}", label_singular: "Project" });

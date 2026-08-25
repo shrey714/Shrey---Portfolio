@@ -5,6 +5,14 @@ const text = z.string().trim().min(1);
 const link = z.string().trim().refine(value => value.startsWith("/") || /^https?:\/\//.test(value), "Expected an absolute URL or site-relative path");
 const listOfText = z.array(text).min(1);
 const labelledText = z.object({ title: text, text }).strict();
+const themeProjectImage = z.object({
+  image: link,
+  showInLight: z.boolean().default(true),
+  showInDark: z.boolean().default(true),
+}).strict().refine(image => image.showInLight || image.showInDark, {
+  message: "Enable the image for light mode, dark mode, or both.",
+});
+const projectImageEntry = z.union([link, themeProjectImage]);
 const achievementEntrySchema = z.object({
   meta: text,
   title: text,
@@ -22,7 +30,7 @@ const achievementEntrySchema = z.object({
 });
 const projectSchema = z.object({
   visualLayout: z.enum(["layout-1", "layout-2", "layout-3", "layout-4", "layout-5", "custom-image"]),
-  visualImageUrls: z.array(link).min(1).optional(),
+  visualImageUrls: z.array(projectImageEntry).min(1).optional(),
   meta: text,
   date: text,
   name: text,

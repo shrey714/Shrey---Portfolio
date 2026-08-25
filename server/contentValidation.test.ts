@@ -26,11 +26,38 @@ describe("portfolio content validation", () => {
     expect(() => validatePortfolioContent(invalid)).toThrow(/visualImageUrls/);
   });
 
-  it("accepts multiple custom project images", () => {
+  it("accepts multiple custom project images with per-image theme visibility", () => {
     const valid = structuredClone(portfolioContent) as typeof portfolioContent;
     valid.work.projects[0].visualLayout = "custom-image";
-    valid.work.projects[0].visualImageUrls = ["/api/media/portfolio/project/one.webp", "https://example.com/two.webp"];
+    valid.work.projects[0].visualImageUrls = [
+      { image: "/api/media/portfolio/project/one.webp", showInLight: true, showInDark: false },
+      { image: "https://example.com/two.webp", showInLight: false, showInDark: true },
+    ];
     expect(validatePortfolioContent(valid).work.projects[0].visualImageUrls).toHaveLength(2);
+  });
+
+  it("migrates existing editable custom project images to structured entries enabled in both themes", () => {
+    const imageEntries = portfolioContent.work.projects.flatMap(project => project.visualImageUrls ?? []);
+
+    expect(imageEntries.length).toBeGreaterThan(0);
+    imageEntries.forEach(entry => {
+      expect(typeof entry).toBe("object");
+      expect(entry).toMatchObject({ showInLight: true, showInDark: true });
+    });
+  });
+
+  it("keeps legacy string image lists valid while projects are migrated to theme-aware image entries", () => {
+    const legacy = structuredClone(portfolioContent) as { work: { projects: Array<Record<string, unknown>> } };
+    legacy.work.projects[0].visualLayout = "custom-image";
+    legacy.work.projects[0].visualImageUrls = ["/api/media/portfolio/project/one.webp"];
+    expect(validatePortfolioContent(legacy).work.projects[0].visualImageUrls).toHaveLength(1);
+  });
+
+  it("requires each structured image to be enabled for at least one theme", () => {
+    const invalid = structuredClone(portfolioContent) as typeof portfolioContent;
+    invalid.work.projects[0].visualLayout = "custom-image";
+    invalid.work.projects[0].visualImageUrls = [{ image: "/api/media/portfolio/project/one.webp", showInLight: false, showInDark: false }];
+    expect(() => validatePortfolioContent(invalid)).toThrow(/Enable the image for light mode/);
   });
 
   it("rejects the retired singular project-image field", () => {

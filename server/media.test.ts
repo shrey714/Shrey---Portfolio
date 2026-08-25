@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isAllowedPortfolioMediaPath, mediaDeliveryCandidates } from "./media";
+import { isAllowedPortfolioMediaPath, mediaDeliveryCandidates, mediaLibraryScript } from "./media";
 
 describe("portfolio media paths", () => {
   it("allows only normalized paths within the private portfolio media namespace", () => {
@@ -21,5 +21,15 @@ describe("portfolio media paths", () => {
     ]);
     expect(mediaDeliveryCandidates("portfolio/resume/shrey-patel.pdf")).toEqual(["portfolio/resume/shrey-patel.pdf"]);
     expect(mediaDeliveryCandidates("outside/asset.pdf")).toEqual([]);
+  });
+
+  it("allows selecting and uploads every chosen file from the Decap Blob media picker", () => {
+    const script = mediaLibraryScript();
+
+    expect(script).toContain('type="file" multiple');
+    expect(script).toContain("const files = Array.from(fileInput.files || []);");
+    expect(script).toContain("for (const [index, file] of files.entries())");
+    expect(script).toContain('setStatus("Uploading " + (index + 1) + " of " + files.length + "…")');
+    expect(script).toContain('files.length + " file" + (files.length === 1 ? "" : "s") + " uploaded."');
   });
 });
